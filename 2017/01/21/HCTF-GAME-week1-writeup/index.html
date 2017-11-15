@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      HCTF-GAME week1 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="WEB这TM是啥   题目描述： http://115.28.78.16:13333/web/web1/  打开后在源码里可以发现一大串奇怪的 JS 代码，其实这是 JS FUCK，一种 JS 的混淆方式。有很多方法能反混淆  解密脚本 http://www.snip2code.com/Snippet/1374337/Decode-jsfuck---aaencode---jjencode 火狐拓展">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HCTF-GAME week1 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/01/21/HCTF-GAME-week1-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="WEB这TM是啥   题目描述： http://115.28.78.16:13333/web/web1/  打开后在源码里可以发现一大串奇怪的 JS 代码，其实这是 JS FUCK，一种 JS 的混淆方式。有很多方法能反混淆  解密脚本 http://www.snip2code.com/Snippet/1374337/Decode-jsfuck---aaencode---jjencode 火狐拓展">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HCTF-GAME week1 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="WEB这TM是啥   题目描述： http://115.28.78.16:13333/web/web1/  打开后在源码里可以发现一大串奇怪的 JS 代码，其实这是 JS FUCK，一种 JS 的混淆方式。有很多方法能反混淆  解密脚本 http://www.snip2code.com/Snippet/1374337/Decode-jsfuck---aaencode---jjencode 火狐拓展">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">HCTF-GAME week1 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-01-21" class="post-meta__date date">2017-01-21</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="这TM是啥"><a href="#这TM是啥" class="headerlink" title="这TM是啥"></a>这TM是啥</h3><blockquote>
+<p>  题目描述： <a href="http://115.28.78.16:13333/web/web1/" target="_blank" rel="external">http://115.28.78.16:13333/web/web1/</a></p>
+</blockquote>
+<p>打开后在源码里可以发现一大串奇怪的 JS 代码，其实这是 <a href="http://www.jsfuck.com/" target="_blank" rel="external">JS FUCK</a>，一种 JS 的混淆方式。<br>有很多方法能反混淆</p>
+<ul>
+<li>解密脚本 <a href="http://www.snip2code.com/Snippet/1374337/Decode-jsfuck---aaencode---jjencode" target="_blank" rel="external">http://www.snip2code.com/Snippet/1374337/Decode-jsfuck---aaencode---jjencode</a></li>
+<li>火狐拓展 JavaScript Deobfuscator</li>
+<li>……</li>
+</ul>
+<p>知道一种就够了</p>
+<h3 id="我是谁我在哪？？？"><a href="#我是谁我在哪？？？" class="headerlink" title="我是谁我在哪？？？"></a>我是谁我在哪？？？</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/web/web2/index.php" target="_blank" rel="external">http://115.28.78.16:13333/web/web2/index.php</a></p>
+</blockquote>
+<p>302 重定向，flag 在 HTTP 响应头里</p>
+<h3 id="不可能拿到的flag"><a href="#不可能拿到的flag" class="headerlink" title="不可能拿到的flag"></a>不可能拿到的flag</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/web/web3/" target="_blank" rel="external">http://115.28.78.16:13333/web/web3/</a></p>
+</blockquote>
+<p>要拿到 flag 要满足两个条件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$name != $password</span><br><span class="line">sha1($name) === sha1($password)</span><br></pre></td></tr></table></figure></p>
+<p>两个值不相等，sha1 处理后的值却相等，看似是不可能的，但是 sha1 函数是存在漏洞的，它不能处理数组类型，会报错并返回 NULL。所以这里我们只要构造 <code>name[]=1&amp;password[]=2</code> 就可以了。与之类似的还有 md5 函数。</p>
+<h3 id="神奇的数字"><a href="#神奇的数字" class="headerlink" title="神奇的数字"></a>神奇的数字</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/web/web4/" target="_blank" rel="external">http://115.28.78.16:13333/web/web4/</a></p>
+</blockquote>
+<p>这题以及下面的 web5 可能很多人都搜到了 get flag 的方式，但不一定明白为什么这样就能拿到 flag 了。我们来分析下，要拿到 flag 需满足三个条件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$number == intval($number)</span><br><span class="line">intval($number) == intval(strrev($number))</span><br><span class="line">$n is not a palindrome number</span><br></pre></td></tr></table></figure>
+<p>$n 是一个回文数，又不能是一个回文数。第二个条件都用到了 intval 函数，受上题的启发，可能这里有点问题，我们翻下 php 手册，发现了这么一句话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">返回值</span><br><span class="line">最大的值取决于操作系统。 32 位系统最大带符号的 integer 范围是 -2147483648 到 2147483647。举例，在这样的系统上， intval(&apos;1000000000000&apos;) 会返回 2147483647。64 位系统上，最大带符号的 integer 值是 9223372036854775807。</span><br></pre></td></tr></table></figure>
+<p>如果我们构造一个值，它是等于最大值的，只要保证字符串反转后超过了最大值，那它返回的就是最大值，这样就满足所有条件了。但是最大值的回文数没有超过最大值，第二个条件不满足，我们想到可以在前面加 0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number=0009223372036854775807</span><br></pre></td></tr></table></figure>
+<p>这题还有其他的解决方法，有兴趣的可以去研究下</p>
+<h3 id="php真可怕我要回农村"><a href="#php真可怕我要回农村" class="headerlink" title="php真可怕我要回农村"></a>php真可怕我要回农村</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/web/web5/" target="_blank" rel="external">http://115.28.78.16:13333/web/web5/</a></p>
+</blockquote>
+<p>对于这种题包括前面那道题，最好本地搭建环境试一下<br>get flag 的条件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$b is not a <span class="keyword">array</span></span><br><span class="line">$b is not a number</span><br><span class="line">(int)(($a + $b) * <span class="number">10</span>) == <span class="number">8</span></span><br><span class="line">$b[<span class="number">10</span>] == <span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+<p>php 在进行加法运算时会自动进行类型转换，所以传入 0.7a 就会绕过第二个条件的限制。但是你会发现 $c 是7，这就涉及 php 中浮点数精度的问题。该结果的内部表示其实是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">floor((0.1+0.7)*10)</span><br><span class="line">7.9999999999999991118...</span><br></pre></td></tr></table></figure>
+<p>用 <code>(int)</code> 进行强制类型转换时向下取整，所以是 7<br>因此构造 <code>b=0.71a</code> 就可以了，第四个条件其实是没用的，如果第 11 位不存在的话，返回的是 NULL，<code>NULL == false</code></p>
+<h2 id="PENTEST"><a href="#PENTEST" class="headerlink" title="PENTEST"></a>PENTEST</h2><h3 id="lightless的渗透教室入门篇（一）"><a href="#lightless的渗透教室入门篇（一）" class="headerlink" title="lightless的渗透教室入门篇（一）"></a>lightless的渗透教室入门篇（一）</h3><blockquote>
+<p>题目描述： 115.28.78.16:13333/pentest/01/</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://115.28.78.16:13333/pentest/01/?hacker=HelloGet -d hacker=HelloPost</span><br><span class="line">hctf&#123;PostAndGetIsSoEasy_comeon!&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lightless的渗透教室入门篇（二）"><a href="#lightless的渗透教室入门篇（二）" class="headerlink" title="lightless的渗透教室入门篇（二）"></a>lightless的渗透教室入门篇（二）</h3><blockquote>
+<p>题目描述： 115.28.78.16:13333/pentest/02/</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Referer:http://www.google.com"</span> -H <span class="string">"X-Forwarded-For:127.0.0.1"</span> -H <span class="string">"User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 99_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11A465 Safari for iPhone"</span> -d hint=1 http://115.28.78.16:13333/pentest/02/</span><br></pre></td></tr></table></figure>
+<p>得到提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- flag not in html... --&gt;</span><br></pre></td></tr></table></figure>
+<p>不在源码里，那就只能在 HTTP 响应头里了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Referer:http://www.google.com"</span> -H <span class="string">"X-Forwarded-For:127.0.0.1"</span> -H <span class="string">"User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 99_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/11A465 Safari for iPhone"</span> -I http://115.28.78.16:13333/pentest/02/</span><br><span class="line">flag: hctf&#123;h77p_He4dEr_50_E4sy_ANd_fUn_ohhouhou&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="lightless的渗透教室入门篇（三）"><a href="#lightless的渗透教室入门篇（三）" class="headerlink" title="lightless的渗透教室入门篇（三）"></a>lightless的渗透教室入门篇（三）</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/pentest/03/" target="_blank" rel="external">http://115.28.78.16:13333/pentest/03/</a></p>
+</blockquote>
+<p>在 HTTP 响应头里查找到关于 cookie 的信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookiecontent: admin=1 and isLogin=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>修改 cookie</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --cookie <span class="string">"admin=1;isLogin=true"</span> http://115.28.78.16:13333/pentest/03/</span><br><span class="line">flag: hctf&#123;hao_hao_kan_zi_liao!!!&#125;, 通过伪造cookie，你可以绕过一些限制，或是伪造身份。</span><br></pre></td></tr></table></figure>
+<h3 id="lightless的渗透教室入门篇（四）"><a href="#lightless的渗透教室入门篇（四）" class="headerlink" title="lightless的渗透教室入门篇（四）"></a>lightless的渗透教室入门篇（四）</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/pentest/04/" target="_blank" rel="external">http://115.28.78.16:13333/pentest/04/</a></p>
+</blockquote>
+<p>有的可能构造对了，但忘记再 URL 编码一次了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">param1=&amp;lt;script&amp;gt;x=alert;x(&apos;lightless&apos;);&amp;lt;/script&amp;gt;&amp;param2=%3Cscript%3Ex%3Dalert%3Bx%28%27lightless%27%29%3B%3C/script%3E</span><br></pre></td></tr></table></figure>
+<p>就像这样，URL 编码的原因是 param1 中有 <code>&amp;</code>、<code>=</code> 等特殊字符，param2 中的 URL 编码在传输时会被自动解码<br>这里比较坑的是 HTML 实体编码只能用实体名称的形式，不能用实体编号的形式</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="密码学教室入门（一）"><a href="#密码学教室入门（一）" class="headerlink" title="密码学教室入门（一）"></a>密码学教室入门（一）</h3><blockquote>
+<p>题目描述： 这是最著名的一种非对称加密密码体制<br>学习文档：<a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem" target="_blank" rel="external">https://en.wikipedia.org/wiki/RSA_(cryptosystem</a>)<br>p: 0x9a724c6747de9eadccd33f4d60ada91754b8be8c65590cafe66f69a2f4afbfd359e47ca6fd2dbde8948062dc116bc574f4313ab99b2bb6d8ae47beaa0c1ebeddL<br>q: 0x8c1c81cc005ce3dd6d684ebb88151dc0c53b1cef8a29b1cb8121860fb57d93117bf449aac4300dc6103ac6211c6f8ae68987d99aff0dd8967a4afa00f2116873L<br>e: 0x28b95b7e3159a851cbf537e007ae49864b7dbb93fc370a5L<br>d: 0x190a000845e9c8c2059242835432326369aaf8c7ca85e685bba968b386155a91f1f7ca1019ff23d119222e1f0dfdeb0915d2e97601ef94bf15ca6d9211e984e9038f263f4984355c397ed22d67c26da6d31acfc4d599c70cba80859bee099e5a2dc3ab23aecf58f73f44d07318f70985c623d9612efefb15bf8dab77d5d54e85L<br>c: 0x23091e42fa7609c73f1941b320fad6d2ff6e47be588d1623f970f1fee7abd221c9834b208f3c888902fe87ca76ec1e1363757d93c6e25c49f1c61c72b141c0b8848b54a117427d8e30eeab89694eb5f849cafecb0e5361b9b2b0e3f89e0fdbcc66a6aad4a1a4a85d828083a01a5d569b7eeb6f9151794453382b524aa52993f9L</p>
+</blockquote>
+<p>私钥给了，就一个公式<br>\begin{matrix} c^d \equiv m \pmod {n} \ \end{matrix}</p>
+<h3 id="密码学教室入门（二）"><a href="#密码学教室入门（二）" class="headerlink" title="密码学教室入门（二）"></a>密码学教室入门（二）</h3><blockquote>
+<p>  题目描述： 凯撒加密是一种古老的对称加密算法<br>学习文档：<a href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="external">https://en.wikipedia.org/wiki/Caesar_cipher</a><br>mlfrj{Hfjxfw_hnumjw_8x_ozxy_ktw_kzs}</p>
+</blockquote>
+<p>凯撒加密，自己写个脚本解密就好了，不过这迷之数字处理……</p>
+<h3 id="密码学教室入门（三）"><a href="#密码学教室入门（三）" class="headerlink" title="密码学教室入门（三）"></a>密码学教室入门（三）</h3><blockquote>
+<p>题目描述： 维吉尼亚密码是最常见的分组密码。将明文对应的书名中的空格换成下划线，在并且加上hgame{}后作为flag<br><a href="https://en.wikipedia.org/wiki/Vigenère_cipher" target="_blank" rel="external">https://en.wikipedia.org/wiki/Vigenère_cipher</a><br>ET. RBPHXYF, ZNFYHH BU E IGUS GQU MJU MRQTLWTOOHRY KQ YIG FFTVLPQF, XJTVLJNFU SS FDVSBA’W CGKEQG DX IKV YSKDP. FDVSBA MX THPJBUHH, QQPD VR GF DVWFUWII CJENO OEYFT XMBV HFZ. E OGZ YSKDP CGJMST RR UJH KPNOSBJPJ IBA, ZOFHV OGZ HICUKJT EVTVIKX CA XMF GIKBTJIX CQH B WLNSF MSEKYMIVCO BIQ MX URSS THZJBNHH BU HW. PESFVWI. JH MBF AWJVWIS CQ FDERYSU RJ IKV NNRUMXPPPISU DX UJH MBPGW PH HFSPDC’T IEYIGU FOF LNEFHR JV MS JLW DGOP; FHJFSIH KPWQH JV AMJNH XFCUGMJPJ YIG GJMN HZSKQK UJH XUQUQNOI SK VKI CCVXNMNH.</p>
+</blockquote>
+<p>之前只是知道原理，没有去做过这种题目，花了点时间。<br>密文保留了原先的标点符号。因此我们可以用词频分析的方法，首先你要知道在一段话中，一般 <code>the</code> 和 <code>a</code> 出现的频率是最高的，所以我写了个 python 脚本计算出出现的所有三字符单词和一字符单词的出现次数，结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[(&apos;UJH&apos;, 3), (&apos;IKV&apos;, 2), (&apos;YIG&apos;, 2), (&apos;OGZ&apos;, 2), (&apos;HFZ&apos;, 1), (&apos;IBA&apos;, 1), (&apos;VKI&apos;, 1), (&apos;GQU&apos;, 1), (&apos;MBF&apos;, 1), (&apos;XMF&apos;, 1), (&apos;BIQ&apos;, 1), (&apos;CQH&apos;, 1), (&apos;JLW&apos;, 1), (&apos;MJU&apos;, 1), (&apos;FOF&apos;, 1)]</span><br><span class="line"></span><br><span class="line">[(&apos;E&apos;, 2), (&apos;B&apos;, 1), (&apos;T&apos;, 1), (&apos;W&apos;, 1)]</span><br></pre></td></tr></table></figure>
+<p>再与 <code>the</code> 和 <code>a</code> 计算偏移量，再加上比较明显的 <code>&#39;s</code>，大致如下(出现的数字都是偏移量)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">THE </span><br><span class="line">UJH 1 2 3</span><br><span class="line">IKV 15 3 17</span><br><span class="line">YIG 5 1 2</span><br><span class="line">OGZ 21 25 21</span><br><span class="line"></span><br><span class="line">&apos;S</span><br><span class="line">4 1</span><br><span class="line"></span><br><span class="line">A</span><br><span class="line">4 1</span><br></pre></td></tr></table></figure>
+<p>这里是需要猜下的，1 和 4 肯定是有的，然后出现频率较高的两个 <code>the</code> 又含有 2 3 5，大概是 1 2 3 4 5 这样，当然不一定是这个顺序，然后我又验证了下后面出现频率较低的 <code>the</code>，其中两组偏移量是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2 3 4</span><br><span class="line">4 5 1</span><br></pre></td></tr></table></figure>
+<p>这就基本确定了啊，密钥长度为 5，分别为 1 2 3 4 5，而且从上面的偏移来看，顺序就是 1 2 3 4 5，不过第一个偏移不一定是 1，换句话说秘钥是这五个中的一种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;ABCDE&quot;,&quot;BCDEA&quot;,&quot;CDEAB&quot;,&quot;DEABC&quot;,&quot;EABCD&quot;]</span><br></pre></td></tr></table></figure>
+<p>把所有情况输出出来就知道了，最后随便拿其中的一句话谷歌下，书名是这个 A Tale of Two Cities</p>
+<p>事后和出题人聊了下，应该是先用重合指数攻击算出分组长度，然后分组进行字频分析</p>
+<h3 id="密码学教室入门（四）"><a href="#密码学教室入门（四）" class="headerlink" title="密码学教室入门（四）"></a>密码学教室入门（四）</h3><blockquote>
+<p>题目描述： n: 0x81cfc71c44c83faf3c5242fa81ae2e533fc945f3bef30bc13323ea4a55b3debc11301c6a9ecb8f7ef92fa169b157435af728a145497f2cdf75b3007b9732da4c47d67683f09ae1edc8f698f5ec7549593d9f1d06adafae4ad09514928bf0367a2719f7c171580318690dafc6a3d5385b3516b769f529c0a055ce25e68bc21395L<br>e: 0x01<br>c: 0x6867616d657b7273615f31735f737469316c5f653473795f6e6f77217dL</p>
+</blockquote>
+<p>e = 1，根据 \begin{matrix} m^e \equiv c \pmod {n} \ \end{matrix}<br>flag 就是 c</p>
+<h3 id="密码学教室番外篇"><a href="#密码学教室番外篇" class="headerlink" title="密码学教室番外篇"></a>密码学教室番外篇</h3><blockquote>
+<p>题目描述： 昨天看大家凯撒密码疯狂试flag，所以yxrdv{uxwupytip19954902180//+/%}</p>
+</blockquote>
+<p>这里数字的表应该是这样的 1234567890，问题来了，为啥上面那个对数字的处理不是这样的，迷。。。</p>
+<p>出题人可能是从<a href="http://www.jianshu.com/p/bd0087afbf66" target="_blank" rel="external">这篇文章</a>找到的对数字的处理，有兴趣的自己看下吧</p>
+<p>解密脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">c = <span class="string">'yxrdv&#123;uxwupytip19954902180//+/%&#125;'</span></span><br><span class="line">li = [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>, <span class="string">'0'</span>]</span><br><span class="line">le = len(c)</span><br><span class="line">m = [<span class="string">'*'</span>] * le</span><br><span class="line">add = ord(<span class="string">'y'</span>) - ord(<span class="string">'h'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(le):</span><br><span class="line">	<span class="keyword">if</span> c[i].islower():</span><br><span class="line">		num = ord(c[i]) - <span class="number">97</span> - add</span><br><span class="line">		num = num <span class="keyword">if</span> num &gt;=<span class="number">0</span> <span class="keyword">else</span> num + <span class="number">26</span></span><br><span class="line">		m[i] = chr(num + <span class="number">97</span>)</span><br><span class="line">	<span class="keyword">elif</span> c[i].isdigit():</span><br><span class="line">		num = li.index(c[i]) - add</span><br><span class="line">		<span class="keyword">while</span> num &lt; <span class="number">0</span>:</span><br><span class="line">			num += <span class="number">10</span></span><br><span class="line">		m[i] = li[num]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		m[i] = c[i]</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">''</span>.join(m)</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>与去年相比，题量还是大一些的，不过有好多可以搜到的。不要只想着拿 FLAG，背后的原理才是你应该关注的，你应该能从题目中感受到你缺哪部分知识，然后相应的去学，比如 web 安全的现在就可以开始 HTML 和 JS 的学习了。</p>
+<blockquote>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+</blockquote>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

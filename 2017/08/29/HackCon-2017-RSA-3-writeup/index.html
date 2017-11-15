@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      HackCon 2017 RSA-3 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="I was finally able to capture the modulos and ciphertext that my friend uses to send the flag to everyone. Please hack it, and tell me what he is sending.Note: Different flag format. rsa3.txt  We are">
+<meta name="keywords" content="writeup,CTF,RSA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackCon 2017 RSA-3 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/08/29/HackCon-2017-RSA-3-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="I was finally able to capture the modulos and ciphertext that my friend uses to send the flag to everyone. Please hack it, and tell me what he is sending.Note: Different flag format. rsa3.txt  We are">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/hackcon2017/1.jpg">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HackCon 2017 RSA-3 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="I was finally able to capture the modulos and ciphertext that my friend uses to send the flag to everyone. Please hack it, and tell me what he is sending.Note: Different flag format. rsa3.txt  We are">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/hackcon2017/1.jpg">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">HackCon 2017 RSA-3 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-08-29" class="post-meta__date date">2017-08-29</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/RSA/">RSA</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <blockquote>
+<p>I was finally able to capture the modulos and ciphertext that my friend uses to send the flag to everyone. Please hack it, and tell me what he is sending.<br>Note: Different flag format.</p>
+<p><a href="https://hackcon.in/files/257f1bd531bea7b6a29a700bd949b42f/rsa3.txt" target="_blank" rel="external">rsa3.txt</a></p>
+</blockquote>
+<p>We are giving following data:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n = 27889790942966947036861378043158080483040875117204641483879866390238208620663956576973777874507240669643888065763137780499805909939066661612708826993608654680300732401951416830721424144957953976708056088725541261145598655543913301108486073727361975257751155861693187124732625567462532590982339774968025316953820269111867532777587735148492283985886531900163665810672858631477638383286430874438461463017230692713981299647992939576135711541276805459680629858238737522674183159028538781619179277007783213596156511625151052311022548741688444363119109174839265715141719292947895928622131533978133711731642378245705631956649</span><br><span class="line">ciphertext = 27565432352959169185267553837899918221071526625835688441598442671911411122049381510509743510890496110212243616256779662952985804971850105832078504709537095259376624037980191442815236496206629132445698638752008471224630238657804976392808705657174518751058814995018236045588302953757877948476094692393461773107162692398429932051387701451649957934778348969875044313103315581471155771861778522866249975693209102641771607970433761749835749459436417356404889295590430882236042943244986093685207061420612079333415995591395030262118706403057290219600617207992171928187137731325872336342093957597097019557095193031636012448452</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+<p>That have 1000 group of n and c, so many!<br>Firstly, I think that could have the same factor. But failed. All n are relatively prime. Stuck! I am no idea. So I begin to do other things. </p>
+<p>Suddenly I’m aware of that if e are same(should be same), it might be done by Chinese remainder theorem. You can understand it at <a href="https://en.wikipedia.org/wiki/Chinese_remainder_theorem" target="_blank" rel="external">wiki</a>, I will not explain it.  But no e, don’t worry, we can blast it. So I write a python script to solve the challenge.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long, long_to_bytes</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="comment"># get all n and c</span></span><br><span class="line">s = open(<span class="string">'file.txt'</span>).read().split(<span class="string">'\n'</span>)</span><br><span class="line">num = <span class="number">0</span></span><br><span class="line">n = []</span><br><span class="line">c = [] </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)):</span><br><span class="line">    <span class="keyword">if</span> num % <span class="number">3</span> == <span class="number">0</span>:</span><br><span class="line">        n.append(int(s[i].split(<span class="string">' '</span>)[<span class="number">2</span>]))</span><br><span class="line">    <span class="keyword">elif</span> num % <span class="number">3</span> == <span class="number">1</span>:</span><br><span class="line">        c.append(int(s[i].split(<span class="string">' '</span>)[<span class="number">2</span>]))</span><br><span class="line">    num += <span class="number">1</span></span><br><span class="line">le = len(n)</span><br><span class="line"></span><br><span class="line"><span class="comment"># calc N</span></span><br><span class="line">N = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> n:</span><br><span class="line">    N *= num</span><br><span class="line"></span><br><span class="line"><span class="comment"># N1,N2...Nn</span></span><br><span class="line"><span class="comment"># NN1 * t1 = 1 (mod n1)</span></span><br><span class="line">NN = [<span class="keyword">None</span>] * le</span><br><span class="line">t =  [<span class="keyword">None</span>] * le</span><br><span class="line">x = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(le):</span><br><span class="line">    NN[i] = N / n[i]</span><br><span class="line">    t[i] = gmpy2.invert(NN[i],n[i])</span><br><span class="line">    x += c[i]*t[i]*NN[i]</span><br><span class="line"></span><br><span class="line">res = x % N</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">65537</span>):</span><br><span class="line">    num = <span class="number">0</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        flag = long_to_bytes(gmpy2.iroot(res,i)[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> flag:</span><br><span class="line">            <span class="keyword">if</span> j <span class="keyword">not</span> <span class="keyword">in</span> string.printable:</span><br><span class="line">                num = <span class="number">1</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> num == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'e is '</span> + str(i)</span><br><span class="line">            <span class="keyword">print</span> flag</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+<p>Although flag isn’t standard format, we can print all the printable message.</p>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/hackcon2017/1.jpg" alt=""></p>
+<p>Nice!</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

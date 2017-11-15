@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      Docker 使用总结 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="什么是 Docker Docker 是个划时代的开源项目，它彻底释放了虚拟化的威力，极大提高了应用的运行效率，降低了云计算资源供应的成本，同时让应用的部署、测试和分发都变得前所未有的高效和轻松！  可能这么说你会感到一脸茫然，实践是学习的最好途径，我们简单的介绍下 Docker 的安装及常用命令 安装官方网站有各种环境下的安装教程，这里我们只说下 Ubuntu 下使用脚本自动安装 官方提供的安装脚">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 使用总结 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/11/21/Docker-使用总结/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="什么是 Docker Docker 是个划时代的开源项目，它彻底释放了虚拟化的威力，极大提高了应用的运行效率，降低了云计算资源供应的成本，同时让应用的部署、测试和分发都变得前所未有的高效和轻松！  可能这么说你会感到一脸茫然，实践是学习的最好途径，我们简单的介绍下 Docker 的安装及常用命令 安装官方网站有各种环境下的安装教程，这里我们只说下 Ubuntu 下使用脚本自动安装 官方提供的安装脚">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker 使用总结 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="什么是 Docker Docker 是个划时代的开源项目，它彻底释放了虚拟化的威力，极大提高了应用的运行效率，降低了云计算资源供应的成本，同时让应用的部署、测试和分发都变得前所未有的高效和轻松！  可能这么说你会感到一脸茫然，实践是学习的最好途径，我们简单的介绍下 Docker 的安装及常用命令 安装官方网站有各种环境下的安装教程，这里我们只说下 Ubuntu 下使用脚本自动安装 官方提供的安装脚">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">Docker 使用总结</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-11-21" class="post-meta__date date">2016-11-21</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/Docker/">Docker</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h3 id="什么是-Docker"><a href="#什么是-Docker" class="headerlink" title="什么是 Docker"></a>什么是 Docker</h3><blockquote>
+<p>Docker 是个划时代的开源项目，它彻底释放了虚拟化的威力，极大提高了应用的运行效率，降低了云计算资源供应的成本，同时让应用的部署、测试和分发都变得前所未有的高效和轻松！</p>
+</blockquote>
+<p>可能这么说你会感到一脸茫然，实践是学习的最好途径，我们简单的介绍下 Docker 的安装及常用命令</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><a href="https://docs.docker.com/engine/installation/" target="_blank" rel="external">官方网站</a>有各种环境下的安装教程，这里我们只说下 Ubuntu 下使用脚本自动安装</p>
+<h4 id="官方提供的安装脚本"><a href="#官方提供的安装脚本" class="headerlink" title="官方提供的安装脚本"></a>官方提供的安装脚本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.docker.com/ | sh</span><br></pre></td></tr></table></figure>
+<p>如果你没有翻墙的话，可能会出现下载错误的情况，所以有了国内云服务商提供的安装脚本</p>
+<h4 id="阿里云的安装脚本"><a href="#阿里云的安装脚本" class="headerlink" title="阿里云的安装脚本"></a>阿里云的安装脚本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -</span><br></pre></td></tr></table></figure>
+<h4 id="DaoCloud-的安装脚本"><a href="#DaoCloud-的安装脚本" class="headerlink" title="DaoCloud 的安装脚本"></a>DaoCloud 的安装脚本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.daocloud.io/docker | sh</span><br></pre></td></tr></table></figure>
+<h4 id="配置-docker-加速器"><a href="#配置-docker-加速器" class="headerlink" title="配置 docker 加速器"></a>配置 docker 加速器</h4><p>下载镜像时官方注册服务器会比较慢(即使翻了墙)，我们可以换一个镜像服务器地址，这里推荐 <a href="https://www.daocloud.io" target="_blank" rel="external">DaoCloud</a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://xxx.m.daocloud.io</span><br></pre></td></tr></table></figure></p>
+<p>后面的 xxx 是你注册后获得的地址</p>
+<h3 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull &lt;仓库名&gt;:&lt;标签&gt;</span><br><span class="line">docker pull ubuntu:16.04</span><br></pre></td></tr></table></figure>
+<p>如果不指定标签名，则默认为 latest</p>
+<h3 id="列出本地所有镜像"><a href="#列出本地所有镜像" class="headerlink" title="列出本地所有镜像"></a>列出本地所有镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<h3 id="使用镜像启动容器"><a href="#使用镜像启动容器" class="headerlink" title="使用镜像启动容器"></a>使用镜像启动容器</h3><p>镜像与容器的关系相当于类和实例的关系<br>我们以交互的方式来启动容器<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -i -t &lt;仓库名&gt;:&lt;标签名&gt; /bin/bash</span><br><span class="line">-i --interactive 交互的方式</span><br><span class="line">-t --tty         分配一个伪终端</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改已有镜像"><a href="#修改已有镜像" class="headerlink" title="修改已有镜像"></a>修改已有镜像</h3><p>当容器发生变化后，就可以提交它，来创建一个新的镜像<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m "some info" -a "heartsky" 容器名 &lt;仓库名&gt;:&lt;标签名&gt;</span><br><span class="line">-m --message string 提交时的说明信息</span><br><span class="line">-a --author string  作者信息</span><br><span class="line">容器名 刚才启动容器后的 id ，如 root@e78ad72270f5 中的 e78ad72270f5</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看已启动的容器"><a href="#查看已启动的容器" class="headerlink" title="查看已启动的容器"></a>查看已启动的容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps # 查看正在运行的容器</span><br><span class="line">docker ps -a # --all 查看所有容器(包括已经停止的)</span><br><span class="line">docker ps -q # --quiet 只展示容器的 id</span><br></pre></td></tr></table></figure>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p>因为容器的创建是如此的简单快捷，所以当我们不再使用某个容器的时候，可以毫不犹豫的把它删除<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker rm CONTAINER </span><br><span class="line"><span class="meta">#</span> CONTAINER 为容器名或容器 id ，可以结合 docker ps 命令来删除容器</span><br><span class="line"><span class="meta">#</span> -f --force 强制删除某个或多个容器(比如正在工作的容器无法删除，可加入这个选项)</span><br></pre></td></tr></table></figure></p>
+<p>结合前面的命令，可以单行命令删除所有容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker ps -aq) --force</span><br></pre></td></tr></table></figure></p>
+<h3 id="删除本地镜像"><a href="#删除本地镜像" class="headerlink" title="删除本地镜像"></a>删除本地镜像</h3><p>一旦我们不再需要某个镜像时，就可以把它删除<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rmi IMAGE</span><br><span class="line"><span class="meta">#</span> IMAGE 为镜像名(&lt;仓库名&gt;:&lt;标签名&gt;)或镜像 id</span><br></pre></td></tr></table></figure></p>
+<h3 id="利用-Dockerfile-创建镜像"><a href="#利用-Dockerfile-创建镜像" class="headerlink" title="利用 Dockerfile 创建镜像"></a>利用 Dockerfile 创建镜像</h3><p>想要修改一个镜像，还要进入伪终端一行行的敲命令？想要在团队中分享修改好的镜像，还要存到本地再传给其他人？ 少年，你需要 Dockerfile</p>
+<p>有了它就可以自动执行你想要执行的命令，下面就介绍下常用的 Dockerfile 指令</p>
+<h4 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h4><p>FROM 指令告诉 Docker 使用哪个镜像作为基础，比如下面的就是以<code>ubuntu:16.04</code> 作为基础<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:16.04</span><br></pre></td></tr></table></figure></p>
+<h4 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h4><p>说明镜像创建者的信息<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAINTAINER &lt;name&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><p>RUN 指令有两种形式</p>
+<h5 id="shell-形式"><a href="#shell-形式" class="headerlink" title="shell 形式"></a>shell 形式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN &lt;command&gt;</span><br><span class="line">RUN apt-get install curl</span><br></pre></td></tr></table></figure>
+<p>相当于执行 <code>/bin/sh -c &lt;command&gt;</code></p>
+<h5 id="exec-形式"><a href="#exec-形式" class="headerlink" title="exec 形式"></a>exec 形式</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN ["param0","param1","param2"]</span><br><span class="line">RUN ["apt-get","install","curl"]</span><br></pre></td></tr></table></figure>
+<p>不会触发 shell ，所以可以在没有 bash 的镜像中执行，但是 $USER 这样的环境变量便不能使用了</p>
+<h4 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h4><p>指定 RUN、CMD 和 ENTRYPOINT 指令执行命令时的目录(默认为<code>/</code>)。<br>如果该指令再次出现且路径为相对路径，则为相对于当前工作目录的路径。<br>如<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WORKDIR /test</span><br><span class="line">WORKDIR 233</span><br></pre></td></tr></table></figure></p>
+<p>则当前工作目录为 <code>/test/233</code></p>
+<h4 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD &lt;src&gt; &lt;des&gt;</span><br></pre></td></tr></table></figure>
+<p>将 <code>&lt;src&gt;</code> 对应的文件或文件夹拷贝到 <code>&lt;des&gt;</code> 对应的路径下，而且 <code>&lt;src&gt;</code> 只能在 Dockerfile 文件的相对路径下，不能是<code>../path/</code></p>
+<p>除此之外，ADD 指令还支持远程 URL 获取文件和自动解压 tar 文件，如<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADD test.tar /</span><br></pre></td></tr></table></figure></p>
+<p>这会自动解压 test.tar 并把里面的全部内容拷贝到 / 目录下</p>
+<h4 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h4><p>指定向外部开放的端口<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPOSE &lt;port&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当然 Docker 的命令远不止这些，上述都是前几天在题目的部署过程中常用到的一些命令，仅作整理日后翻看之用</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      wamp安装教程 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="0x00说是教程，实则是安装及配置时遇到的一些问题 0x01去官方下载软件时，在chrome下没下完就提示下完了，打开后不能运行，火狐下也是，不过火狐提示的是下载失败，不知道为什么，然后失败后就一直点继续下载，最后成功了 0x02安装后打开，右下角出来图标，但无法对其操作，多次尝试后在安装文件夹里找到了install-english.txt，找到原因，在安装前要下载各种版本的Visual C++，">
+<meta name="keywords" content="problems">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wamp安装教程 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/03/11/wamp安装教程/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="0x00说是教程，实则是安装及配置时遇到的一些问题 0x01去官方下载软件时，在chrome下没下完就提示下完了，打开后不能运行，火狐下也是，不过火狐提示的是下载失败，不知道为什么，然后失败后就一直点继续下载，最后成功了 0x02安装后打开，右下角出来图标，但无法对其操作，多次尝试后在安装文件夹里找到了install-english.txt，找到原因，在安装前要下载各种版本的Visual C++，">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wamp安装教程 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="0x00说是教程，实则是安装及配置时遇到的一些问题 0x01去官方下载软件时，在chrome下没下完就提示下完了，打开后不能运行，火狐下也是，不过火狐提示的是下载失败，不知道为什么，然后失败后就一直点继续下载，最后成功了 0x02安装后打开，右下角出来图标，但无法对其操作，多次尝试后在安装文件夹里找到了install-english.txt，找到原因，在安装前要下载各种版本的Visual C++，">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">wamp安装教程</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-03-11" class="post-meta__date date">2016-03-11</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/problems/">problems</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h3 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h3><p>说是教程，实则是安装及配置时遇到的一些问题</p>
+<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>去官方下载软件时，在chrome下没下完就提示下完了，打开后不能运行，火狐下也是，不过火狐提示的是下载失败，不知道为什么，然后失败后就一直点继续下载，最后成功了</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>安装后打开，右下角出来图标，但无法对其操作，多次尝试后在安装文件夹里找到了<code>install-english.txt</code>，找到原因，在安装前要下载各种版本的<code>Visual C++</code>，之后成功运行</p>
+<h3 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h3><p>配置php，打开bin-&gt;php-&gt;php.ini</p>
+<p>short_open_tag = Off（是否允许使用 PHP代码开始标志的缩写形式（&lt;? ?&gt;））；<br>教程说改为On，个人觉得不用，推荐使用php的标准形式<code>&lt;?php ?&gt;</code></p>
+<p>memory_limit = 128M（最大使用内存的大小）；<br>upload_max_filesize = 2M（上传附件的最大值），<br>以上根据实际需要修改</p>
+<p><del>暂时写到这，使用过程中有新发现再来完善 = =</del></p>
+<h3 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h3><p>修改www目录，后来想了下，放在软件目录里不太保险，万一哪天手贱把软件卸了，忘记网页文件还在里面。</p>
+<p>打开scripts-&gt;config.inc.php,把<code>$wwwDir = $c_installDir.&#39;/www&#39;;</code>改成自己想要的目录,我是直接改成了<code>$wwwDir = &#39;E:/code/website/&#39;;</code>(后来的时候出了问题，不知道和删了$c_installDir.有没有关系= =)，有一点要注意，windows下表示路径的\要改为/</p>
+<p>还没完，再打开httpd.conf，相应改为<code>DocumentRoot &quot;your_path&quot;</code>和<code>&lt;Directory &quot;your_path&quot;&gt;</code></p>
+<p><del>按理说到现在就可以了，不知道为什么目录还是没更改，重启服务也不行，后来重启电脑结果莫名其妙的可以了</del></p>
+<p>重启电脑后生效</p>
+<p>暂时告一段落，开始撸php ：)</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

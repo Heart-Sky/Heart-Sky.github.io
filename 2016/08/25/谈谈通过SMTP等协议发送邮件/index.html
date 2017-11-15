@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      谈谈通过SMTP等协议发送邮件 | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="前几天土师傅邀请我写个官网的留言发送邮件的功能，期间也是遇到了各种坑，觉得有必要记录下，便有了下面的这篇文章 mail() and sendmail因为之前也没写过，学长说PHP写几句就好了，便去搜了下PHP 发送邮件，就收到了PHP有自带的发送邮件的函数mail() 函数很简单，就这么一行 1mail(to,subject,message,headers,parameters) 顿时充满希望，需">
+<meta name="keywords" content="Protocols">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈通过SMTP等协议发送邮件 | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2016/08/25/谈谈通过SMTP等协议发送邮件/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="前几天土师傅邀请我写个官网的留言发送邮件的功能，期间也是遇到了各种坑，觉得有必要记录下，便有了下面的这篇文章 mail() and sendmail因为之前也没写过，学长说PHP写几句就好了，便去搜了下PHP 发送邮件，就收到了PHP有自带的发送邮件的函数mail() 函数很简单，就这么一行 1mail(to,subject,message,headers,parameters) 顿时充满希望，需">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/%E8%B0%88%E8%B0%88%E9%80%9A%E8%BF%87SMTP%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/smtp_imap_pop3.png">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈通过SMTP等协议发送邮件 | HeartSky&#39;s blog">
+<meta name="twitter:description" content="前几天土师傅邀请我写个官网的留言发送邮件的功能，期间也是遇到了各种坑，觉得有必要记录下，便有了下面的这篇文章 mail() and sendmail因为之前也没写过，学长说PHP写几句就好了，便去搜了下PHP 发送邮件，就收到了PHP有自带的发送邮件的函数mail() 函数很简单，就这么一行 1mail(to,subject,message,headers,parameters) 顿时充满希望，需">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/%E8%B0%88%E8%B0%88%E9%80%9A%E8%BF%87SMTP%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/smtp_imap_pop3.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">谈谈通过SMTP等协议发送邮件</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2016-08-25" class="post-meta__date date">2016-08-25</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/Protocols/">Protocols</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>前几天土师傅邀请我写个官网的留言发送邮件的功能，期间也是遇到了各种坑，觉得有必要记录下，便有了下面的这篇文章</p>
+<h3 id="mail-and-sendmail"><a href="#mail-and-sendmail" class="headerlink" title="mail() and sendmail"></a>mail() and sendmail</h3><p>因为之前也没写过，学长说PHP写几句就好了，便去搜了下<code>PHP 发送邮件</code>，就收到了PHP有自带的发送邮件的函数mail()</p>
+<p>函数很简单，就这么一行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mail(to,subject,message,headers,parameters)</span><br></pre></td></tr></table></figure>
+<p>顿时充满希望，需要安装一个邮件系统，那就搞吧，从此便踏上了不归之路</p>
+<p>搭建邮件系统的一种方式就是在服务器上安装sendmail程序</p>
+<blockquote>
+<p>Sendmail is a general purpose internetwork email routing facility that supports many kinds of mail-transfer and delivery methods, including the Simple Mail Transfer Protocol (SMTP) used for email transport over the Internet.</p>
+</blockquote>
+<p>先用的自己的ubuntu做测试，结果不知道为啥安装上后就是发不出去邮件，谷歌良久仍未解决</p>
+<p>最后问了下LL学长，用sendmail的话就是自己建立了SMTP服务器，太麻烦也没必要，可以用QQ、163等的SMTP服务器来发送，只要提供用户名、密码连接上就可以发送邮件了</p>
+<h3 id="PHPMailer"><a href="#PHPMailer" class="headerlink" title="PHPMailer"></a>PHPMailer</h3><p>一个开源的PHP第三方函数库</p>
+<blockquote>
+<p>PHPMailer - A full-featured email creation and transfer class for PHP</p>
+</blockquote>
+<p>正如它所说的<code>send without a local mail server</code>，这是我们使用它的一个理由，与其相似的还有<code>SwiftMailer</code>,<code>Zend_Mail</code>,<code>eZcomponents</code>等</p>
+<p>使用也很简单，感兴趣的朋友可以去其<a href="https://github.com/PHPMailer/PHPMailer" target="_blank" rel="external">github</a>看下</p>
+<h3 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h3><p>下面就说下在发送邮件时需要的SMTP协议和其他协议，以及他们是如何协同工作的</p>
+<h4 id="SMTP-Simple-Mail-Transfer-Protocol"><a href="#SMTP-Simple-Mail-Transfer-Protocol" class="headerlink" title="SMTP(Simple Mail Transfer Protocol)"></a>SMTP(Simple Mail Transfer Protocol)</h4><p>即简单邮件传输协议，这个协议主要用来从邮件客户端发送邮件到邮件服务器，也被用来把邮件从一个邮件服务器转发到另一个邮件服务器(比如从QQ转发到163)。默认使用端口25，也可以使用465或587.</p>
+<h4 id="POP3-Post-Office-Protocol-3"><a href="#POP3-Post-Office-Protocol-3" class="headerlink" title="POP3(Post Office Protocol 3)"></a>POP3(Post Office Protocol 3)</h4><p>因为它的版本3被广泛使用，所以被称为POP3。主要用来从邮件服务器上取回邮件到客户端，拥有认证机制。</p>
+<p>其工作流程:</p>
+<ol>
+<li>连接邮件服务器的110端口(如果是SSL或TLS连接的话，则是995端口)</li>
+<li>取回用户邮件</li>
+<li>删除服务器上的邮件</li>
+<li>同服务器断开连接</li>
+</ol>
+<p>虽然POP客户端可以通过配置使得在服务器上继续存储邮件，但通常是删除服务器上的邮件，这与在IMAP上通常是不删除是不一样的</p>
+<h4 id="IMAP-Internet-Message-Access-Protocol"><a href="#IMAP-Internet-Message-Access-Protocol" class="headerlink" title="IMAP(Internet Message Access Protocol)"></a>IMAP(Internet Message Access Protocol)</h4><p>它用来在一个邮件服务器上存储邮件，并且允许用户查看和操作(删除、回复等)这些邮件</p>
+<p>其工作流程:</p>
+<ol>
+<li>连接邮件服务器的143端口(SSL或TLS连接则是993端口)</li>
+<li>取回用户邮件</li>
+<li>保持这个连接直到邮件客户端被关闭，在连接的过程中会按照需要下载信息</li>
+</ol>
+<h4 id="How-work-together"><a href="#How-work-together" class="headerlink" title="How work together"></a>How work together</h4><p>可以参考下面的图片</p>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/%E8%B0%88%E8%B0%88%E9%80%9A%E8%BF%87SMTP%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/smtp_imap_pop3.png" alt="smtp_imap_pop3"></p>
+<p>首先发送方发送的邮件会被发送到SMTP服务器(比如你是163的邮箱账号，会被发送到smtp.163.com所在的服务器，或者是自己搭建的SMTP服务器)，然后再被转发到接收方所在的SMTP服务器，这都是通过SMTP协议实现的，之后接收方再通过POP3或IMAP协议取回自己的邮件或直接查看服务器上的邮件。当然，这是简化后的，只涉及这三个协议，真正的过程要比这个复杂。</p>
+<p>我们可以看出SMTP是必须的，因为它与其他两个协议的主要功能是不同的，至于POP3和IMAP则是可以二选一的，对何时用何种协议感兴趣的朋友可以去搜下，这里就不再讨论了</p>
+<h3 id="END"><a href="#END" class="headerlink" title="END"></a>END</h3><p>其实远没有结束，这里只是给出了一些很基础的概念和原理，目前也只能理解到这水平，而且现阶段的理解也不乏错误，欢迎各位大佬指正(⊙v⊙)</p>
+<h3 id="Reference-links"><a href="#Reference-links" class="headerlink" title="Reference links"></a>Reference links</h3><p><a href="http://www.jscape.com/blog/smtp-vs-imap-vs-pop3-difference" target="_blank" rel="external">SMTP vs IMAP vs POP3 - Knowing The Difference</a><br><a href="http://www.howtogeek.com/56002/htg-explains-how-does-email-work/" target="_blank" rel="external">HTG Explains: How Does Email Work?</a></p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

