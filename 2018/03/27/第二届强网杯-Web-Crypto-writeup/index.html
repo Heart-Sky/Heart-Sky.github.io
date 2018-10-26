@@ -23,12 +23,12 @@
 <meta property="og:url" content="http://heartsky.info/2018/03/27/第二届强网杯-Web-Crypto-writeup/index.html">
 <meta property="og:site_name" content="HeartSky&#39;s blog">
 <meta property="og:description" content="WEBweb签到一共三关前面两关是MD5函数不能处理数组以及0e弱类型比较的问题第三关123if((string)$_GET[&apos;param1&apos;]!==(string)$_GET[&apos;param2&apos;] &amp;amp;&amp;amp; md5($_GET[&apos;param1&apos;])===md5($_GET[&apos;param2&apos;]))&amp;#123;   die(&quot;success!&quot;);&amp;#125; 找到两个MD5值一样的字符串">
-<meta property="og:image" content="http://heartsky.info/QWB/20180327000044_7pgkxf_Screenshot.jpeg">
-<meta property="og:updated_time" content="2018-10-26T06:06:01.496Z">
+<meta property="og:image" content="http://heartsky.info/images/QWB/20180327000044_7pgkxf_Screenshot.jpeg">
+<meta property="og:updated_time" content="2018-10-26T06:08:42.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第二届强网杯 Web&#x2F;Crypto writeup | HeartSky&#39;s blog">
 <meta name="twitter:description" content="WEBweb签到一共三关前面两关是MD5函数不能处理数组以及0e弱类型比较的问题第三关123if((string)$_GET[&apos;param1&apos;]!==(string)$_GET[&apos;param2&apos;] &amp;amp;&amp;amp; md5($_GET[&apos;param1&apos;])===md5($_GET[&apos;param2&apos;]))&amp;#123;   die(&quot;success!&quot;);&amp;#125; 找到两个MD5值一样的字符串">
-<meta name="twitter:image" content="http://heartsky.info/QWB/20180327000044_7pgkxf_Screenshot.jpeg">
+<meta name="twitter:image" content="http://heartsky.info/images/QWB/20180327000044_7pgkxf_Screenshot.jpeg">
     
     
     
@@ -188,7 +188,7 @@ classes that you can use:
   <section id="post-content" class="article-content post">
     <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="web签到"><a href="#web签到" class="headerlink" title="web签到"></a>web签到</h3><p>一共三关<br>前面两关是MD5函数不能处理数组以及0e弱类型比较的问题<br>第三关<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>((string)$_GET[<span class="string">'param1'</span>]!==(string)$_GET[<span class="string">'param2'</span>] &amp;&amp; md5($_GET[<span class="string">'param1'</span>])===md5($_GET[<span class="string">'param2'</span>]))&#123;</span><br><span class="line">   <span class="keyword">die</span>(<span class="string">"success!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>找到两个MD5值一样的字符串<br><a href="https://www.mscs.dal.ca/~selinger/md5collision/" target="_blank" rel="external">https://www.mscs.dal.ca/~selinger/md5collision/</a></p>
-<p>简单扩展下 md5 的哈希过程<br>这里我用 ppt 画了一个图方便理解<br><img src="http://heartsky.info/QWB/20180327000044_7pgkxf_Screenshot.jpeg" alt=""><br>明文进行 64 bit 的分组，不足则进行 padding，这里的 s0 和函数 f 都是固定的，第一次就是利用函数 f 把第一个分组 m0 和初始化向量 s0 作为输入，得到输出 s1，依次类推，最后得到的 s6，也就是哈希后的结果，即图中的 enc</p>
+<p>简单扩展下 md5 的哈希过程<br>这里我用 ppt 画了一个图方便理解<br><img src="http://heartsky.info/images/QWB/20180327000044_7pgkxf_Screenshot.jpeg" alt=""><br>明文进行 64 bit 的分组，不足则进行 padding，这里的 s0 和函数 f 都是固定的，第一次就是利用函数 f 把第一个分组 m0 和初始化向量 s0 作为输入，得到输出 s1，依次类推，最后得到的 s6，也就是哈希后的结果，即图中的 enc</p>
 <p>最后一关就是 05 年王小云提出的 md5 哈希碰撞，也就是图中左上角的式子，对于两个不同的消息分组 M、N，s 相同，经过两次 f 函数后得到的结果是一样的，前面的消息分组对应图中的 m2，也就是虽然 m2、m3 不同，但是最后两次 f 函数后的 s4 是相同的，即最后哈希结果相同</p>
 <h3 id="share-your-mind"><a href="#share-your-mind" class="headerlink" title="share your mind"></a>share your mind</h3><p>前端后端对解析差异的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://39.107.33.96:20000/index.php/view/article/969/..%2f..%2f..%2f..%2findex.php/add</span><br></pre></td></tr></table></figure></p>
 <p>对于这个 url，nginx 和 apache 的解析是不同的，apache 是把 <code>..%2f..%2f..%2f..%2findex.php</code> 当做一层路径，而 nginx 会先进行 url 解码，即 <code>/index.php/view/article/969/../../../../index.php/add</code>，最后也就是 <code>/index.php/add</code></p>
